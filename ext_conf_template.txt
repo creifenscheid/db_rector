@@ -1,0 +1,2 @@
+# cat=XXX; type=string; label=YYY: ZZZ
+xxx =

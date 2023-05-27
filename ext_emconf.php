@@ -26,20 +26,20 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'xxx',
-    'description' => 'xxx',
+    'title' => 'DB Rector',
+    'description' => 'Adapter to use typo3-rector on entries of sys_template and pages',
     'category' => 'be',
     'author' => 'C. Reifenscheid',
-    'version' => '11.0.0',
+    'version' => '12.0.0',
     'state' => 'alpha',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.5.0-11.5.99'
+            'typo3' => '12.4.0-12.4.99'
         ] 
     ],
     'autoload' => [
         'psr-4' => [
-            'CReifenscheid\\xxx\\' => 'Classes'
+            'CReifenscheid\\DbRector\\' => 'Classes'
         ]
     ]
 ];

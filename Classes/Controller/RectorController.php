@@ -34,6 +34,11 @@ class RectorConttoller extends BaseController
 {
     public function indexAction(): ResponseInterface
     {
+        $return = shell_exec('ls -la');
+        var_dump($return);
+        die();
+    
+    
         $this->moduleTemplate->setContent($this->view->render());
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());

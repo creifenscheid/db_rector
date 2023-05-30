@@ -2,7 +2,6 @@
 
 defined('TYPO3') || die();
 
-use CReifenscheid\DbRector\Controller\RectorController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 $extKey = 'db_rector';
@@ -10,7 +9,7 @@ $moduleIdentifier = GeneralUtility::underscoredToUpperCamelCase($extKey);
 
 return [
     'web_' . $moduleIdentifier => [
-        'parent' => 'admin',
+        'parent' => 'web',
         'position' => ['after' => '*'],
         'access' => 'admin',
         'iconIdentifier' => 'db-rector-extension',
@@ -19,7 +18,7 @@ return [
         'workspaces' => 'live',
         'path' => '/module/admin/' . $moduleIdentifier,
         'controllerActions' => [
-            RectorController::class => 'index',
+            \CReifenscheid\DbRector\Controller\RectorController::class => 'index',
         ],
     ],
 ];

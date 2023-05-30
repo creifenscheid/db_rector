@@ -6,6 +6,10 @@
 	"require" : {
 		"typo3/cms-core" : "^12.4",
 		"ssch/typo3-rector" : "^1"
+	}
+	,
+	"require-dev": {
+		"roave/security-advisories": "dev-latest"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -17,5 +21,13 @@
 			"name" : "C. Reifenscheid",
 			"email" : "dev@christian-reifenscheid.de"
 		}
-	]
+	],
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "db_rector"
+		}
+	},
+	"replace": {
+		"typo3-ter/db-rector": "self.version"
+	}
 }

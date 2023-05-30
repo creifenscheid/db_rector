@@ -28,11 +28,11 @@ namespace CReifenscheid\DbRector\Controller;
  ***************************************************************/
 
 /**
- * Class RectorConttoller
+ * Class RectorController
  */
-class RectorConttoller extends BaseController
+class RectorController extends BaseController
 {
-    public function indexAction(): ResponseInterface
+    public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
         $return = shell_exec('ls -la');
         var_dump($return);

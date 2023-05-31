@@ -2,6 +2,8 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
+use TYPO3\CMS\Core\Core\Environment;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -34,10 +36,11 @@ class RectorController extends BaseController
 {
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
-        $return = shell_exec('ls -la');
+        $filePath = Environment::getVarPath() . '/' . $this->request->getControllerExtensionName();
+
+        $return = shell_exec('../../vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
         var_dump($return);
         die();
-    
     
         $this->moduleTemplate->setContent($this->view->render());
 

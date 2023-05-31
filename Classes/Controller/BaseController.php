@@ -7,6 +7,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -75,16 +76,16 @@ class BaseController extends ActionController
         $this->uriBuilder->setRequest($this->request);
 
         $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
-        $menu->setIdentifier('DbRectorModuleMenu');
+        $menu->setIdentifier($this->request->getControllerExtensionName() . 'ModuleMenu');
 
-        $moduleControllerActions = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$this->request->getControllerExtensionName()]['modules'][$this->request->getPluginName()]['controllers'];
+        $moduleControllerActions = $this->request->getAttribute('module')->getControllerActions();
 
         foreach ($moduleControllerActions as $configuredController) {
             $alias = $configuredController['alias'];
 
             $menu->addMenuItem(
                 $menu->makeMenuItem()
-                    ->setTitle(LocalizationUtility::translate('LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:section.' . strtolower((string)$alias)))
+                    ->setTitle(LocalizationUtility::translate('LLL:EXT:' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName()) . '/Resources/Private/Language/locallang_mod.xlf:section.' . strtolower((string)$alias)))
                     ->setHref($this->uriBuilder->uriFor('index', null, $alias))
                     ->setActive($currentController === $alias . 'Controller')
             );

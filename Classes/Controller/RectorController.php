@@ -36,11 +36,12 @@ class RectorController extends BaseController
 {
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
-        $filePath = Environment::getVarPath() . '/' . $this->request->getControllerExtensionName();
+        $this->assignDefaultValues();
 
-        $return = shell_exec('../../vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
-        var_dump($return);
-        die();
+        if (Environment::getContext()->isDevelopment()) {
+            //$filePath = Environment::getVarPath() . '/' . $this->request->getControllerExtensionName();
+            //$return = shell_exec('../../vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
+        }
     
         $this->moduleTemplate->setContent($this->view->render());
 

@@ -5,6 +5,7 @@ namespace CReifenscheid\DbRector\Controller;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -92,5 +93,13 @@ class BaseController extends ActionController
         }
 
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+    }
+
+    protected function assignDefaultValues(): void
+    {
+        $this->view->assignMultiple([
+            'l10n' => 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:',
+            'contextIsDevelopment' => Environment::getContext()->isDevelopment()
+        ]);
     }
 }

@@ -7,7 +7,7 @@
 <div class="db-rector-be-module">
     <h1><f:translate key="{l10n}mlang_tabs_tab"/></h1>
 
-    <f:if condition="!{contextIsDevelopment}">
+    <f:if condition="!{contextIsDevelopment} && !{ignoreTYPO3Context}">
         <div class="callout callout-danger">
             <div class="media">
                 <div class="media-left">
@@ -22,7 +22,24 @@
         </div>
     </f:if>
 
-    <f:render section="Content"/>
+    <f:if condition="!{contextIsDevelopment} && {ignoreTYPO3Context}">
+        <div class="callout callout-warning">
+            <div class="media">
+                <div class="media-left">
+                    <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                </div>
+                <div class="media-body">
+                    <div class="callout-body">
+                        <p><f:translate key="{l10n}ignore-context"/></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:if>
+
+    <f:if condition="{contextIsDevelopment} || {ignoreTYPO3Context}">
+        <f:render section="Content"/>
+    </f:if>
 </div>
 
 </html>

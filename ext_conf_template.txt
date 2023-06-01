@@ -1,2 +1,2 @@
-# cat=XXX; type=string; label=YYY: ZZZ
-xxx =
+# cat=Configuration/enable; type=boolean; label=LLL:EXT:db_rector/Resources/Private/Language/locallang_extensionConfiguration.xlf:backendmodule.ignoreTYPO3Context
+ignoreTYPO3Context = false

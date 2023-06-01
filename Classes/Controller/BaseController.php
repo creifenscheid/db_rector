@@ -2,11 +2,11 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
+use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -43,18 +43,20 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class BaseController extends ActionController
 {
+    protected string $shortName = '';
+    protected ?ExtensionConfiguration $extensionConfiguration = null;
     protected ModuleTemplateFactory $moduleTemplateFactory;
-
     protected ModuleTemplate $moduleTemplate;
-
     protected PageRenderer $pageRenderer;
 
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
-        PageRenderer $pageRenderer
+        PageRenderer $pageRenderer,
+        ExtensionConfiguration $extensionConfiguration
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->pageRenderer = $pageRenderer;
+        $this->extensionConfiguration = $extensionConfiguration;
 
         $reflect = new ReflectionClass($this);
         $this->shortName = $reflect->getShortName();
@@ -99,7 +101,8 @@ class BaseController extends ActionController
     {
         $this->view->assignMultiple([
             'l10n' => 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:',
-            'contextIsDevelopment' => Environment::getContext()->isDevelopment()
+            'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
+            'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context()
         ]);
     }
 }

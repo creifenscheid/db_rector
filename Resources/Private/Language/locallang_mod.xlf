@@ -14,13 +14,14 @@
             </trans-unit>
 
             <!-- INDEX -->
+            <trans-unit id="no-composer" resname="no-composer">
+                <source>Your TYPO3 installation is not running in composer mode, which is required to run rector.</source>
+            </trans-unit>
             <trans-unit id="no-development" resname="no-development">
-                <source>Your TYPO3 installation is not running in context "Development". To prevent changes in a production environment, this module can't be used.
-                </source>
+                <source>Your TYPO3 installation is not running in context "Development". To prevent changes in a production environment, this module canonly be used in context "Development".</source>
             </trans-unit>
             <trans-unit id="ignore-context" resname="ignore-context">
-                <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!
-                </source>
+                <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!</source>
             </trans-unit>
         </body>
     </file>

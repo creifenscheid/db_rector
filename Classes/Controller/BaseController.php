@@ -110,7 +110,8 @@ class BaseController extends ActionController
         $this->view->assignMultiple([
             'l10n' => 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:',
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
-            'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context()
+            'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
+            'composerMode' => Environment::isComposerMode()
         ]);
     }
 }

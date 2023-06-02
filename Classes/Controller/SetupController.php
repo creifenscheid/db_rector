@@ -32,6 +32,8 @@ namespace CReifenscheid\DbRector\Controller;
  */
 class SetupController extends BaseController
 {
+    protected bool $restrictedRendering = false;
+    
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
         $this->assignDefaultValues();

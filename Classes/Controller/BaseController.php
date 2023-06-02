@@ -50,6 +50,7 @@ class BaseController extends ActionController
     protected ModuleTemplate $moduleTemplate;
     protected PageRenderer $pageRenderer;
     protected ?Typo3Version $typo3Version = null;
+    protected bool $restrictedRendering = true;
 
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
@@ -111,7 +112,8 @@ class BaseController extends ActionController
             'l10n' => 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:',
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
-            'composerMode' => Environment::isComposerMode()
+            'composerMode' => Environment::isComposerMode(),
+            'restrictedRendering' => $this->restrictedRendering
         ]);
     }
 }

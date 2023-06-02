@@ -3,6 +3,7 @@
 namespace CReifenscheid\DbRector\Controller;
 
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *
@@ -39,8 +40,8 @@ class RectorController extends BaseController
         $this->assignDefaultValues();
 
         if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() === true || Environment::getContext()->isDevelopment())) {
-            //$filePath = Environment::getVarPath() . '/' . $this->request->getControllerExtensionName();
-            //$return = shell_exec('../../vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
+            //$filePath = Environment::getVarPath() . '/' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName());
+            //$return = shell_exec(Environment::getProjectPath() . '/vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
         }
     
         $this->moduleTemplate->setContent($this->view->render());

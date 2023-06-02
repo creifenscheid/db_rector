@@ -38,7 +38,7 @@ class RectorController extends BaseController
     {
         $this->assignDefaultValues();
 
-        if (Environment::getContext()->isDevelopment()) {
+        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() === true || Environment::getContext()->isDevelopment())) {
             //$filePath = Environment::getVarPath() . '/' . $this->request->getControllerExtensionName();
             //$return = shell_exec('../../vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
         }

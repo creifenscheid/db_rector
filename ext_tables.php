@@ -19,6 +19,7 @@ defined('TYPO3') || die();
             'after:toolsupgrade',
             [
                 \CReifenscheid\DbRector\Controller\RectorController::class => 'index',
+                \CReifenscheid\DbRector\Controller\SetupController::class => 'index',
             ],
             [
                 'access' => 'admin',

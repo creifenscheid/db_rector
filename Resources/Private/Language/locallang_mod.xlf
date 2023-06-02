@@ -13,6 +13,14 @@
                 <source>Database Rector</source>
             </trans-unit>
 
+            <!-- MODULE MENU -->
+            <trans-unit id="section.setup" resname="section.setup">
+                <source>Setup check</source>
+            </trans-unit>
+            <trans-unit id="section.rector" resname="section.rector">
+                <source>Rector</source>
+            </trans-unit>
+
             <!-- INDEX -->
             <trans-unit id="no-composer" resname="no-composer">
                 <source>Your TYPO3 installation is not running in composer mode, which is required to run rector.</source>

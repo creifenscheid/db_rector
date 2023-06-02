@@ -63,6 +63,6 @@ class ExtensionConfiguration
 
     public function setIgnoreTYPO3Context(string $ignoreTYPO3Context): void
     {
-        $this->ignoreTYPO3Context = (bool)$ignoreTYPO3Context;
+        $this->ignoreTYPO3Context = filter_var($ignoreTYPO3Context, FILTER_VALIDATE_BOOLEAN);
     }
 }

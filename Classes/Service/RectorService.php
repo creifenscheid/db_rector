@@ -61,8 +61,6 @@ class RectorService implements SingletonInterface
         return $this->goodToGo;
     }
 
-// SeppToDo: check php version for return statement
-// set needed pho version as requirement
     public function getVersion(): bool|string
     {
          return $this->goodToGo ? $this->version : $this->goodToGo;

@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use CReifenscheid\DbRector\Services\RectorService
 
 /***************************************************************
  *
@@ -46,6 +47,7 @@ class BaseController extends ActionController
 {
     protected string $shortName = '';
     protected ?ExtensionConfiguration $extensionConfiguration = null;
+    protected ?RectorService $rectorService = null;
     protected ModuleTemplateFactory $moduleTemplateFactory;
     protected ModuleTemplate $moduleTemplate;
     protected PageRenderer $pageRenderer;
@@ -55,11 +57,13 @@ class BaseController extends ActionController
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
         PageRenderer $pageRenderer,
-        ExtensionConfiguration $extensionConfiguration
+        ExtensionConfiguration $extensionConfiguration,
+        RectorService $rectorService
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->pageRenderer = $pageRenderer;
         $this->extensionConfiguration = $extensionConfiguration;
+        $this->rectorService = $rectorService;
 
         $reflect = new ReflectionClass($this);
         $this->shortName = $reflect->getShortName();

@@ -44,7 +44,7 @@ class SetupController extends BaseController
             'setup.typo3version' => $this->typo3Version,
             'setup.context' => Environment::getContext(),
             'setup.composer' => Environment::isComposerMode(),
-            'setup.rectorVersion' => 'xxx',
+            'setup.rectorVersion' => $this->rectorService->getVersion(),
             'setup.phpVersion' => phpversion(),
         ]); 
     

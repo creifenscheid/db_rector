@@ -61,7 +61,7 @@ class ExtensionConfiguration
         return $this->ignoreTYPO3Context;
     }
 
-    public function setIgnoreTYPO3Context(string $ignoreTYPO3Context): void
+    private function setIgnoreTYPO3Context(string $ignoreTYPO3Context): void
     {
         $this->ignoreTYPO3Context = filter_var($ignoreTYPO3Context, FILTER_VALIDATE_BOOLEAN);
     }

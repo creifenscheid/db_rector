@@ -2,6 +2,8 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
+use TYPO3\CMS\Core\Core\Environment;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -37,6 +39,14 @@ class SetupController extends BaseController
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
         $this->assignDefaultValues();
+        
+        $this->view->assignMultiple([
+            'setup.typo3version' => $this->typo3Version,
+            'setup.context' => Environment::getContext(),
+            'setup.composer' => Environment::isComposerMode(),
+            'setup.rectorVersion' => 'xxx',
+            'setup.phpVersion' => phpversion(),
+        ]); 
     
         $this->moduleTemplate->setContent($this->view->render());
 

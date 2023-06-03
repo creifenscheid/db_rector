@@ -3,6 +3,12 @@
 
 <f:layout name="Default"/>
 
+' => $this->typo3Version,
+            '' => Environment::getContext(),
+            '' => Environment::isComposerMode(),
+            '' => $this->rectorService->getVersion(),
+            '
+
 <f:section name="Content">
     <h2><f:translate key="{l10n}section.setup" /></h2>
     <br>
@@ -13,7 +19,7 @@
                     TYPO3
                 </th>
                 <td>
-                    12.5.2
+                    {setup.typo3version}
                 </td>
             </tr>
             <tr role="row">
@@ -21,7 +27,7 @@
                     TYPO3-Kontext
                 </th>
                 <td>
-                    Development
+                    {setup.context}
                 </td>
             </tr>
             <tr role="row">
@@ -29,7 +35,7 @@
                     Composer
                 </th>
                 <td>
-                    false
+                    <f:translate key="{l10n}.general.{setup.composer}" />
                 </td>
             </tr>
             <tr role="row">
@@ -37,7 +43,14 @@
                     Rector
                 </th>
                 <td>
-                    v0.15.2
+                    <f:if condition="{setup.rectorVersion}">
+                        <f:then>
+                                        {setup.rectorVersion}
+                        </f:then>
+                        <f:else>
+                            <f:translate key="{l10n}.no-rector" />
+                        </f:else>
+                    </f:if>
                 </td>
             </tr>
             <tr role="row">
@@ -45,7 +58,7 @@
                     PHP
                 </th>
                 <td>
-                    8.0
+                    {setup.phpVersion}
                 </td>
             </tr>
         </table>

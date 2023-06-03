@@ -3,63 +3,39 @@
 
 <f:layout name="Default"/>
 
-' => $this->typo3Version,
-            '' => Environment::getContext(),
-            '' => Environment::isComposerMode(),
-            '' => $this->rectorService->getVersion(),
-            '
-
 <f:section name="Content">
     <h2><f:translate key="{l10n}section.setup" /></h2>
     <br>
     <div class="table-fit">
         <table id="db-rector_setup-check" class="table table-striped table-hover">
             <tr role="row">
-                <th scope="row">
-                    TYPO3
-                </th>
-                <td>
-                    {setup.typo3version}
-                </td>
+                <th scope="row"><f:translate key="{l10n}setup.typo3" /></th>
+                <td>{setup.typo3version}</td>
             </tr>
-            <tr role="row">
-                <th scope="row">
-                    TYPO3-Kontext
-                </th>
-                <td>
-                    {setup.context}
-                </td>
+            <tr role="row"{f:if(condition:'{setup.context} != "Development"', then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.typo3context" /></th>
+                <td>{setup.context}</td>
             </tr>
-            <tr role="row">
-                <th scope="row">
-                    Composer
-                </th>
-                <td>
-                    <f:translate key="{l10n}.general.{setup.composer}" />
-                </td>
+            <tr role="row"{f:if(condition:'!{setup.composer}', then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.composer" /></th>
+                <td><f:translate key="{l10n}general.{f:if(condition:setup.composer, then:'yes', else:'no')}" /></td>
             </tr>
-            <tr role="row">
-                <th scope="row">
-                    Rector
-                </th>
+            <tr role="row"{f:if(condition:'!{setup.rectorVersion}', then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.rector" /></th>
                 <td>
                     <f:if condition="{setup.rectorVersion}">
                         <f:then>
-                                        {setup.rectorVersion}
+                            {setup.rectorVersion}
                         </f:then>
                         <f:else>
-                            <f:translate key="{l10n}.no-rector" />
+                            <f:translate key="{l10n}no-rector" />
                         </f:else>
                     </f:if>
                 </td>
             </tr>
             <tr role="row">
-                <th scope="row">
-                    PHP
-                </th>
-                <td>
-                    {setup.phpVersion}
-                </td>
+                <th scope="row"><f:translate key="{l10n}setup.php" /></th>
+                <td>{setup.phpVersion}</td>
             </tr>
         </table>
     </div>

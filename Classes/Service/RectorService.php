@@ -55,6 +55,12 @@ class RectorService implements SingletonInterface
             $this->goodToGo = true;
         }
     }
+
+    public function getGoodToGo(): bool
+    {
+        return $this->goodToGo;
+    }
+
 // SeppToDo: check php version for return statement
 // set needed pho version as requirement
     public function getVersion(): bool|string
@@ -62,9 +68,8 @@ class RectorService implements SingletonInterface
          return $this->goodToGo ? $this->version : $this->goodToGo;
     }
     
-    private function run(string $statement): string 
+    private function run(string $statement): ?string 
     {
          return shell_exec($this->path . $statement);
     }
-    
 }

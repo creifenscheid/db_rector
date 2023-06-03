@@ -41,11 +41,13 @@ class SetupController extends BaseController
         $this->assignDefaultValues();
         
         $this->view->assignMultiple([
-            'setup.typo3version' => $this->typo3Version,
-            'setup.context' => Environment::getContext(),
-            'setup.composer' => Environment::isComposerMode(),
-            'setup.rectorVersion' => $this->rectorService->getVersion(),
-            'setup.phpVersion' => phpversion(),
+            'setup' => [
+                'typo3version' => $this->typo3Version,
+                'context' => Environment::getContext(),
+                'composer' => Environment::isComposerMode(),
+                'rectorVersion' => $this->rectorService->getVersion(),
+                'phpVersion' => phpversion()
+            ]
         ]); 
     
         $this->moduleTemplate->setContent($this->view->render());

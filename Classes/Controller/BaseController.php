@@ -13,7 +13,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use CReifenscheid\DbRector\Services\RectorService
+use CReifenscheid\DbRector\Service\RectorService;
 
 /***************************************************************
  *
@@ -117,7 +117,8 @@ class BaseController extends ActionController
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
             'composerMode' => Environment::isComposerMode(),
-            'restrictedRendering' => $this->restrictedRendering
+            'restrictedRendering' => $this->restrictedRendering,
+            'rector' => $this->rectorService->getGoodToGo(),
         ]);
     }
 }

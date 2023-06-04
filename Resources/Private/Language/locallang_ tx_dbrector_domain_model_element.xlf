@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+    <file source-language="en" datatype="plaintext"
+          original="EXT:db_rector/Resources/Private/Language/locallang_tx_dbrector_domain_model_element.xlf" date="2023-06-01T11:55:00Z"
+          product-name="db-rector">
+        <header/>
+        <body>
+            <trans-unit id="label" resname="label">
+                <source>DB Rector element</source>
+            </trans-unit>
+            <trans-unit id="origin" resname="origin">
+                <source>Original element</source>
+            </trans-unit>
+            <trans-unit id="original_data" resname="original_data">
+                <source>Original data</source>
+            </trans-unit>
+            <trans-unit id="refactored_data" resname="refactored_data">
+                <source>Refactored data</source>
+            </trans-unit>
+            <trans-unit id="applied" resname="applied">
+                <source>Applied</source>
+            </trans-unit>
+            <trans-unit id="processed" resname="processed">
+                <source>Processed</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

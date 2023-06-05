@@ -34,70 +34,80 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Element extends AbstractEntity
 {
-    // SeppToDo: Definevtype of origin
-    protected xxx $origin = null;
-    protected string $originalData = '';
-    protected string $refactoredData = '';
+    protected int $originUid = 0;
+    protected string $originTable = '';
+    protected string $originData = '';
+    protected string $processedData = '';
     protected bool $applied = false;
     protected bool $processed = false;
-    
-    public function getOrigin(): xxx
+
+    public function getOriginUid(): int
     {
-        return $this->origin;
+        return $this->originUid;
     }
-    
-    public function setOrigin(xxx $origin): Element
+
+    public function setOriginUid(int $originUid): Element
     {
-        $this->origin = $origin;
-        
+        $this->originUid = $originUid;
+
         return $this;
     }
-    
-    public function getOriginalData(): array
+
+    public function getOriginTable(): string
     {
-        return unserialize($this->originalData);
+        return $this->originTable;
     }
-    
-    public function setOriginalData(array $originalData): Element
+
+    public function setOriginTable(string $originTable): void
     {
-        $this->originalData = serialize($originalData);
-        
+        $this->originTable = $originTable;
+    }
+
+    public function getOriginData(): array
+    {
+        return unserialize($this->originData, ['allowed_classes' => false]);
+    }
+
+    public function setOriginData(array $originData): Element
+    {
+        $this->originData = serialize($originData);
+
         return $this;
     }
-    
-    public function getRefactoredData(): array
+
+    public function getProcessedData(): array
     {
-        return unserialize($this->refactoredData);
+        return unserialize($this->processedData, ['allowed_classes' => false]);
     }
-    
-    public function setRefactoredData(array $refactoredData): Element
+
+    public function setProcessedData(array $processedData): Element
     {
-        $this->refactoredData = serialize($refactoredData);
-        
+        $this->processedData = serialize($processedData);
+
         return $this;
     }
-    
+
     public function getApplied(): bool
     {
         return $this->applied;
     }
-    
+
     public function setApplied(bool $applied): Element
     {
         $this->applied = $applied;
-        
+
         return $this;
     }
-    
+
     public function getProcessed(): bool
     {
         return $this->processed;
     }
-    
+
     public function setProcessed(bool $processed): Element
     {
         $this->processed = $processed;
-        
+
         return $this;
     }
 }

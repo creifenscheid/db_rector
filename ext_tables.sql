@@ -1,11 +1,12 @@
 #
 # Table structure for table 'tx_dbrector_domain_model_element'
 #
-CREATE TABLE tx_guidelines_domain_model_standard
+CREATE TABLE tx_dbrector_domain_model_element
 (
-    origin int(11) DEFAULT 0 NOT NULL,
-    original_data text,
-    refactored_data text,
+    origin_uid int(11) DEFAULT 0 NOT NULL,
+    origin_table varchar(255) DEFAULT '' NOT NULL,
+    origin_data text,
+    processed_data text,
     applied tinyint(1) DEFAULT 0 NOT NULL,
     processed tinyint(1) DEFAULT 0 NOT NULL
 );

@@ -7,9 +7,11 @@ $l10n = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/TCA/locallang_
 
 return [
     'ctrl' => [
-        'hideTable' => true,
+        //'hideTable' => true,
         'title' => $l10n . 'label',
-        'label' => '',
+        'label' => 'origin_table',
+        'label_alt' => 'origin_uid',
+        'label_alt_force' => true,
         'adminOnly' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -29,22 +31,133 @@ return [
         ],
 
         'iconfile' => 'EXT:' . $extensionKey . '/Resources/Public/Icons/Extension.svg',
-        'search' => '',
+        'search' => 'origin_uid, origin_table, origin_data, processed_data',
     ],
     'types' => [
         [
-            'showitem' => '',
+            'showitem' => '
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                    --palette--;;origin,
+                --div--;' . $l10n . 'tab.refactor,
+                    --palette--;;process,processed_data,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,hidden,
+                    --palette--;;timeRestrictions,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,sys_language_uid
+            ',
+        ],
+    ],
+    'palettes' => [
+        'origin' => [
+            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_data'
+        ],
+        'process' => [
+            'showitem' => 'processed, applied'
+        ],
+        'timeRestrictions' => [
+            'showitem' => 'starttime,endtime',
         ],
     ],
     'columns' => [
-        'origin' => [
-            'label' => $l10n . 'origin',
+        'starttime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
+                'default' => 0,
+            ],
+            'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
+        ],
+        'endtime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
+                'default' => 0,
+            ],
+            'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
+        ],
+        'hidden' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.enabled',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'items' => [
+                    [
+                        0 => '',
+                        1 => '',
+                        'invertStateDisplay' => true,
+                    ],
+                ],
+            ],
+        ],
+        'sys_language_uid' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
+            'config' => [
+                'type' => 'language',
+            ],
+        ],
+        'l18n_parent' => [
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => 0,
+                'items' => [
+                    [
+                        '',
+                        0,
+                    ],
+                ],
+                'foreign_table' => $table,
+                'foreign_table_where' =>
+                    'AND {#' . $table . '}.{#pid}=###CURRENT_PID###'
+                    . ' AND {#' . $table . '}.{#sys_language_uid} IN (-1,0)',
+            ],
+        ],
+        'l10n_source' => [
             'config' => [
                 'type' => 'passthrough',
             ],
         ],
-        'original_data' => [
-            'label' => $l10n . 'original_data',
+        'l18n_diffsource' => [
+            'config' => [
+                'type' => 'passthrough',
+                'default' => '',
+            ],
+        ],
+        'origin_uid' => [
+            'label' => $l10n . 'origin_uid',
+            'config' => [
+                'default' => '',
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim, num',
+                'readOnly' => true,
+            ]
+        ],
+        'origin_table' => [
+            'label' => $l10n . 'origin_table',
+            'config' => [
+                'default' => '',
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim',
+                'readOnly' => true,
+            ],
+        ],
+        'origin_data' => [
+            'label' => $l10n . 'origin_data',
             'config' => [
                 'type' => 'text',
                 'eval' => 'trim',
@@ -52,8 +165,8 @@ return [
                 'readOnly' => true,
             ],
         ],
-        'refactored_data' => [
-            'label' => $l10n . 'refactored_data',
+        'processed_data' => [
+            'label' => $l10n . 'processed_data',
             'config' => [
                 'type' => 'text',
                 'eval' => 'trim',

@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
 
 /***************************************************************
@@ -45,5 +46,13 @@ class TyposcriptController extends BaseController
         // implement toolbar
             // run rector on entry
             // apply rector result to original entry
+    }
+
+    private function getDataEntries(): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_template');
+        $queryBuilder->select('uid', 'constants', 'config');
+
+        return[];
     }
 }

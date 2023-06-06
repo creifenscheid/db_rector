@@ -7,6 +7,7 @@ use ReflectionClass;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -51,17 +52,20 @@ class BaseController extends ActionController implements RectorControllerInterfa
     protected ModuleTemplateFactory $moduleTemplateFactory;
     protected ModuleTemplate $moduleTemplate;
     protected PageRenderer $pageRenderer;
+    protected ?ConnectionPool $connectionPool = null;
     protected ?Typo3Version $typo3Version = null;
     protected bool $restrictedRendering = true;
 
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
         PageRenderer $pageRenderer,
+        ConnectionPool $connectionPool,
         ExtensionConfiguration $extensionConfiguration,
         RectorService $rectorService
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->pageRenderer = $pageRenderer;
+        $this->connectionPool = $connectionPool;
         $this->extensionConfiguration = $extensionConfiguration;
         $this->rectorService = $rectorService;
 

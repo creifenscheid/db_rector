@@ -17,8 +17,8 @@
             <trans-unit id="section.setup" resname="section.setup">
                 <source>Setup check</source>
             </trans-unit>
-            <trans-unit id="section.rector" resname="section.rector">
-                <source>Rector</source>
+            <trans-unit id="section.typoscript" resname="section.typoscript">
+                <source>TypoScript</source>
             </trans-unit>
 
             <!-- GENERAL -->

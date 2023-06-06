@@ -18,7 +18,7 @@ defined('TYPO3') || die();
             $extKey,
             'after:toolsupgrade',
             [
-                \CReifenscheid\DbRector\Controller\RectorController::class => 'index',
+                \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index',
                 \CReifenscheid\DbRector\Controller\SetupController::class => 'index',
             ],
             [

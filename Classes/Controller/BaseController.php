@@ -43,7 +43,7 @@ use CReifenscheid\DbRector\Service\RectorService;
 /**
  * Class BaseController
  */
-class BaseController extends ActionController
+class BaseController extends ActionController implements RectorControllerInterface
 {
     protected string $shortName = '';
     protected ?ExtensionConfiguration $extensionConfiguration = null;
@@ -108,6 +108,23 @@ class BaseController extends ActionController
         }
 
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+    }
+
+    public function indexAction(): \Psr\Http\Message\ResponseInterface
+    {
+        $this->assignDefaultValues();
+
+        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() === true || Environment::getContext()->isDevelopment())) {
+            $this->run();
+        }
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
+    }
+
+    public function run (): void
+    {
     }
 
     protected function assignDefaultValues(): void

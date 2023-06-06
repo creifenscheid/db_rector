@@ -3,7 +3,6 @@
 namespace CReifenscheid\DbRector\Controller;
 
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *
@@ -31,21 +30,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  ***************************************************************/
 
 /**
- * Class RectorController
+ * Class TyposcriptController
  */
-class RectorController extends BaseController
+class TyposcriptController extends BaseController
 {
-    public function indexAction(): \Psr\Http\Message\ResponseInterface
+    public function run(): void
     {
-        $this->assignDefaultValues();
-
-        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() === true || Environment::getContext()->isDevelopment())) {
-            //$filePath = Environment::getVarPath() . '/' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName());
-            //$return = shell_exec(Environment::getProjectPath() . '/vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
-        }
-    
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        //$filePath = Environment::getVarPath() . '/' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName());
+        //$return = shell_exec(Environment::getProjectPath() . '/vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
     }
 }

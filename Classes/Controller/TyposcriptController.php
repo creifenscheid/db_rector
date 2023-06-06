@@ -38,5 +38,12 @@ class TyposcriptController extends BaseController
     {
         //$filePath = Environment::getVarPath() . '/' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName());
         //$return = shell_exec(Environment::getProjectPath() . '/vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
+
+        // get all sys_template entries
+        // create rector models
+        // show models in view
+        // implement toolbar
+            // run rector on entry
+            // apply rector result to original entry
     }
 }

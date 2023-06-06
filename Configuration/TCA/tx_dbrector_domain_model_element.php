@@ -7,7 +7,7 @@ $l10n = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/TCA/locallang_
 
 return [
     'ctrl' => [
-        //'hideTable' => true,
+        'hideTable' => true,
         'title' => $l10n . 'label',
         'label' => 'origin_table',
         'label_alt' => 'origin_uid',

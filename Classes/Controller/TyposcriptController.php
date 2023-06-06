@@ -2,9 +2,6 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
-use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Core\Environment;
-
 /***************************************************************
  *
  *  Copyright notice
@@ -51,7 +48,7 @@ class TyposcriptController extends BaseController
     private function getDataEntries(): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_template');
-        $queryBuilder->select('uid', 'constants', 'config');
+        $queryBuilder->select('uid', 'constants', 'config')
 
         return[];
     }

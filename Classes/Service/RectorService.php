@@ -68,6 +68,9 @@ class RectorService implements SingletonInterface
         $this->goodToGo = $goodToGo;
     }
 
+    /**
+     * @SeppToDo: The following code feels a bit dirty. Perhaps there is a nicer way to implement it.
+     */
     private function initRectorConfiguration(): bool
     {
         if ($this->createVarFolder() !== false) {

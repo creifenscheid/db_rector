@@ -39,18 +39,17 @@ class RectorService implements SingletonInterface
     private CONST EXT_KEY = 'db_rector';
     protected bool $goodToGo = false;
     protected ?string $version = null;
-    protected ?string $path = null;
-    
+    protected ?string $rectorPath = null;
+    protected ?string $varFolder = null;
+
     public function __construct()
     {
-        $this->path = Environment::getProjectPath() . '/vendor/bin/rector ';
+        $this->rectorPath = Environment::getProjectPath() . '/vendor/bin/rector ';
         $this->init();
     }
 
     private function init(): void
     {
-        $goodToGo = true;
-
         $this->version = $this->run('--version');
 
         /*
@@ -61,9 +60,9 @@ class RectorService implements SingletonInterface
          */
         if ($this->version === null) {
             $goodToGo = false;
+        } else {
+            $goodToGo = $this->initRectorConfiguration();
         }
-
-        $goodToGo = $this->initRectorConfiguration();
 
         // assign state
         $this->goodToGo = $goodToGo;
@@ -71,17 +70,29 @@ class RectorService implements SingletonInterface
 
     private function initRectorConfiguration(): bool
     {
-        $folder = $this->createVarFolder();
+        if ($this->createVarFolder() !== false) {
+            // CONFIGURATION SETUP
+            $configurationFilename = 'rector.php';
+            $configurationFile = $this->varFolder . '/' . $configurationFilename;
+            $configurationTemplate = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName('EXT:' . self::EXT_KEY . '/Resources/Private/Php/' . $configurationFilename);
 
-        if ($folder === true) {
-            $phpVersion = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', phpversion());
+            if (file_exists($configurationFile)) {
+                return true;
+            }
+
+            // SETUP PHP VERSION FOR RECTOR
+            $phpVersion = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', PHP_VERSION);
             array_pop($phpVersion);
+            $rectorPhp = 'PHP_' . implode('', $phpVersion);
 
-            $rectorPhp = implode('', $phpVersion);
+            // PREPARE CONFIG FILE
+            $configuration = file_get_contents($configurationTemplate);
+            $configuration = str_replace('%%PHPVERSION%%', $rectorPhp, $configuration);
 
-            // get content from config file
-            // replace placeholder with specific content
-            // write file to var folder
+            // WRITE CONFIG FILE
+            $fileResult = file_put_contents($configurationFile, $configuration);
+
+            return !($fileResult === false);
         }
 
         return false;
@@ -99,6 +110,8 @@ class RectorService implements SingletonInterface
             return chmod($varFolder, $GLOBALS['TYPO3_CONF_VARS']['SYS']['folderCreateMask']);
         }
 
+        $this->varFolder = $varFolder;
+
         return true;
     }
 
@@ -114,6 +127,6 @@ class RectorService implements SingletonInterface
     
     private function run(string $statement): ?string 
     {
-         return shell_exec($this->path . $statement);
+         return shell_exec($this->rectorPath . $statement);
     }
 }

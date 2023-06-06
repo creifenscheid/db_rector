@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\DbRector\Service;
 
+use CReifenscheid\CtypeManager\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Core\Environment;
 
@@ -71,6 +72,19 @@ class RectorService implements SingletonInterface
     private function initRectorConfiguration(): bool
     {
         $folder = $this->createVarFolder();
+
+        if ($folder === true) {
+            $phpVersion = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', phpversion());
+            array_pop($phpVersion);
+
+            $rectorPhp = implode('', $phpVersion);
+
+            // get content from config file
+            // replace placeholder with specific content
+            // write file to var folder
+        }
+
+        return false;
     }
 
     private function createVarFolder(): bool

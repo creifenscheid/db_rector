@@ -58,9 +58,11 @@ class Element extends AbstractEntity
         return $this->originTable;
     }
 
-    public function setOriginTable(string $originTable): void
+    public function setOriginTable(string $originTable): Element
     {
         $this->originTable = $originTable;
+
+        return $this;
     }
 
     public function getOriginData(): array

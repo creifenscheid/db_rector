@@ -12,9 +12,13 @@
                 <th scope="row"><f:translate key="{l10n}setup.typo3" /></th>
                 <td>{setup.typo3version}</td>
             </tr>
-            <tr role="row"{f:if(condition:'{setup.context} != "Development"', then:' class="danger"')}>
+            <tr role="row"{f:if(condition:'{setup.typo3context} != "Development"', then:' class="danger"')}>
                 <th scope="row"><f:translate key="{l10n}setup.typo3context" /></th>
-                <td>{setup.context}</td>
+                <td>{setup.typo3context}</td>
+            </tr>
+            <tr role="row"{f:if(condition:setup.ignoreTypo3context, then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.ignoreTypo3context" /></th>
+            <td><f:translate key="{l10n}general.{f:if(condition:setup.ignoreTypo3context, then:'yes', else:'no')}" /></td>
             </tr>
             <tr role="row"{f:if(condition:'!{setup.composer}', then:' class="danger"')}>
                 <th scope="row"><f:translate key="{l10n}setup.composer" /></th>

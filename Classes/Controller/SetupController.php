@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
+use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 
 /***************************************************************
@@ -43,7 +44,8 @@ class SetupController extends BaseController
         $this->view->assignMultiple([
             'setup' => [
                 'typo3version' => $this->typo3Version,
-                'context' => Environment::getContext(),
+                'typo3context' => Environment::getContext(),
+                'ignoreTypo3context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
                 'composer' => Environment::isComposerMode(),
                 'rectorVersion' => $this->rectorService->getVersion(),
                 'phpVersion' => PHP_VERSION,

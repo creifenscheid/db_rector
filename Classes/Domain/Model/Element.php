@@ -34,21 +34,21 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Element extends AbstractEntity
 {
-    protected string $origin = '';
+    protected int $originUid = 0;
     protected string $originTable = '';
     protected string $originData = '';
     protected string $processedData = '';
     protected bool $applied = false;
     protected bool $processed = false;
 
-    public function getOrigin(): array
+    public function getOriginUid(): int
     {
-        return unserialize($this->origin, ['allowed_classes' => false]);
+        return $this->originUid;
     }
 
-    public function setOrigin(array $origin): Element
+    public function setOriginUid(int $originUid): Element
     {
-        $this->origin = serialize($origin);
+        $this->originUid = $originUid;
 
         return $this;
     }

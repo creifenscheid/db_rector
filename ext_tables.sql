@@ -3,7 +3,7 @@
 #
 CREATE TABLE tx_dbrector_domain_model_element
 (
-    origin text,
+    origin_uid int(11) DEFAULT 0 NOT NULL,
     origin_table varchar(255) DEFAULT '' NOT NULL,
     origin_data text,
     processed_data text,

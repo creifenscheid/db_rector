@@ -10,6 +10,8 @@ return [
         'hideTable' => true,
         'title' => $l10n . 'label',
         'label' => 'origin_table',
+        'label_alt' => 'origin_uid',
+        'label_alt_force' => true,
         'adminOnly' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -29,7 +31,7 @@ return [
         ],
 
         'iconfile' => 'EXT:' . $extensionKey . '/Resources/Public/Icons/Extension.svg',
-        'search' => 'origin, origin_table, origin_data, processed_data',
+        'search' => 'origin_uid, origin_table, origin_data, processed_data',
     ],
     'types' => [
         [
@@ -46,7 +48,7 @@ return [
     ],
     'palettes' => [
         'origin' => [
-            'showitem' => 'origin_table, --linebreak--, origin, --linebreak--, origin_data'
+            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_data'
         ],
         'process' => [
             'showitem' => 'processed, applied'
@@ -132,14 +134,16 @@ return [
                 'default' => '',
             ],
         ],
-        'origin' => [
-            'label' => $l10n . 'origin',
+        'origin_uid' => [
+            'label' => $l10n . 'origin_uid',
             'config' => [
-                'type' => 'text',
-                'eval' => 'trim',
                 'default' => '',
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim, num',
                 'readOnly' => true,
-            ],
+            ]
         ],
         'origin_table' => [
             'label' => $l10n . 'origin_table',

@@ -81,7 +81,7 @@ class TyposcriptController extends BaseController
 
         try {
             return $queryBuilder->executeQuery()->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         return [];
@@ -112,7 +112,7 @@ class TyposcriptController extends BaseController
 
         try {
             $this->elementRepository->add($element);
-        } catch (IllegalObjectTypeException $e) {
+        } catch (IllegalObjectTypeException) {
         }
     }
 }

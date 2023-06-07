@@ -15,7 +15,6 @@ return [
         'adminOnly' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'origUid' => 't3_origuid',
         'sorting' => 'sorting',
 

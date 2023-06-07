@@ -3,6 +3,7 @@
 namespace CReifenscheid\DbRector\Service;
 
 use CReifenscheid\CtypeManager\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Core\Environment;
 
@@ -83,14 +84,19 @@ class RectorService implements SingletonInterface
                 return true;
             }
 
+            // PREPARE CONFIG FILE
+            $configuration = file_get_contents($configurationTemplate);
+
             // SETUP PHP VERSION FOR RECTOR
             $phpVersion = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', PHP_VERSION);
             array_pop($phpVersion);
-            $rectorPhp = 'PHP_' . implode('', $phpVersion);
+            $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . implode('', $phpVersion), $configuration);
 
-            // PREPARE CONFIG FILE
-            $configuration = file_get_contents($configurationTemplate);
-            $configuration = str_replace('%%PHPVERSION%%', $rectorPhp, $configuration);
+            // SETUP TYPO3 VERSION
+            $typo3version = new Typo3Version();
+            $configuration = str_replace('%%TYPO3CUR%%', 'UP_TO_TYPO3_' . $typo3version->getMajorVersion(), $configuration);
+            $configuration = str_replace('%%TYPO3PREV%%', 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1), $configuration);
+
 
             // WRITE CONFIG FILE
             $fileResult = file_put_contents($configurationFile, $configuration);

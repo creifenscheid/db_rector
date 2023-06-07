@@ -11,9 +11,27 @@ The result is read into a db model, which can be viewed and applied in the backe
   - view all typoscript and tsconfig stored in the db
   - run typo3-rector on single db entries
   - apply typo3-rector result to original db entries
-  - view difference between original and processed typoscript and tsconfig
 - security: backend module is only active in TYPO3 context „development“ - can be deactivated via extension configuration
 
+## Configuration
+### Extension configuration
+| Parameter | Default | Optional | Description                                                                  |
+|:----------|:--------|:---------|:-----------------------------------------------------------------------------|
+|ignoreTYPO3Context|false|yes| If set to true, the context of the TYPO3 installation is going to be ignored |
+
+### Rector configuration
+To configure rector a file named rector.php is required.<br>
+This file is generated more or less automatically.<br>
+There is some sort of template, which is copied into the working folder /var/db_rector/.<br>
+<br>
+Hence we just want to refactor typoscript and tsconfig, the rector config file is kept short.<br>
+<br>
+The following configuration parameter are defined dynamically:
+
+| Parameter  | Value(s)                                                                                                   | Description                           |
+|------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| phpVersion | The php version of the TYPO3 installation                                                                  | target version to support             |
+| sets       | 2 defined "UP_TO_TYPO3" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to run on the targeted code |
 
 ## Installation
 

@@ -8,8 +8,8 @@ use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
-        Typo3LevelSetList::UP_TO_TYPO3_10,
-        Typo3LevelSetList::UP_TO_TYPO3_11,
+        Typo3LevelSetList::%%TYPO3PREV%%,
+        Typo3LevelSetList::%%TYPO3CUR%%,
     ]);
     $rectorConfig->phpVersion(PhpVersion::%%PHPVERSION%%);
 };

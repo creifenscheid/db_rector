@@ -35,10 +35,15 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Element extends AbstractEntity
 {
     protected int $originUid = 0;
+
     protected string $originTable = '';
+
     protected string $originData = '';
+
     protected string $processedData = '';
+
     protected bool $applied = false;
+
     protected bool $processed = false;
 
     public function getOriginUid(): int

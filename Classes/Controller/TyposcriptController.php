@@ -38,9 +38,13 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
  */
 class TyposcriptController extends BaseController
 {
+    /**
+     * @var string
+     */
     private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
+
     protected array $propertiesToRefactor = [
         'constants',
         'config',
@@ -91,7 +95,10 @@ class TyposcriptController extends BaseController
     {
         // CHECK IF MODEL ALREADY EXISTS
         $existingModel = $this->elementRepository->findByUidAndTable($data['uid'], self::TABLE);
-        if (($existingModel instanceof QueryResult && $existingModel->count() > 0) || (is_array($existingModel) && count($existingModel) > 0)) {
+        if ($existingModel instanceof QueryResult && $existingModel->count() > 0) {
+            return;
+        }
+        if (is_array($existingModel) && $existingModel !== []) {
             return;
         }
 

@@ -36,7 +36,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExtensionConfiguration
 {
+    /**
+     * @var string
+     */
     private const EXTENSION_KEY = 'db_rector';
+
     protected bool $ignoreTYPO3Context = false;
 
     public function __construct()

@@ -47,13 +47,21 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class BaseController extends ActionController implements RectorControllerInterface
 {
     protected string $shortName = '';
+
     protected ?ExtensionConfiguration $extensionConfiguration = null;
+
     protected ?RectorService $rectorService = null;
+
     protected ModuleTemplateFactory $moduleTemplateFactory;
+
     protected ModuleTemplate $moduleTemplate;
+
     protected PageRenderer $pageRenderer;
+
     protected ?ConnectionPool $connectionPool = null;
+
     protected ?Typo3Version $typo3Version = null;
+
     protected bool $restrictedRendering = true;
 
     public function __construct(
@@ -118,7 +126,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
     {
         $this->assignDefaultValues();
 
-        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() === true || Environment::getContext()->isDevelopment())) {
+        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
             $this->run();
         }
 

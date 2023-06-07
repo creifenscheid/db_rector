@@ -36,10 +36,17 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class RectorService implements SingletonInterface
 {
+    /**
+     * @var string
+     */
     private const EXT_KEY = 'db_rector';
+
     protected bool $goodToGo = false;
+
     protected ?string $version = null;
+
     protected ?string $rectorPath = null;
+
     protected ?string $varFolder = null;
 
     public function __construct()
@@ -58,11 +65,7 @@ class RectorService implements SingletonInterface
          * and an error means, rector does not run properly or there is a problem with running rector
          * so, we are not good to go.
          */
-        if ($this->version === null) {
-            $goodToGo = false;
-        } else {
-            $goodToGo = $this->initRectorConfiguration();
-        }
+        $goodToGo = $this->version === null ? false : $this->initRectorConfiguration();
 
         // assign state
         $this->goodToGo = $goodToGo;
@@ -73,7 +76,7 @@ class RectorService implements SingletonInterface
      */
     private function initRectorConfiguration(): bool
     {
-        if ($this->createVarFolder() !== false) {
+        if ($this->createVarFolder()) {
             // CONFIGURATION SETUP
             $configurationFilename = 'rector.php';
             $configurationFile = $this->varFolder . '/' . $configurationFilename;
@@ -99,7 +102,7 @@ class RectorService implements SingletonInterface
             // WRITE CONFIG FILE
             $fileResult = file_put_contents($configurationFile, $configuration);
 
-            return !($fileResult === false);
+            return $fileResult !== false;
         }
 
         return false;

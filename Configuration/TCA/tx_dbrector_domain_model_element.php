@@ -48,10 +48,10 @@ return [
     ],
     'palettes' => [
         'origin' => [
-            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_data'
+            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_data',
         ],
         'process' => [
-            'showitem' => 'processed, applied'
+            'showitem' => 'processed, applied',
         ],
         'timeRestrictions' => [
             'showitem' => 'starttime,endtime',
@@ -143,7 +143,7 @@ return [
                 'max' => 255,
                 'eval' => 'trim, num',
                 'readOnly' => true,
-            ]
+            ],
         ],
         'origin_table' => [
             'label' => $l10n . 'origin_table',

@@ -3,6 +3,7 @@
 namespace CReifenscheid\DbRector\Controller;
 
 use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
+use CReifenscheid\DbRector\Service\RectorService;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -14,7 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use CReifenscheid\DbRector\Service\RectorService;
 
 /***************************************************************
  *
@@ -127,7 +127,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
-    public function run (): void
+    public function run(): void
     {
     }
 

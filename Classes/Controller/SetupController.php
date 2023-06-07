@@ -35,21 +35,21 @@ use TYPO3\CMS\Core\Core\Environment;
 class SetupController extends BaseController
 {
     protected bool $restrictedRendering = false;
-    
+
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
         $this->assignDefaultValues();
-        
+
         $this->view->assignMultiple([
             'setup' => [
                 'typo3version' => $this->typo3Version,
                 'context' => Environment::getContext(),
                 'composer' => Environment::isComposerMode(),
                 'rectorVersion' => $this->rectorService->getVersion(),
-                'phpVersion' => PHP_VERSION
-            ]
-        ]); 
-    
+                'phpVersion' => PHP_VERSION,
+            ],
+        ]);
+
         $this->moduleTemplate->setContent($this->view->render());
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());

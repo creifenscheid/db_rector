@@ -2,10 +2,9 @@
 
 namespace CReifenscheid\DbRector\Service;
 
-use CReifenscheid\CtypeManager\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Core\Environment;
 
 /***************************************************************
  *
@@ -37,7 +36,7 @@ use TYPO3\CMS\Core\Core\Environment;
  */
 class RectorService implements SingletonInterface
 {
-    private CONST EXT_KEY = 'db_rector';
+    private const EXT_KEY = 'db_rector';
     protected bool $goodToGo = false;
     protected ?string $version = null;
     protected ?string $rectorPath = null;
@@ -97,7 +96,6 @@ class RectorService implements SingletonInterface
             $configuration = str_replace('%%TYPO3CUR%%', 'UP_TO_TYPO3_' . $typo3version->getMajorVersion(), $configuration);
             $configuration = str_replace('%%TYPO3PREV%%', 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1), $configuration);
 
-
             // WRITE CONFIG FILE
             $fileResult = file_put_contents($configurationFile, $configuration);
 
@@ -131,11 +129,11 @@ class RectorService implements SingletonInterface
 
     public function getVersion(): bool|string
     {
-         return $this->goodToGo ? $this->version : $this->goodToGo;
+        return $this->goodToGo ? $this->version : $this->goodToGo;
     }
-    
-    private function run(string $statement): ?string 
+
+    private function run(string $statement): ?string
     {
-         return shell_exec($this->rectorPath . $statement);
+        return shell_exec($this->rectorPath . $statement);
     }
 }

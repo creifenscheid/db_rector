@@ -38,12 +38,12 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
  */
 class TyposcriptController extends BaseController
 {
-    private CONST TABLE = 'sys_template';
+    private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
     protected array $propertiesToRefactor = [
         'constants',
-        'config'
+        'config',
     ];
 
     public function injectElementRepository(ElementRepository $elementRepository): void
@@ -66,8 +66,8 @@ class TyposcriptController extends BaseController
 
         // show models in view
         // implement toolbar
-            // run rector on entry
-            // apply rector result to original entry
+        // run rector on entry
+        // apply rector result to original entry
     }
 
     private function getDataEntries(): array

@@ -1,8 +1,5 @@
 <?php
 
-use CReifenscheid\CtypeManager\Controller\CleanupController;
-use CReifenscheid\CtypeManager\Controller\ConfigurationController;
-use CReifenscheid\CtypeManager\Controller\OverviewController;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;

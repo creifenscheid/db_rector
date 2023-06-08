@@ -12,7 +12,9 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         ->autowire()
         ->autoconfigure();
 
-    $services->load('CReifenscheid\\DbRector\\', __DIR__ . '/../Classes/');
+    $services->load('CReifenscheid\\DbRector\\', __DIR__ . '/../Classes/')->exclude([
+        __DIR__ . '/../Classes/Domain/Model',
+    ]);
 
     $services->set(RectorController::class)
         ->tag('backend.controller');

@@ -34,6 +34,11 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class ElementRepository extends Repository
 {
+    public function persistAll() : void
+    {
+        $this->persistenceManager->persistAll();
+    }
+
     public function findByUidAndTable(int $uid, string $table): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
     {
         $query = $this->createQuery();

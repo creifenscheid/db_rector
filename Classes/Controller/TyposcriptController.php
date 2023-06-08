@@ -66,7 +66,8 @@ class TyposcriptController extends BaseController
             $this->createModel($entry);
         }
 
-        $this->view->assign('elements', $this->elementRepository->findByOriginTable(self::TABLE));
+        $elements = $this->elementRepository->findByOriginTable(self::TABLE);
+        $this->view->assign('elements', $elements);
 
         // show models in view
         // implement toolbar
@@ -114,11 +115,13 @@ class TyposcriptController extends BaseController
         $element = new Element();
         $element
             ->setOriginUid($data['uid'])
+            ->setOriginInformation($data)
             ->setOriginTable(self::TABLE)
             ->setOriginData($dataToProcess);
 
         try {
             $this->elementRepository->add($element);
+            $this->elementRepository->persistAll();
         } catch (IllegalObjectTypeException) {
         }
     }

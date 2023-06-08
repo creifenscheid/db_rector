@@ -36,6 +36,8 @@ class Element extends AbstractEntity
 {
     protected int $originUid = 0;
 
+    protected string $originInformation = '';
+
     protected string $originTable = '';
 
     protected string $originData = '';
@@ -58,6 +60,22 @@ class Element extends AbstractEntity
         return $this;
     }
 
+    public function getOriginInformation(): string
+    {
+        if ($this->originInformation === '') {
+            return [];
+        }
+
+        return unserialize($this->originInformation, ['allowed_classes' => false]);
+    }
+
+    public function setOriginInformation(array $originInformation): Element
+    {
+        $this->originInformation = serialize($originInformation);
+
+        return $this;
+    }
+
     public function getOriginTable(): string
     {
         return $this->originTable;
@@ -72,6 +90,10 @@ class Element extends AbstractEntity
 
     public function getOriginData(): array
     {
+        if ($this->originData === '') {
+            return [];
+        }
+
         return unserialize($this->originData, ['allowed_classes' => false]);
     }
 
@@ -84,6 +106,10 @@ class Element extends AbstractEntity
 
     public function getProcessedData(): array
     {
+        if ($this->processedData === '') {
+            return [];
+        }
+
         return unserialize($this->processedData, ['allowed_classes' => false]);
     }
 

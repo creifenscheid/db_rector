@@ -47,7 +47,7 @@ return [
     ],
     'palettes' => [
         'origin' => [
-            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_data',
+            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_information, --linebreak--, origin_data',
         ],
         'process' => [
             'showitem' => 'processed, applied',
@@ -144,6 +144,12 @@ return [
                 'readOnly' => true,
             ],
         ],
+        'origin_information' => [
+            'label' => $l10n . 'origin_information',
+            'config' => [
+                'type' => 'passthrough'
+            ],
+        ],
         'origin_table' => [
             'label' => $l10n . 'origin_table',
             'config' => [
@@ -158,19 +164,13 @@ return [
         'origin_data' => [
             'label' => $l10n . 'origin_data',
             'config' => [
-                'type' => 'text',
-                'eval' => 'trim',
-                'default' => '',
-                'readOnly' => true,
+                'type' => 'passthrough'
             ],
         ],
         'processed_data' => [
             'label' => $l10n . 'processed_data',
             'config' => [
-                'type' => 'text',
-                'eval' => 'trim',
-                'default' => '',
-                'readOnly' => true,
+                'type' => 'passthrough'
             ],
         ],
         'processed' => [

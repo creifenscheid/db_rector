@@ -14,6 +14,9 @@
             <trans-unit id="origin_uid" resname="origin_uid">
                 <source>Uid of original element</source>
             </trans-unit>
+            <trans-unit id="origin_information" resname="origin_information">
+                <source>Information of original element</source>
+            </trans-unit>
             <trans-unit id="origin_table" resname="origin_table">
                 <source>Table of original element</source>
             </trans-unit>

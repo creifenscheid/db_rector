@@ -1,6 +1,6 @@
 <?php
 
-use CReifenscheid\DbRector\Controller\RectorController;
+use CReifenscheid\DbRector\Controller\TyposcriptController;
 use CReifenscheid\DbRector\Controller\SetupController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -16,7 +16,7 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         __DIR__ . '/../Classes/Domain/Model',
     ]);
 
-    $services->set(RectorController::class)
+    $services->set(TyposcriptController::class)
         ->tag('backend.controller');
     $services->set(SetupController::class)
         ->tag('backend.controller');

@@ -106,7 +106,7 @@ class TyposcriptController extends BaseController
         // PREPARE DATA TO REFACTOR
         $dataToProcess = [];
         foreach ($data as $key => $value) {
-            if (in_array($key, $this->propertiesToRefactor, true)) {
+            if (in_array($key, $this->propertiesToRefactor, true) && $value !== '') {
                 $dataToProcess[$key] = $value;
             }
         }

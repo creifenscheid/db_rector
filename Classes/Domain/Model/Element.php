@@ -60,8 +60,10 @@ class Element extends AbstractEntity
         return $this;
     }
 
-    public function getOriginInformation(): array
+    public function getOriginInformation(): string
     {
+        return $this->originInformation;
+    
         if ($this->originInformation === '') {
             return [];
         }

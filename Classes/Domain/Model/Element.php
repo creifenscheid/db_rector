@@ -85,18 +85,14 @@ class Element extends AbstractEntity
         return $this;
     }
 
-    public function getOriginData(): array
+    public function getOriginData(): string
     {
-        if ($this->originData === '') {
-            return [];
-        }
-
-        return unserialize($this->originData, ['allowed_classes' => false]);
+        return $this->originData;
     }
 
-    public function setOriginData(array $originData): Element
+    public function setOriginData(string $originData): Element
     {
-        $this->originData = serialize($originData);
+        $this->originData = $originData;
 
         return $this;
     }

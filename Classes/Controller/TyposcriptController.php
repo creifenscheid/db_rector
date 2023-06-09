@@ -67,6 +67,7 @@ class TyposcriptController extends BaseController
         }
 
         $elements = $this->elementRepository->findByOriginTable(self::TABLE);
+        debug($elements);
         $this->view->assign('elements', $elements);
 
         // show models in view
@@ -120,7 +121,7 @@ class TyposcriptController extends BaseController
             ->setOriginUid($data['uid'])
             ->setOriginInformation($informationData)
             ->setOriginTable(self::TABLE)
-            ->setOriginData($dataToProcess);
+            ->setOriginData(serialize($dataToProcess));
 
         try {
             $this->elementRepository->add($element);

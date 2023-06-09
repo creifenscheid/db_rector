@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\DbRector\Domain\Model;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /***************************************************************
@@ -60,14 +61,8 @@ class Element extends AbstractEntity
         return $this;
     }
 
-    public function getOriginInformation(): string
+    public function getOriginInformation(): array
     {
-        return $this->originInformation;
-    
-        if ($this->originInformation === '') {
-            return [];
-        }
-
         return unserialize($this->originInformation, ['allowed_classes' => false]);
     }
 

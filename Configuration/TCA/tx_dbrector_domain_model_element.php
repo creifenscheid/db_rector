@@ -147,8 +147,12 @@ return [
         'origin_information' => [
             'label' => $l10n . 'origin_information',
             'config' => [
-                'type' => 'passthrough'
-            ],
+                'default' => '',
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'readOnly' => true
+            ]
         ],
         'origin_table' => [
             'label' => $l10n . 'origin_table',
@@ -164,14 +168,22 @@ return [
         'origin_data' => [
             'label' => $l10n . 'origin_data',
             'config' => [
-                'type' => 'passthrough'
-            ],
+                'default' => '',
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'readOnly' => true
+            ]
         ],
         'processed_data' => [
             'label' => $l10n . 'processed_data',
             'config' => [
-                'type' => 'passthrough'
-            ],
+                'default' => '',
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'readOnly' => true
+            ]
         ],
         'processed' => [
             'label' => $l10n . 'processed',

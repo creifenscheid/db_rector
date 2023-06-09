@@ -105,9 +105,12 @@ class TyposcriptController extends BaseController
 
         // PREPARE DATA TO REFACTOR
         $dataToProcess = [];
+        $informationData = [];
         foreach ($data as $key => $value) {
-            if (in_array($key, $this->propertiesToRefactor, true) && $value !== '') {
+            if ($value !== '' && in_array($key, $this->propertiesToRefactor, true)) {
                 $dataToProcess[$key] = $value;
+            } elseif ($value !== '') {
+                $informationData[$key] = $value;
             }
         }
 
@@ -115,7 +118,7 @@ class TyposcriptController extends BaseController
         $element = new Element();
         $element
             ->setOriginUid($data['uid'])
-            ->setOriginInformation($data)
+            ->setOriginInformation($informationData)
             ->setOriginTable(self::TABLE)
             ->setOriginData($dataToProcess);
 

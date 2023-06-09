@@ -4,12 +4,11 @@
 	"description" : "Adapter to use typo3-rector on entries of sys_template and pages",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
-		"typo3/cms-core" : "^11.5||^12.4"
-	}
-	,
-	"require-dev": {
-		"roave/security-advisories": "dev-latest",
+		"typo3/cms-core" : "^11.5||^12.4",
 		"ssch/typo3-rector" : "^1"
+	},
+	"require-dev": {
+		"roave/security-advisories": "dev-latest"
 	},
 	"autoload" : {
 		"psr-4" : {

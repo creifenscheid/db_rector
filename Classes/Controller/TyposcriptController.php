@@ -107,9 +107,9 @@ class TyposcriptController extends BaseController
         $dataToProcess = [];
         $informationData = [];
         foreach ($data as $key => $value) {
-            if ($value !== '' && in_array($key, $this->propertiesToRefactor, true)) {
+            if ($value !== '' && $value !== null && in_array($key, $this->propertiesToRefactor, true)) {
                 $dataToProcess[$key] = $value;
-            } elseif ($value !== '') {
+            } elseif ($value !== '' && $value !== null) {
                 $informationData[$key] = $value;
             }
         }

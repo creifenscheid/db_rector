@@ -37,13 +37,13 @@ class Element extends AbstractEntity
 {
     protected int $originUid = 0;
 
-    protected string $originInformation = '';
+    protected int $originPid = 0;
 
-    protected string $originTable = '';
+    protected string $originTitle = '';
 
-    protected string $originData = '';
+    protected string $originTyposcript = '';
 
-    protected string $processedData = '';
+    protected string $processedTyposcript = '';
 
     protected bool $applied = false;
 
@@ -61,54 +61,50 @@ class Element extends AbstractEntity
         return $this;
     }
 
-    public function getOriginInformation(): array
+    public function getOriginPid(): int
     {
-        return unserialize($this->originInformation, ['allowed_classes' => false]);
+        return $this->originPid;
     }
 
-    public function setOriginInformation(array $originInformation): Element
+    public function setOriginPid(int $originPid): Element
     {
-        $this->originInformation = serialize($originInformation);
+        $this->originPid = $originPid;
 
         return $this;
     }
 
-    public function getOriginTable(): string
+    public function getOriginTitle(): string
     {
-        return $this->originTable;
+        return $this->originTitle;
     }
 
-    public function setOriginTable(string $originTable): Element
+    public function setOriginTitle(string $originTitle): Element
     {
-        $this->originTable = $originTable;
+        $this->originTitle = $originTitle;
 
         return $this;
     }
 
-    public function getOriginData(): string
+    public function getOriginTyposcript(): string
     {
-        return $this->originData;
+        return $this->originTyposcript;
     }
 
-    public function setOriginData(string $originData): Element
+    public function setOriginTyposcript(string $originTyposcript): Element
     {
-        $this->originData = $originData;
+        $this->originTyposcript = $originTyposcript;
 
         return $this;
     }
 
-    public function getProcessedData(): array
+    public function getProcessedTyposcript(): string
     {
-        if ($this->processedData === '') {
-            return [];
-        }
-
-        return unserialize($this->processedData, ['allowed_classes' => false]);
+        return $this->processedTyposcript;
     }
 
-    public function setProcessedData(array $processedData): Element
+    public function setProcessedTyposcript(string $processedTyposcript): Element
     {
-        $this->processedData = serialize($processedData);
+        $this->processedTyposcript = serialize($processedTyposcript);
 
         return $this;
     }

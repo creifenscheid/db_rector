@@ -7,6 +7,8 @@ use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 
 /***************************************************************
  *
@@ -45,11 +47,6 @@ class TyposcriptController extends BaseController
 
     protected ?ElementRepository $elementRepository = null;
 
-    protected array $propertiesToRefactor = [
-        'constants',
-        'config',
-    ];
-
     public function injectElementRepository(ElementRepository $elementRepository): void
     {
         $this->elementRepository = $elementRepository;
@@ -66,20 +63,27 @@ class TyposcriptController extends BaseController
             $this->createModel($entry);
         }
 
-        $elements = $this->elementRepository->findByOriginTable(self::TABLE);
-        debug($elements);
+        $elements = $this->elementRepository->findAll();
         $this->view->assign('elements', $elements);
 
-        // show models in view
         // implement toolbar
         // run rector on entry
         // apply rector result to original entry
     }
 
+    public function processAllAction(): \Psr\Http\Message\ResponseInterface
+    {
+        $messagePrefix = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:typoscript.message.processAll';
+        $this->addFlashMessage(LocalizationUtility::translate($messagePrefix . '.bodytext'), LocalizationUtility::translate($messagePrefix . '.header.' . AbstractMessage::OK));
+
+        // redirect to index
+        return $this->redirect('index');
+    }
+
     private function getDataEntries(): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
-        $queryBuilder->select('uid', 'pid', 'title', 'constants', 'config')
+        $queryBuilder->select('uid', 'pid', 'title', 'config')
         ->from(self::TABLE)
         ->where(
             $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0)),
@@ -96,7 +100,7 @@ class TyposcriptController extends BaseController
     private function createModel(array $data): void
     {
         // CHECK IF MODEL ALREADY EXISTS
-        $existingModel = $this->elementRepository->findByUidAndTable($data['uid'], self::TABLE);
+        $existingModel = $this->elementRepository->findByOriginUid($data['uid']);
         if ($existingModel instanceof QueryResult && $existingModel->count() > 0) {
             return;
         }
@@ -104,24 +108,13 @@ class TyposcriptController extends BaseController
             return;
         }
 
-        // PREPARE DATA TO REFACTOR
-        $dataToProcess = [];
-        $informationData = [];
-        foreach ($data as $key => $value) {
-            if ($value !== '' && $value !== null && in_array($key, $this->propertiesToRefactor, true)) {
-                $dataToProcess[$key] = $value;
-            } elseif ($value !== '' && $value !== null) {
-                $informationData[$key] = $value;
-            }
-        }
-
         // SET UP MODEL
         $element = new Element();
         $element
             ->setOriginUid($data['uid'])
-            ->setOriginInformation($informationData)
-            ->setOriginTable(self::TABLE)
-            ->setOriginData(serialize($dataToProcess));
+            ->setOriginPid($data['pid'])
+            ->setOriginTitle($data['title'])
+            ->setOriginTyposcript($data['config']);
 
         try {
             $this->elementRepository->add($element);

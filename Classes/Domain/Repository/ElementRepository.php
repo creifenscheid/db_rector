@@ -38,16 +38,4 @@ class ElementRepository extends Repository
     {
         $this->persistenceManager->persistAll();
     }
-
-    public function findByUidAndTable(int $uid, string $table): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
-    {
-        $query = $this->createQuery();
-
-        return $query->matching(
-            $query->logicalAnd(
-                $query->equals('originUid', $uid),
-                $query->equals('originTable', $table)
-            )
-        )->execute();
-    }
 }

@@ -7,9 +7,9 @@ $l10n = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/TCA/locallang_
 
 return [
     'ctrl' => [
-        'hideTable' => true,
+        //'hideTable' => true,
         'title' => $l10n . 'label',
-        'label' => 'origin_table',
+        'label' => 'origin_title',
         'label_alt' => 'origin_uid',
         'label_alt_force' => true,
         'adminOnly' => true,
@@ -30,7 +30,7 @@ return [
         ],
 
         'iconfile' => 'EXT:' . $extensionKey . '/Resources/Public/Icons/Extension.svg',
-        'search' => 'origin_uid, origin_table, origin_data, processed_data',
+        'search' => 'origin_uid, origin_title, origin_typoscript, processed_typoscript',
     ],
     'types' => [
         [
@@ -38,7 +38,7 @@ return [
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     --palette--;;origin,
                 --div--;' . $l10n . 'tab.refactor,
-                    --palette--;;process,processed_data,
+                    --palette--;;process,processed_typoscript,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,hidden,
                     --palette--;;timeRestrictions,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,sys_language_uid
@@ -47,7 +47,7 @@ return [
     ],
     'palettes' => [
         'origin' => [
-            'showitem' => 'origin_uid, origin_table, --linebreak--, origin_information, --linebreak--, origin_data',
+            'showitem' => 'origin_uid, origin_pid, --linebreak--, origin_title, --linebreak--, origin_typoscript',
         ],
         'process' => [
             'showitem' => 'processed, applied',
@@ -144,18 +144,19 @@ return [
                 'readOnly' => true,
             ],
         ],
-        'origin_information' => [
-            'label' => $l10n . 'origin_information',
+        'origin_pid' => [
+            'label' => $l10n . 'origin_pid',
             'config' => [
                 'default' => '',
-                'type' => 'text',
-                'cols' => 40,
-                'rows' => 15,
-                'readOnly' => true
-            ]
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim, num',
+                'readOnly' => true,
+            ],
         ],
-        'origin_table' => [
-            'label' => $l10n . 'origin_table',
+        'origin_title' => [
+            'label' => $l10n . 'origin_title',
             'config' => [
                 'default' => '',
                 'type' => 'input',
@@ -165,8 +166,8 @@ return [
                 'readOnly' => true,
             ],
         ],
-        'origin_data' => [
-            'label' => $l10n . 'origin_data',
+        'origin_typoscript' => [
+            'label' => $l10n . 'origin_typoscript',
             'config' => [
                 'default' => '',
                 'type' => 'text',
@@ -175,8 +176,8 @@ return [
                 'readOnly' => true
             ]
         ],
-        'processed_data' => [
-            'label' => $l10n . 'processed_data',
+        'processed_typoscript' => [
+            'label' => $l10n . 'processed_typoscript',
             'config' => [
                 'default' => '',
                 'type' => 'text',

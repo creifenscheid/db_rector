@@ -60,6 +60,32 @@
             <trans-unit id="setup.php" resname="setup.php">
                 <source>PHP version</source>
             </trans-unit>
+
+            <!-- TYPOSCRIPT -->
+            <trans-unit id="typoscript.originUid" resname="typoscript.originUid">
+                <source>SysTemplate uid</source>
+            </trans-unit>
+            <trans-unit id="typoscript.originPid" resname="typoscript.originPid">
+                <source>Page uid</source>
+            </trans-unit>
+            <trans-unit id="typoscript.originTitle" resname="typoscript.originTitle">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="typoscript.originTyposcript" resname="typoscript.originTyposcript">
+                <source>Original typoscript</source>
+            </trans-unit>
+            <trans-unit id="typoscript.processedTyposcript" resname="typoscript.processedTyposcript">
+                <source>Processed typoscript</source>
+            </trans-unit>
+            <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
+                <source>Process all</source>
+            </trans-unit>
+            <trans-unit id="typoscript.message.processAll.header" resname="typoscript.message.processAll.header">
+                <source>Process succeeded</source>
+            </trans-unit>
+            <trans-unit id="typoscript.message.processAll.bodytext" resname="typoscript.message.processAll.bodytext">
+                <source>All typoscript records have been processed.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

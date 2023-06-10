@@ -14,17 +14,17 @@
             <trans-unit id="origin_uid" resname="origin_uid">
                 <source>Uid of original element</source>
             </trans-unit>
-            <trans-unit id="origin_information" resname="origin_information">
-                <source>Information of original element</source>
+            <trans-unit id="origin_pid" resname="origin_pid">
+                <source>Page uid of original element</source>
             </trans-unit>
-            <trans-unit id="origin_table" resname="origin_table">
-                <source>Table of original element</source>
+            <trans-unit id="origin_title" resname="origin_title">
+                <source>Title of original element</source>
             </trans-unit>
-            <trans-unit id="origin_data" resname="origin_data">
-                <source>Original data</source>
+            <trans-unit id="origin_typoscript" resname="origin_typoscript">
+                <source>Original typoscript</source>
             </trans-unit>
-            <trans-unit id="processed_data" resname="processed_data">
-                <source>Processed data</source>
+            <trans-unit id="processed_typoscript" resname="processed_typoscript">
+                <source>Processed typoscript</source>
             </trans-unit>
             <trans-unit id="applied" resname="applied">
                 <source>Applied</source>

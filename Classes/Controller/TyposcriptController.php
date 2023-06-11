@@ -67,11 +67,43 @@ class TyposcriptController extends BaseController
         // run rector on entry
         // apply rector result to original entry
     }
+    
+    public function detailAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+    {
+        debug($element);
+        
+        // redirect to index
+        return $this->redirect('index');
+    }
 
     public function processAllAction(): \Psr\Http\Message\ResponseInterface
     {
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
 
+        // redirect to index
+        return $this->redirect('index');
+    }
+    
+    public function processAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+    {
+        debug($element);
+        
+        // redirect to index
+        return $this->redirect('index');
+    }
+    
+    public function applyAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+    {
+        debug($element);
+        
+        // redirect to index
+        return $this->redirect('index');
+    }
+    
+    public function rollBackAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+    {
+        debug($element);
+        
         // redirect to index
         return $this->redirect('index');
     }

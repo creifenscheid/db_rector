@@ -40,9 +40,6 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
  */
 class TyposcriptController extends BaseController
 {
-    /**
-     * @var string
-     */
     private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
@@ -73,8 +70,7 @@ class TyposcriptController extends BaseController
 
     public function processAllAction(): \Psr\Http\Message\ResponseInterface
     {
-        $messagePrefix = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:typoscript.message.processAll';
-        $this->addFlashMessage(LocalizationUtility::translate($messagePrefix . '.bodytext'), LocalizationUtility::translate($messagePrefix . '.header.' . AbstractMessage::OK));
+        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
 
         // redirect to index
         return $this->redirect('index');

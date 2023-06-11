@@ -46,6 +46,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class BaseController extends ActionController implements RectorControllerInterface
 {
+    protected const L10N = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:';
+
     protected string $shortName = '';
 
     protected ?ExtensionConfiguration $extensionConfiguration = null;
@@ -142,7 +144,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
     protected function assignDefaultValues(): void
     {
         $this->view->assignMultiple([
-            'l10n' => 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:',
+            'l10n' => self::L10N,
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
             'composerMode' => Environment::isComposerMode(),

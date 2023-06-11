@@ -80,6 +80,15 @@
             <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
                 <source>Process all</source>
             </trans-unit>
+            <trans-unit id="typoscript.toolbar.process" resname="typoscript.toolbar.process">
+                <source>Process record</source>
+            </trans-unit>
+            <trans-unit id="typoscript.toolbar.apply" resname="typoscript.toolbar.apply">
+                <source>Apply rector result</source>
+            </trans-unit>
+            <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack">
+                <source>Roll back</source>
+            </trans-unit>
             <trans-unit id="typoscript.message.processAll.header" resname="typoscript.message.processAll.header">
                 <source>Process succeeded</source>
             </trans-unit>

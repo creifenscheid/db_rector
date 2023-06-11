@@ -1,4 +1,7 @@
-## TYPO3 Extension "DB Rector"
+# TYPO3 Extension "DB Rector"
+
+## Disclaimer
+It is recommended to **NOT run this** extension **in productive environments**!
 
 ## What does it do
 This extension is an adapter to run typo3-rector in TYPO3 backend to update the typoscript stored in the database in field:config of table:sys_template.

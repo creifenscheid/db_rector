@@ -173,6 +173,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
 
         if ($rector === null) {
             $this->logger->error('An error occurred, so that rector returned "null".');
+
             return false;
         }
 
@@ -185,7 +186,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             }
         }
 
-        $this->logger->error('Rector could not process the file', ['return' => $rector]);
+        $this->logger->error('Rector could not process the file.', ['return' => $rector]);
 
         return false;
     }

@@ -38,8 +38,21 @@ The following configuration parameter are defined dynamically:
 
 ## Installation
 
-Install this extension via `composer req creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate
-the extension in the Extension Manager of your TYPO3 installation.
+Install this extension via `composer req creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
+
+## Occuring errors
+
+```
+Unable to get property "type" of non-object "getTSFE()".
+```
+The refactored typoscript contains a TSFE condition. In e.g. backend context this condition does no longer automatically evaluate to false. Instead, the function returns null.
+@see https://docs.typo3.org/m/typo3/reference-typoscript/main/en-us/Conditions/Index.html#gettsfe
+
+The condition can be fixed by using the null-safe operator.
+
+```
+[getTSFE()?.type == 666]
+```
 
 ## Know working setups
 

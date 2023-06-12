@@ -62,10 +62,6 @@ class TyposcriptController extends BaseController
 
         $elements = $this->elementRepository->findAll();
         $this->view->assign('elements', $elements);
-
-        // implement toolbar
-        // run rector on entry
-        // apply rector result to original entry
     }
 
     public function detailAction(Element $element): ResponseInterface
@@ -79,6 +75,7 @@ class TyposcriptController extends BaseController
 
     public function processAllAction(): ResponseInterface
     {
+        debug($this);die();
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
 
         // redirect to index
@@ -91,7 +88,7 @@ class TyposcriptController extends BaseController
 
         if ($rectorResult === false) {
             // generate error flash message with hint to log
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
 
             return $this->redirect('index');
         }
@@ -117,12 +114,12 @@ class TyposcriptController extends BaseController
         $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
 
         if (!$result) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
 
             $this->logger->warning('Trying to update sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
         }
 
-        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.apply.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
         
         $element->setApplied(true);
         $this->elementRepository->update($element);
@@ -134,8 +131,19 @@ class TyposcriptController extends BaseController
 
     public function rollBackAction(Element $element): ResponseInterface
     {
-        debug($element);
-        die();
+        $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
+
+        if (!$result) {
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+
+            $this->logger->warning('Trying to roll back sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
+        }
+
+        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.rollBack.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        
+        $element->setApplied(false);
+        $this->elementRepository->update($element);
+        $this->elementRepository->persistAll();
 
         // redirect to index
         return $this->redirect('index');

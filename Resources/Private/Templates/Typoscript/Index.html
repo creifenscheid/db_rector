@@ -15,6 +15,7 @@
                 <th><f:translate key="{l10n}typoscript.originTitle" /></th>
                 <th><f:translate key="{l10n}typoscript.originTyposcript" /></th>
                 <th><f:translate key="{l10n}typoscript.processedTyposcript" /></th>
+                <th><f:translate key="{l10n}typoscript.applied" /></th>
                 <th class="col-control"></th>
             </tr>
             </thead>
@@ -28,6 +29,12 @@
                     <td>{element.originTitle}</td>
                     <td><f:format.crop maxCharacters="66">{element.originTyposcript}</f:format.crop></td>
                     <td><f:format.crop maxCharacters="66">{element.processedTyposcript}</f:format.crop></td>
+                    <td>
+                        <f:if condition="{element.applied}">
+                            <f:then><core:icon identifier="actions-check" size="small" /></f:then>
+                            <f:else><core:icon identifier="actions-close" size="small" /></f:else>
+                        </f:if>
+                    </td>
                     <td class="col-control nowrap">
                         <div class="btn-group">
 

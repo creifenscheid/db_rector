@@ -83,6 +83,9 @@
             <trans-unit id="typoscript.processedTyposcript" resname="typoscript.processedTyposcript">
                 <source>Processed typoscript</source>
             </trans-unit>
+            <trans-unit id="typoscript.applied" resname="typoscript.applied">
+                <source>Applied</source>
+            </trans-unit>
             <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
                 <source>Process all</source>
             </trans-unit>
@@ -98,11 +101,17 @@
             <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack">
                 <source>Roll back</source>
             </trans-unit>
+            <trans-unit id="typoscript.messages.general.error.bodytext" resname="typoscript.message.general.error.bodytext">
+                <source>An error occurred. Check the TYPO3 log file for further information.</source>
+            </trans-unit>
             <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext">
                 <source>The element has been refactored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.process.error.bodytext" resname="typoscript.message.process.error.bodytext">
-                <source>An error occurred while refactoring the element. Check the TYPO3 log file for further information.</source>
+            <trans-unit id="typoscript.messages.apply.success.bodytext" resname="typoscript.message.apply.success.bodytext">
+                <source>The refactored typoscript has been applied successfully.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.rollBack.success.bodytext" resname="typoscript.message.rollBack.success.bodytext">
+                <source>The refactored typoscript has been rolled back successfully.</source>
             </trans-unit>
         </body>
     </file>

@@ -30,25 +30,36 @@
                     <td><f:format.crop maxCharacters="66">{element.processedTyposcript}</f:format.crop></td>
                     <td class="col-control nowrap">
                         <div class="btn-group">
-                            <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}" />
-                            <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
-                                <core:icon identifier="actions-view" size="small" />
-                            </f:link.action>
 
-                            <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}" />
-                            <f:link.action action="process" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelProcess}" arguments="{element:element}" title="{ariaLabelProcess}">
-                                <core:icon identifier="actions-play" size="small" />
-                            </f:link.action>
+                            <f:if condition="{element.processed}">
+                                <f:then>
+                                    <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}" />
+                                    <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
+                                        <core:icon identifier="actions-view" size="small" />
+                                    </f:link.action>
 
-                            <f:variable name="ariaLabelApply" value="{f:translate(key:'{l10n}typoscript.toolbar.apply')}" />
-                            <f:link.action action="apply" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelApply}" arguments="{element:element}" title="{ariaLabelApply}">
-                                <core:icon identifier="actions-exchange" size="small" />
-                            </f:link.action>
-
-                            <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}" />
-                            <f:link.action action="rollBack" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelRollBack}" arguments="{element:element}" title="{ariaLabelRollBack}">
-                                <core:icon identifier="actions-undo" size="small" />
-                            </f:link.action>
+                                    <f:if condition="{element.applied}">
+                                        <f:then>
+                                            <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}" />
+                                            <f:link.action action="rollBack" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelRollBack}" arguments="{element:element}" title="{ariaLabelRollBack}">
+                                                <core:icon identifier="actions-undo" size="small" />
+                                            </f:link.action>
+                                        </f:then>
+                                        <f:else>
+                                            <f:variable name="ariaLabelApply" value="{f:translate(key:'{l10n}typoscript.toolbar.apply')}" />
+                                            <f:link.action action="apply" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelApply}" arguments="{element:element}" title="{ariaLabelApply}">
+                                                <core:icon identifier="actions-exchange" size="small" />
+                                            </f:link.action>
+                                        </f:else>
+                                    </f:if>
+                                </f:then>
+                                <f:else>
+                                    <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}" />
+                                    <f:link.action action="process" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelProcess}" arguments="{element:element}" title="{ariaLabelProcess}">
+                                        <core:icon identifier="actions-play" size="small" />
+                                    </f:link.action>
+                                </f:else>
+                            </f:if>
                         </div>
                     </td>
                 </tr>

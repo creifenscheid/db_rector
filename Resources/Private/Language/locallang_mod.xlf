@@ -80,6 +80,9 @@
             <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
                 <source>Process all</source>
             </trans-unit>
+            <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view">
+                <source>View/edit rector result</source>
+            </trans-unit>
             <trans-unit id="typoscript.toolbar.process" resname="typoscript.toolbar.process">
                 <source>Process record</source>
             </trans-unit>

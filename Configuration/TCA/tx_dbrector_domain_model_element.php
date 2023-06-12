@@ -7,7 +7,7 @@ $l10n = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/TCA/locallang_
 
 return [
     'ctrl' => [
-        //'hideTable' => true,
+        'hideTable' => true,
         'title' => $l10n . 'label',
         'label' => 'origin_title',
         'label_alt' => 'origin_uid',
@@ -16,7 +16,6 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'origUid' => 't3_origuid',
-        'sorting' => 'sorting',
 
         'transOrigPointerField' => 'l18n_parent',
         'transOrigDiffSourceField' => 'l18n_diffsource',

@@ -40,6 +40,12 @@
             <trans-unit id="ignore-context" resname="ignore-context">
                 <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!</source>
             </trans-unit>
+            <trans-unit id="general.messages.header.0" resname="general.messages.header.0">
+                <source>Success</source>
+            </trans-unit>
+            <trans-unit id="general.messages.header.2" resname="general.messages.header.2">
+                <source>Error</source>
+            </trans-unit>
 
             <!-- SETUP CHECK -->
             <trans-unit id="setup.typo3" resname="setup.typo3">
@@ -92,11 +98,11 @@
             <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack">
                 <source>Roll back</source>
             </trans-unit>
-            <trans-unit id="typoscript.message.processAll.header" resname="typoscript.message.processAll.header">
-                <source>Process succeeded</source>
+            <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext">
+                <source>The element has been refactored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.message.processAll.bodytext" resname="typoscript.message.processAll.bodytext">
-                <source>All typoscript records have been processed.</source>
+            <trans-unit id="typoscript.messages.process.error.bodytext" resname="typoscript.message.process.error.bodytext">
+                <source>An error occurred while refactoring the element. Check the TYPO3 log file for further information.</source>
             </trans-unit>
         </body>
     </file>

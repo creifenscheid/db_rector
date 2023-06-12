@@ -104,7 +104,7 @@ class Element extends AbstractEntity
 
     public function setProcessedTyposcript(string $processedTyposcript): Element
     {
-        $this->processedTyposcript = serialize($processedTyposcript);
+        $this->processedTyposcript = $processedTyposcript;
 
         return $this;
     }

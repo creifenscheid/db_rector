@@ -6,6 +6,7 @@ use CReifenscheid\DbRector\Domain\Model\Element;
 use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -40,6 +41,7 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
  */
 class TyposcriptController extends BaseController
 {
+
     private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
@@ -51,9 +53,6 @@ class TyposcriptController extends BaseController
 
     public function run(): void
     {
-        //$filePath = Environment::getVarPath() . '/' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName());
-        //$return = shell_exec(Environment::getProjectPath() . '/vendor/bin/rector process ' . $filePath . '/db_rector.typoscript' . ' --config ' . $filePath . '/rector.php');
-
         $entries = $this->getDataEntries();
 
         foreach ($entries as $entry) {
@@ -86,8 +85,27 @@ class TyposcriptController extends BaseController
     
     public function processAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
     {
-        debug($element);die();
-        
+        $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
+
+        if ($rectorResult === false) {
+            // generate error flash message with hint to log
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+
+            return $this->redirect('index');
+        }
+
+        $element->setProcessedTyposcript($rectorResult);
+        $element->setProcessed(true);
+
+        try {
+            $this->elementRepository->update($element);
+            $this->elementRepository->persistAll();
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        } catch (IllegalObjectTypeException | UnknownObjectException) {
+            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+        }
+
         // redirect to index
         return $this->redirect('index');
     }

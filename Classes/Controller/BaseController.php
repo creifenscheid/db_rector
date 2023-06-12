@@ -4,6 +4,9 @@ namespace CReifenscheid\DbRector\Controller;
 
 use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
 use CReifenscheid\DbRector\Service\RectorService;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -44,8 +47,10 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class BaseController
  */
-class BaseController extends ActionController implements RectorControllerInterface
+class BaseController extends ActionController implements RectorControllerInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     protected const L10N = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:';
 
     protected string $shortName = '';
@@ -124,7 +129,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
-    public function indexAction(): \Psr\Http\Message\ResponseInterface
+    public function indexAction(): ResponseInterface
     {
         $this->assignDefaultValues();
 

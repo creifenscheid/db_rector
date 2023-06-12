@@ -5,11 +5,12 @@ namespace CReifenscheid\DbRector\Controller;
 use CReifenscheid\DbRector\Domain\Model\Element;
 use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 
 /***************************************************************
  *
@@ -66,24 +67,25 @@ class TyposcriptController extends BaseController
         // run rector on entry
         // apply rector result to original entry
     }
-    
-    public function detailAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+
+    public function detailAction(Element $element): ResponseInterface
     {
-        debug($element);die();
-        
+        debug($element);
+        die();
+
         // redirect to index
         return $this->redirect('index');
     }
 
-    public function processAllAction(): \Psr\Http\Message\ResponseInterface
+    public function processAllAction(): ResponseInterface
     {
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
 
         // redirect to index
         return $this->redirect('index');
     }
-    
-    public function processAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+
+    public function processAction(Element $element): ResponseInterface
     {
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
@@ -101,7 +103,7 @@ class TyposcriptController extends BaseController
             $this->elementRepository->update($element);
             $this->elementRepository->persistAll();
             $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
-        } catch (IllegalObjectTypeException | UnknownObjectException) {
+        } catch (IllegalObjectTypeException|UnknownObjectException) {
             $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
             $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
         }
@@ -109,19 +111,28 @@ class TyposcriptController extends BaseController
         // redirect to index
         return $this->redirect('index');
     }
-    
-    public function applyAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+
+    public function applyAction(Element $element): ResponseInterface
     {
-        debug($element);die();
-        
+        $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
+
+        if (!$result) {
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+
+            $this->logger->warning('Trying to update sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
+        }
+
+        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+
         // redirect to index
         return $this->redirect('index');
     }
-    
-    public function rollBackAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
+
+    public function rollBackAction(Element $element): ResponseInterface
     {
-        debug($element);die();
-        
+        debug($element);
+        die();
+
         // redirect to index
         return $this->redirect('index');
     }
@@ -130,10 +141,10 @@ class TyposcriptController extends BaseController
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->select('uid', 'pid', 'title', 'config')
-        ->from(self::TABLE)
-        ->where(
-            $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0)),
-        );
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0)),
+            );
 
         try {
             return $queryBuilder->executeQuery()->fetchAllAssociative();
@@ -141,6 +152,19 @@ class TyposcriptController extends BaseController
         }
 
         return [];
+    }
+
+    private function updateSysTemplateRecord(int $uid, string $typoscript): bool
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
+        $affectedRows = $queryBuilder->update(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid))
+            )
+            ->set('config', $typoscript)
+            ->executeStatement();
+
+        return $affectedRows !== 0;
     }
 
     private function createModel(array $data): void

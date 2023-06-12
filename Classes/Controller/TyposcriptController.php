@@ -123,6 +123,10 @@ class TyposcriptController extends BaseController
         }
 
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        
+        $element->setApplied(true);
+        $this->elementRepository->update($element);
+        $this->elementRepository->persistAll();
 
         // redirect to index
         return $this->redirect('index');

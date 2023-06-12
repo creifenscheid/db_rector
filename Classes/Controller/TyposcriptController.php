@@ -70,7 +70,7 @@ class TyposcriptController extends BaseController
     
     public function detailAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
     {
-        debug($element);
+        debug($element);die();
         
         // redirect to index
         return $this->redirect('index');
@@ -86,7 +86,7 @@ class TyposcriptController extends BaseController
     
     public function processAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
     {
-        debug($element);
+        debug($element);die();
         
         // redirect to index
         return $this->redirect('index');
@@ -94,7 +94,7 @@ class TyposcriptController extends BaseController
     
     public function applyAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
     {
-        debug($element);
+        debug($element);die();
         
         // redirect to index
         return $this->redirect('index');
@@ -102,7 +102,7 @@ class TyposcriptController extends BaseController
     
     public function rollBackAction(\CReifenscheid\DbRector\Domain\Model\Element $element): \Psr\Http\Message\ResponseInterface
     {
-        debug($element);
+        debug($element);die();
         
         // redirect to index
         return $this->redirect('index');

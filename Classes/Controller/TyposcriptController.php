@@ -66,14 +66,14 @@ class TyposcriptController extends BaseController
 
     public function detailAction(Element $element): ResponseInterface
     {
-        debug($element);
-        die();
+        $this->view->assign('element', $element);
+        
+        $this->moduleTemplate->setContent($this->view->render());
 
-        // redirect to index
-        return $this->redirect('index');
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
-    public function processAllAction(): ResponseInterface
+    public function processAllAction(): void
     {
         debug($this);die();
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
@@ -82,7 +82,7 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function processAction(Element $element): ResponseInterface
+    public function processAction(Element $element): void
     {
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
@@ -109,7 +109,7 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function applyAction(Element $element): ResponseInterface
+    public function applyAction(Element $element): void
     {
         $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
 
@@ -129,7 +129,7 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function rollBackAction(Element $element): ResponseInterface
+    public function rollBackAction(Element $element): void
     {
         $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
 

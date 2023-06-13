@@ -20,9 +20,6 @@
             <trans-unit id="section.typoscript" resname="section.typoscript">
                 <source>TypoScript</source>
             </trans-unit>
-            <trans-unit id="section.typoscript.detail" resname="section.typoscript.detail">
-                <source>TypoScript of SysTemplate:%s - "%s" - located on page:%s</source>
-            </trans-unit>
 
             <!-- GENERAL -->
             <trans-unit id="general.yes" resname="general.yes">
@@ -133,8 +130,14 @@
             <trans-unit id="typoscript.detail.description" resname="typoscript.detail.description">
                 <source>If you do not agree with the changes, you can edit the result of the refactoring here. Note that these changes will be overwritten when you process the original typoscript again.</source>
             </trans-unit>
+            <trans-unit id="typoscript.detail.info" resname="typoscript.detail.info">
+                <source>Information of the original sys_template record</source>
+            </trans-unit>
             <trans-unit id="typoscript.detail.states" resname="typoscript.detail.states">
                 <source>Refactoring states</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.back" resname="typoscript.detail.back">
+                <source>Back to list view</source>
             </trans-unit>
         </body>
     </file>

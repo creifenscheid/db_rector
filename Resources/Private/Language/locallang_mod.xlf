@@ -113,7 +113,7 @@
             <trans-unit id="typoscript.messages.rollBack.success.bodytext" resname="typoscript.message.rollBack.success.bodytext">
                 <source>The refactored typoscript has been rolled back successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
+            <trans-unit id="typoscript.button.submit" resname="typoscript.button.submit">
                 <source>Save changes</source>
             </trans-unit>
         </body>

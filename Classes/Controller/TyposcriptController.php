@@ -73,7 +73,7 @@ class TyposcriptController extends BaseController
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
     
-    public function submitAction(Element $element): void
+    public function submitAction(Element $element): ResponseInterface
     {
         debug($element);die();
 
@@ -87,10 +87,10 @@ class TyposcriptController extends BaseController
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
 
         // redirect to index
-        return $this->redirect('index');
+        $this->redirect('index');
     }
 
-    public function processAction(Element $element): void
+    public function processAction(Element $element): ResponseInterface
     {
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
@@ -98,7 +98,7 @@ class TyposcriptController extends BaseController
             // generate error flash message with hint to log
             $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
 
-            return $this->redirect('index');
+            $this->redirect('index');
         }
 
         $element->setProcessedTyposcript($rectorResult);
@@ -117,7 +117,7 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function applyAction(Element $element): void
+    public function applyAction(Element $element): ResponseInterface
     {
         $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
 
@@ -137,7 +137,7 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function rollBackAction(Element $element): void
+    public function rollBackAction(Element $element): ResponseInterface
     {
         $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
 

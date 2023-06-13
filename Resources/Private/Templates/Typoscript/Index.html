@@ -23,7 +23,7 @@
             <tbody data-multi-record-selection-row-selection="true">
 
             <f:for each="{elements}" as="element">
-                <tr title="id={element.originUid}" data-uid="{element.originUid}" data-multi-record-selection-element="true">
+                <tr title="id={element.originUid}" data-uid="{element.originUid}" data-multi-record-selection-element="true"{f:if(condition:element.applied, then:' class="success"')}>
                     <td>{element.originUid}</td>
                     <td>{element.originPid}</td>
                     <td>{element.originTitle}</td>

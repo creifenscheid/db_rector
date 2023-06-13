@@ -207,6 +207,12 @@ class TyposcriptController extends BaseController
             )
             ->set('config', $typoscript)
             ->executeStatement();
+            
+        if($affectedRows === 0) {
+            debug($queryBuilder->getSQL());
+            debug($queryBuilder->getParameters());
+            die();
+        }
 
         return $affectedRows !== 0;
     }

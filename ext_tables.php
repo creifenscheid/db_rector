@@ -15,7 +15,7 @@ defined('TYPO3') || die();
             $extKey,
             'after:toolsupgrade',
             [
-                \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, process, apply, rollBack, submit',
+                \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, process, apply, rollBack, submit, reset',
                 \CReifenscheid\DbRector\Controller\SetupController::class => 'index',
             ],
             [

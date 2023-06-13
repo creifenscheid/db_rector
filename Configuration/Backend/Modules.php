@@ -18,7 +18,7 @@ return [
         'workspaces' => 'live',
         'path' => '/module/tools/' . $moduleIdentifier,
         'controllerActions' => [
-            \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, process, apply, rollBack, submit',
+            \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, process, apply, rollBack, submit, reset',
             \CReifenscheid\DbRector\Controller\SetupController::class => 'index',
         ],
     ],

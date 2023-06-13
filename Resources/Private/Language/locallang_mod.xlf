@@ -104,6 +104,9 @@
             <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack">
                 <source>Roll back</source>
             </trans-unit>
+            <trans-unit id="typoscript.toolbar.reset" resname="typoscript.toolbar.reset">
+                <source>Reset rector element</source>
+            </trans-unit>
             <trans-unit id="typoscript.messages.general.error.bodytext" resname="typoscript.message.general.error.bodytext">
                 <source>An error occurred. Check the TYPO3 log file for further information.</source>
             </trans-unit>
@@ -124,6 +127,9 @@
             </trans-unit>
             <trans-unit id="typoscript.messages.detail.success.bodytext" resname="typoscript.messages.detail.success.bodytext">
                 <source>Your changes have been stored successfully.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.reset.success.bodytext" resname="typoscript.messages.reset.success.bodytext">
+                <source>The rector element has been reset successfully.</source>
             </trans-unit>
 
             <!-- DETAIL -->

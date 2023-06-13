@@ -76,16 +76,8 @@ class TyposcriptController extends BaseController
     
     public function submitAction(Element $element): ResponseInterface
     {
-        try {
-            $this->elementRepository->update($element);
-            $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.detail.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
-        } catch (IllegalObjectTypeException|UnknownObjectException) {
-            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
-        }
+        $this->updateRectorElement($element, 'typoscript.messages.detail.success.bodytext');
 
-        // redirect to index
         return $this->redirect('index');
     }
 
@@ -136,16 +128,8 @@ class TyposcriptController extends BaseController
         $element->setProcessedTyposcript($rectorResult);
         $element->setProcessed(true);
 
-        try {
-            $this->elementRepository->update($element);
-            $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
-        } catch (IllegalObjectTypeException|UnknownObjectException) {
-            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
-        }
+        $this->updateRectorElement($element, 'typoscript.messages.process.success.bodytext');
 
-        // redirect to index
         return $this->redirect('index');
     }
 
@@ -159,13 +143,10 @@ class TyposcriptController extends BaseController
             $this->logger->warning('Trying to update sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
         }
 
-        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.apply.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
-        
         $element->setApplied(true);
-        $this->elementRepository->update($element);
-        $this->elementRepository->persistAll();
 
-        // redirect to index
+        $this->updateRectorElement($element, 'typoscript.messages.apply.success.bodytext');
+
         return $this->redirect('index');
     }
 
@@ -179,13 +160,24 @@ class TyposcriptController extends BaseController
             $this->logger->warning('Trying to roll back sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
         }
 
-        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.rollBack.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
-        
         $element->setApplied(false);
-        $this->elementRepository->update($element);
-        $this->elementRepository->persistAll();
 
-        // redirect to index
+        $this->updateRectorElement($element, 'typoscript.messages.rollBack.success.bodytext');
+
+        return $this->redirect('index');
+    }
+
+    public function resetAction(Element $element): ResponseInterface
+    {
+        try {
+            $this->elementRepository->remove($element);
+            $this->elementRepository->persistAll();
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.reset.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        } catch (IllegalObjectTypeException) {
+            $this->logger->error('The element could not be removed from the repository', ['element' => $element]);
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+        }
+
         return $this->redirect('index');
     }
 
@@ -217,6 +209,18 @@ class TyposcriptController extends BaseController
             ->executeStatement();
 
         return $affectedRows !== 0;
+    }
+
+    private function updateRectorElement(Element $element, string $messageKey): void
+    {
+        try {
+            $this->elementRepository->update($element);
+            $this->elementRepository->persistAll();
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        } catch (IllegalObjectTypeException|UnknownObjectException) {
+            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+        }
     }
 
     private function createModel(array $data): void

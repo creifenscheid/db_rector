@@ -76,7 +76,14 @@ class TyposcriptController extends BaseController
     
     public function submitAction(Element $element): ResponseInterface
     {
-        debug($element);die();
+        try {
+            $this->elementRepository->update($element);
+            $this->elementRepository->persistAll();
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.detail.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        } catch (IllegalObjectTypeException|UnknownObjectException) {
+            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+        }
 
         // redirect to index
         return $this->redirect('index');

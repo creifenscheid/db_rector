@@ -38,13 +38,13 @@
                     <td class="col-control nowrap">
                         <div class="btn-group">
 
+                            <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}" />
+                            <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
+                                <core:icon identifier="actions-view" size="small" />
+                            </f:link.action>
+
                             <f:if condition="{element.processed}">
                                 <f:then>
-                                    <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}" />
-                                    <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
-                                        <core:icon identifier="actions-view" size="small" />
-                                    </f:link.action>
-
                                     <f:if condition="{element.applied}">
                                         <f:then>
                                             <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}" />

@@ -81,13 +81,38 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
-    public function processAllAction(): void
+    public function processAllAction(): ResponseInterface
     {
-        debug($this);die();
-        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . '.typoscript.message.processAll.bodytext'), LocalizationUtility::translate(self::L10N . 'typoscript.message.processAll.header.' . AbstractMessage::OK));
+        $elements = $this->elementRepository->findByProcessed(false);
+        
+        $result = true;
+        foreach ($elements as $element) {
+            $elementResult = $this->rectorService->process($element->getOriginTyposcript());
+
+            if ($elementResult === false) {
+                $result = false;
+            } else {
+                $element->setProcessedTyposcript($elementResult);
+                $element->setProcessed(true);
+                try {
+                    $this->elementRepository->update($element);
+                } catch (IllegalObjectTypeException|UnknownObjectException) {
+                    $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
+                    $result = false;
+                }
+            }
+        }
+
+        if ($result === false) {
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+        } else {
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+        }
+
+        $this->elementRepository->persistAll();
 
         // redirect to index
-        $this->redirect('index');
+        return $this->redirect('index');
     }
 
     public function processAction(Element $element): ResponseInterface
@@ -95,10 +120,9 @@ class TyposcriptController extends BaseController
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
         if ($rectorResult === false) {
-            // generate error flash message with hint to log
             $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
 
-            $this->redirect('index');
+            return $this->redirect('index');
         }
 
         $element->setProcessedTyposcript($rectorResult);

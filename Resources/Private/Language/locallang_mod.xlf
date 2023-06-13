@@ -107,6 +107,12 @@
             <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext">
                 <source>The element has been refactored successfully.</source>
             </trans-unit>
+            <trans-unit id="typoscript.messages.processAll.success.bodytext" resname="typoscript.messages.processAll.success.bodytext">
+                <source>All elements have been refactored successfully.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.processAll.error.bodytext" resname="typoscript.messages.processAll.error.bodytext">
+                <source>An error occurred for at least one element. Check the TYPO3 log file for further information.</source>
+            </trans-unit>
             <trans-unit id="typoscript.messages.apply.success.bodytext" resname="typoscript.message.apply.success.bodytext">
                 <source>The refactored typoscript has been applied successfully.</source>
             </trans-unit>

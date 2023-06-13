@@ -4,10 +4,43 @@
 <f:layout name="Default"/>
 
 <f:section name="Content">
-    <h2><f:translate key="{l10n}section.typoscript" /></h2>
+    <h2><f:translate key="{l10n}section.typoscript.detail" arguments="{0:element.originUid, 1:element.originTitle, 2:element.originPid}"/></h2>
     <br>
-    <f:form id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data">
-        <f:form.button class="btn btn-primary"><f:translate key="{l10n}typoscript.button.submit"/></f:form.button>
+    <p><f:translate key="{l10n}typoscript.detail.description"/></p>
+    <br>
+    <f:form id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col border border-bottom-0 py-3">
+                    <h3 class="mb-3"><f:translate key="{l10n}typoscript.detail.states" /></h3>
+                    <div class="form-check">
+                        <f:form.checkbox property="processed" class="form-check-input" id="processed" value="{element.processed}" checked="{f:if(condition:element.processed, then:'checked')}"/>
+                        <label class="form-check-label" for="processed"><f:translate key="{l10n}typoscript.processed" /></label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="applied"><f:translate key="{l10n}typoscript.applied" /></label>
+                        <f:form.checkbox property="applied" class="form-check-input" id="applied" value="{element.applied}" checked="{f:if(condition:element.applied, then:'checked')}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border py-3">
+                    <h3 class="mb-3"><f:translate key="{l10n}typoscript.originTyposcript"/></h3>
+                    <code>
+                        <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
+                    </code>
+                </div>
+                <div class="col border border-start-0 py-3">
+                    <div class="d-flex flex-column" style="height:100%;">
+                    <h3 id="processed-typoscript-label" class="mb-3"><f:translate key="{l10n}typoscript.processedTyposcript"/></h3>
+
+                        <f:form.textarea property="processedTyposcript" value="{element.processedTyposcript}" class="form-control flex-grow-1" id="processed-typosscript" aria="{labelledby:'processed-typoscript-label'}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <f:form.button class="btn btn-primary mt-4"><f:translate key="{l10n}typoscript.button.submit"/></f:form.button>
     </f:form>
 </f:section>
 

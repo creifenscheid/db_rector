@@ -66,6 +66,7 @@ class TyposcriptController extends BaseController
 
     public function detailAction(Element $element): ResponseInterface
     {
+        $this->assignDefaultValues();
         $this->view->assign('element', $element);
         
         $this->moduleTemplate->setContent($this->view->render());

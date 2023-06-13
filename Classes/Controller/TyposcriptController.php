@@ -72,6 +72,14 @@ class TyposcriptController extends BaseController
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
+    
+    public function submitAction(Element $element): void
+    {
+        debug($element);die();
+
+        // redirect to index
+        return $this->redirect('index');
+    }
 
     public function processAllAction(): void
     {

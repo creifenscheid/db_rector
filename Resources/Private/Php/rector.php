@@ -11,5 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
         Typo3LevelSetList::%%TYPO3PREV%%,
         Typo3LevelSetList::%%TYPO3CUR%%,
     ]);
+    $rectorConfig->rule(\Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v9\v0\FileIncludeToImportStatementTypoScriptRector::class);
+    $rectorConfig->rule(\Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v9\v4\OldConditionToExpressionLanguageTypoScriptRector::class);
     $rectorConfig->phpVersion(PhpVersion::%%PHPVERSION%%);
 };

@@ -234,18 +234,20 @@ class TyposcriptController extends BaseController
             return;
         }
 
-        // SET UP MODEL
-        $element = new Element();
-        $element
-            ->setOriginUid($data['uid'])
-            ->setOriginPid($data['pid'])
-            ->setOriginTitle($data['title'])
-            ->setOriginTyposcript($data['config']);
+        if ($data['config'] !== null) {
+            // SET UP MODEL
+            $element = new Element();
+            $element
+                ->setOriginUid($data['uid'])
+                ->setOriginPid($data['pid'])
+                ->setOriginTitle($data['title'])
+                ->setOriginTyposcript($data['config']);
 
-        try {
-            $this->elementRepository->add($element);
-            $this->elementRepository->persistAll();
-        } catch (IllegalObjectTypeException) {
+            try {
+                $this->elementRepository->add($element);
+                $this->elementRepository->persistAll();
+            } catch (IllegalObjectTypeException) {
+            }
         }
     }
 }

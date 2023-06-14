@@ -78,10 +78,8 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
          * and an error means, rector does not run properly or there is a problem with running rector
          * so, we are not good to go.
          */
-        $goodToGo = !($this->version === null) && $this->initRectorConfiguration();
-
         // assign state
-        $this->goodToGo = $goodToGo;
+        $this->goodToGo = $this->version !== null && $this->initRectorConfiguration();
     }
 
     /**

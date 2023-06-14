@@ -43,6 +43,9 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class TyposcriptController extends BaseController
 {
 
+    /**
+     * @var string
+     */
     private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
@@ -212,6 +215,7 @@ class TyposcriptController extends BaseController
         if ($existingModel instanceof QueryResult && $existingModel->count() > 0) {
             return;
         }
+
         if (is_array($existingModel) && $existingModel !== []) {
             return;
         }

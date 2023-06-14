@@ -51,6 +51,9 @@ class BaseController extends ActionController implements RectorControllerInterfa
 {
     use LoggerAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const L10N = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:';
 
     protected string $shortName = '';

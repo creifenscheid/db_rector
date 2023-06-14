@@ -4,30 +4,30 @@
 It is recommended to **NOT run this** extension **in productive environments**!
 
 ## What does it do
-This extension is an adapter to run typo3-rector in TYPO3 backend to update the typoscript stored in the database in field:config of table:sys_template.
+This extension is a wrapper to run typo3-rector in TYPO3 backend to update the typoscript stored in ‚sys_template.config‘.
 
 To do so, the content is stored in a temporary file, which is handed over to typo3-rector.
-The result is read into a db model, which can be viewed and applied in the backend module.
+The result is read into a db model, which can be reviewed in the backend module.
 
 ## Features
 - backend module to
   - view all typoscript stored in the db
   - run typo3-rector on single db entries
-  - apply typo3-rector result to original db entries
+  - apply typo3-rector result to sys_template record
 - security: backend module is only active in TYPO3 context „development“ - can be deactivated via extension configuration
 
 ## Configuration
 ### Extension configuration
 | Parameter | Default | Optional | Description                                                                  |
 |:----------|:--------|:---------|:-----------------------------------------------------------------------------|
-|ignoreTYPO3Context|false|yes| If set to true, the context of the TYPO3 installation is going to be ignored |
+|ignoreTYPO3Context|false|yes| If set to true, the context of the TYPO3 installation is going to be ignored - this is not recommended |
 
 ### Rector configuration
 To configure rector a file named rector.php is required.<br>
 This file is generated more or less automatically.<br>
-There is some sort of template, which is copied into the working folder /var/db_rector/.<br>
+There is some sort of template, which is copied into the working folder.<br>
 <br>
-Hence we just want to refactor typoscript and tsconfig, the rector config file is kept short.<br>
+Hence we just want to refactor typoscript, the rector config file is kept short and simple.<br>
 <br>
 The following configuration parameter are defined dynamically:
 
@@ -54,7 +54,7 @@ The condition can be fixed by using the null-safe operator.
 [getTSFE()?.type == 666]
 ```
 
-## Know working setups
+## Known working setups
 
 * DDEV (TYPO3 11, TYPO3 12)
 

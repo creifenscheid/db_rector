@@ -6,7 +6,7 @@ use CReifenscheid\DbRector\Domain\Model\Element;
 use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
@@ -104,9 +104,9 @@ class TyposcriptController extends BaseController
         }
 
         if ($result === false) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::ERROR), FlashMessage::ERROR);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::OK));
         }
 
         $this->elementRepository->persistAll();
@@ -120,7 +120,7 @@ class TyposcriptController extends BaseController
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
         if ($rectorResult === false) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::ERROR), FlashMessage::ERROR);
 
             return $this->redirect('index');
         }
@@ -135,16 +135,8 @@ class TyposcriptController extends BaseController
 
     public function applyAction(Element $element): ResponseInterface
     {
-        $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
-
-        if (!$result) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
-
-            $this->logger->warning('Trying to update sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
-        }
-
+        $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
         $element->setApplied(true);
-
         $this->updateRectorElement($element, 'typoscript.messages.apply.success.bodytext');
 
         return $this->redirect('index');
@@ -152,16 +144,8 @@ class TyposcriptController extends BaseController
 
     public function rollBackAction(Element $element): ResponseInterface
     {
-        $result = $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
-
-        if (!$result) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
-
-            $this->logger->warning('Trying to roll back sys_template:' . $element->getOriginUid() . ' affected 0 rows.', ['element' => $element]);
-        }
-
+        $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
         $element->setApplied(false);
-
         $this->updateRectorElement($element, 'typoscript.messages.rollBack.success.bodytext');
 
         return $this->redirect('index');
@@ -172,10 +156,10 @@ class TyposcriptController extends BaseController
         try {
             $this->elementRepository->remove($element);
             $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.reset.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.reset.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::OK));
         } catch (IllegalObjectTypeException) {
             $this->logger->error('The element could not be removed from the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::ERROR), FlashMessage::ERROR);
         }
 
         return $this->redirect('index');
@@ -198,17 +182,15 @@ class TyposcriptController extends BaseController
         return [];
     }
 
-    private function updateSysTemplateRecord(int $uid, string $typoscript): bool
+    private function updateSysTemplateRecord(int $uid, string $typoscript): void
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
-        $affectedRows = $queryBuilder->update(self::TABLE)
+        $queryBuilder->update(self::TABLE)
             ->where(
                 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid))
             )
-            ->set('config', $typoscript)
+            ->set('config', trim($typoscript))
             ->executeStatement();
-
-        return $affectedRows !== 0;
     }
 
     private function updateRectorElement(Element $element, string $messageKey): void
@@ -216,10 +198,10 @@ class TyposcriptController extends BaseController
         try {
             $this->elementRepository->update($element);
             $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::OK));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::OK));
         } catch (IllegalObjectTypeException|UnknownObjectException) {
             $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . AbstractMessage::ERROR));
+            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . FlashMessage::ERROR), FlashMessage::ERROR);
         }
     }
 

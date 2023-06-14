@@ -1,7 +1,7 @@
 <?php
 
-use CReifenscheid\DbRector\Controller\TyposcriptController;
 use CReifenscheid\DbRector\Controller\SetupController;
+use CReifenscheid\DbRector\Controller\TyposcriptController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 

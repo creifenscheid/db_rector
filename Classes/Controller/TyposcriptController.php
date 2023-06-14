@@ -6,7 +6,6 @@ use CReifenscheid\DbRector\Domain\Model\Element;
 use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
@@ -42,7 +41,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class TyposcriptController extends BaseController
 {
-
     /**
      * @var string
      */
@@ -71,12 +69,12 @@ class TyposcriptController extends BaseController
     {
         $this->assignDefaultValues();
         $this->view->assign('element', $element);
-        
+
         $this->moduleTemplate->setContent($this->view->render());
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
-    
+
     public function submitAction(Element $element): ResponseInterface
     {
         $this->updateRectorElement($element, 'typoscript.messages.detail.success.bodytext');
@@ -87,7 +85,7 @@ class TyposcriptController extends BaseController
     public function processAllAction(): ResponseInterface
     {
         $elements = $this->elementRepository->findByProcessed(false);
-        
+
         $result = true;
         foreach ($elements as $element) {
             $elementResult = $this->rectorService->process($element->getOriginTyposcript());

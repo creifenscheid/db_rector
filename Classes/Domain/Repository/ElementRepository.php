@@ -34,7 +34,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class ElementRepository extends Repository
 {
-    public function persistAll() : void
+    public function persistAll(): void
     {
         $this->persistenceManager->persistAll();
     }

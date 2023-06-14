@@ -172,8 +172,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'readOnly' => true
-            ]
+                'readOnly' => true,
+            ],
         ],
         'processed_typoscript' => [
             'label' => $l10n . 'processed_typoscript',
@@ -182,8 +182,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'readOnly' => true
-            ]
+                'readOnly' => true,
+            ],
         ],
         'processed' => [
             'label' => $l10n . 'processed',

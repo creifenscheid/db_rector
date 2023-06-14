@@ -176,7 +176,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
         }
 
         foreach ($this->rectorSuccessCriteria as $successCriterion) {
-            if (str_contains($rector, (string) $successCriterion)) {
+            if (str_contains($rector, (string)$successCriterion)) {
                 $result = file_get_contents($tmpFile);
                 unlink($tmpFile);
 

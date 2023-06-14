@@ -2,7 +2,6 @@
 
 namespace CReifenscheid\DbRector\Controller;
 
-use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 
 /***************************************************************

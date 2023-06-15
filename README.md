@@ -10,10 +10,22 @@ This extension is a wrapper to run typo3-rector in TYPO3 backend to update the t
 - backend module to
   - view all typoscript stored in the db
   - run typo3-rector on single db entries
-  - adjust the result of the typo3-rector process
+  - Review the result of the typo3-rector process
   - apply typo3-rector result to the corresponding sys_template record
 - security
   - backend module is only active in TYPO3 context „development“ by default
+
+## Installation
+
+Install this extension via `composer req creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
+
+### Known working setups
+
+* DDEV (TYPO3 11, TYPO3 12)
+
+### Known not working setups
+
+* MacOS + MAMP
 
 ## Configuration
 ### Extension configuration
@@ -34,18 +46,6 @@ The following configuration parameter are defined dynamically:
 |------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
 | phpVersion | The php version of the TYPO3 installation                                                                  | target version to support             |
 | sets       | 2 defined "UP_TO_TYPO3" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to run on the target code |
-
-## Installation
-
-Install this extension via `composer req creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
-
-## Known working setups
-
-* DDEV (TYPO3 11, TYPO3 12)
-
-## Known not working setups
-
-* MacOS + MAMP
 
 ## Support
 I don't want your money or anything else.

@@ -131,6 +131,15 @@
             <trans-unit id="typoscript.messages.reset.success.bodytext" resname="typoscript.messages.reset.success.bodytext">
                 <source>The rector element has been reset successfully.</source>
             </trans-unit>
+            <trans-unit id="typoscript.legend" resname="typoscript.legend">
+                <source>Colour legend</source>
+            </trans-unit>
+            <trans-unit id="typoscript.legend.info" resname="typoscript.legend.info">
+                <source>TypoScript has been processed.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.legend.success" resname="typoscript.legend.success">
+                <source>Rector result has been applied.</source>
+            </trans-unit>
 
             <!-- DETAIL -->
             <trans-unit id="typoscript.detail.description" resname="typoscript.detail.description">

@@ -6,9 +6,10 @@ use CReifenscheid\DbRector\Domain\Model\Element;
 use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
-use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /***************************************************************
@@ -47,6 +48,8 @@ class TyposcriptController extends BaseController
     private const TABLE = 'sys_template';
 
     protected ?ElementRepository $elementRepository = null;
+
+    private ?DataHandler $dataHandler = null;
 
     public function injectElementRepository(ElementRepository $elementRepository): void
     {
@@ -169,7 +172,7 @@ class TyposcriptController extends BaseController
     private function getDataEntries(): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
-        $queryBuilder->select('uid', 'pid', 'title', 'config')
+        $queryBuilder->select('uid', 'pid', 'title', 'config', 'tstamp')
             ->from(self::TABLE)
             ->where(
                 $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0)),
@@ -185,21 +188,29 @@ class TyposcriptController extends BaseController
 
     private function updateSysTemplateRecord(int $uid, string $typoscript): void
     {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
-        $queryBuilder->update(self::TABLE)
-            ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid))
-            )
-            ->set('config', trim($typoscript))
-            ->executeStatement();
+        if ($this->dataHandler === null) {
+            $this->dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        }
+
+        // add page to data handler data
+        $dataHandlerData[self::TABLE][$uid] = [
+            'config' => $typoscript,
+        ];
+
+        $this->dataHandler->start($dataHandlerData, []);
+        $this->dataHandler->process_datamap();
     }
 
-    private function updateRectorElement(Element $element, string $messageKey): void
+    private function updateRectorElement(Element $element, ?string $messageKey = null): void
     {
         try {
+            $element->setTstamp(time());
             $this->elementRepository->update($element);
             $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::OK));
+
+            if ($messageKey !== null) {
+                $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::OK));
+            }
         } catch (IllegalObjectTypeException|UnknownObjectException) {
             $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
             $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR), \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -209,13 +220,20 @@ class TyposcriptController extends BaseController
     private function createModel(array $data): void
     {
         // CHECK IF MODEL ALREADY EXISTS
-        $existingModel = $this->elementRepository->findByOriginUid($data['uid']);
-        if ($existingModel instanceof QueryResult && $existingModel->count() > 0) {
+        /** @var \CReifenscheid\DbRector\Domain\Model\Element $existingModel */
+        $existingModel = $this->elementRepository->findByOriginUid($data['uid'])->getFirst();
+
+        if ($existingModel instanceof Element && $data['tstamp'] <= $existingModel->getTstamp()) {
             return;
         }
 
-        if (is_array($existingModel) && $existingModel !== []) {
-            return;
+        if ($existingModel instanceof Element) {
+            try {
+                $this->elementRepository->remove($existingModel);
+                $this->elementRepository->persistAll();
+            } catch (IllegalObjectTypeException) {
+                $this->logger->error('The element could not be removed from the repository', ['element' => $existingModel]);
+            }
         }
 
         if ($data['config'] !== null) {

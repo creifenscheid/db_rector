@@ -12,8 +12,13 @@ This extension is a wrapper to run typo3-rector in TYPO3 backend to update the t
   - run typo3-rector on single db entries
   - Review the result of the typo3-rector process
   - apply typo3-rector result to the corresponding sys_template record
+  - roll back the original typoscript
 - security
   - backend module is only active in TYPO3 context „development“ by default
+
+### Note
+If the sys_template record has been adjusted after the rector process or the applying of the rector result, the corresponding rector model is going to be reset.<br>
+So the updated sys_template typoscript can be processed again.
 
 ## Installation
 

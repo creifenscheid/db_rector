@@ -56,6 +56,16 @@ return [
         ],
     ],
     'columns' => [
+        'tstamp' => [
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.tstamp',
+            'config' => [
+                'default' => '',
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'readOnly' => true,
+            ],
+        ],
         'starttime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',

@@ -34,6 +34,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Element extends AbstractEntity
 {
+    protected int $tstamp = 0;
+
     protected int $originUid = 0;
 
     protected int $originPid = 0;
@@ -47,6 +49,18 @@ class Element extends AbstractEntity
     protected bool $applied = false;
 
     protected bool $processed = false;
+
+    public function getTstamp(): int
+    {
+        return $this->tstamp;
+    }
+
+    public function setTstamp(int $tstamp): Element
+    {
+        $this->tstamp = $tstamp;
+
+        return $this;
+    }
 
     public function getOriginUid(): int
     {

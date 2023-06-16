@@ -22,7 +22,7 @@ So the updated sys_template typoscript can be processed again.
 
 ## Installation
 
-Install this extension via `composer req creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
+Install this extension via `composer req --dev creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
 
 ### Known working setups
 

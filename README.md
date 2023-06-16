@@ -4,7 +4,7 @@
 It is recommended to **NOT run this** extension **in productive environments**!
 
 ## What does it do
-This extension is a wrapper to run typo3-rector in TYPO3 backend to update the typoscript stored in ‚sys_template.config‘.
+This extension is an adapter to run typo3-rector in the TYPO3 backend to refactor typoscript stored in sys_template.config.
 
 ## Features
 - backend module to

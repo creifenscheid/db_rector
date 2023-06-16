@@ -1,7 +1,7 @@
 {
 	"name" : "creifenscheid/db-rector",
 	"type" : "typo3-cms-extension",
-	"description" : "Adapter to use typo3-rector on entries of sys_template and pages",
+	"description" : "This TYPO3 extension is an typo3-rector adapter with backend module to refactor sys_template.config data.",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
 		"typo3/cms-core" : "^11.5||^12.4"

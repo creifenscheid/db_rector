@@ -223,7 +223,7 @@ class TyposcriptController extends BaseController
         /** @var \CReifenscheid\DbRector\Domain\Model\Element $existingModel */
         $existingModel = $this->elementRepository->findByOriginUid($data['uid'])->getFirst();
 
-        if ($existingModel instanceof Element && !$this->hasFieldChanged($data['config'], $existingModel->getOriginTyposcript())) {
+        if ($existingModel instanceof Element && ($data['tstamp'] <= $existingModel->getTstamp()) || ($data['tstamp'] > $existingModel->getTstamp() && !$this->hasFieldChanged($data['config'], $existingModel->getOriginTyposcript()))) {
 
             if ($this->hasFieldChanged($data['title'], $existingModel->getOriginTitle())) {
                 $existingModel->setOriginTitle($data['title']);

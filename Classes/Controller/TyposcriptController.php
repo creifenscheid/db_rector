@@ -223,7 +223,13 @@ class TyposcriptController extends BaseController
         /** @var \CReifenscheid\DbRector\Domain\Model\Element $existingModel */
         $existingModel = $this->elementRepository->findByOriginUid($data['uid'])->getFirst();
 
-        if ($existingModel instanceof Element && $data['tstamp'] <= $existingModel->getTstamp()) {
+        if ($existingModel instanceof Element && !$this->hasFieldChanged($data['config'], $existingModel->getOriginTyposcript())) {
+
+            if ($this->hasFieldChanged($data['title'], $existingModel->getOriginTitle())) {
+                $existingModel->setOriginTitle($data['title']);
+                $this->updateRectorElement($existingModel);
+            }
+
             return;
         }
 
@@ -251,5 +257,14 @@ class TyposcriptController extends BaseController
             } catch (IllegalObjectTypeException) {
             }
         }
+    }
+
+    private function hasFieldChanged(string $originalTs, string $modelTs): bool
+    {
+        $originalTrimmed = preg_replace('/\s+/', '', $originalTs);
+        $modelTrimmed = preg_replace('/\s+/', '', $modelTs);
+
+        // 0: strings identical | 1/-1:  strings differ
+        return !(strcmp($originalTrimmed, $modelTrimmed) === 0);
     }
 }

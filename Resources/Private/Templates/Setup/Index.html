@@ -41,6 +41,10 @@
                 <th scope="row"><f:translate key="{l10n}setup.php" /></th>
                 <td>{setup.phpVersion}</td>
             </tr>
+            <tr role="row"{f:if(condition:'!{setup.shellExec}', then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.shell-exec" /></th>
+                <td><f:translate key="{l10n}general.{f:if(condition:setup.shellExec, then:'yes', else:'no')}" /></td>
+            </tr>
         </table>
     </div>
 </f:section>

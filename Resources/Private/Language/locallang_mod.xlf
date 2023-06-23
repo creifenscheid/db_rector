@@ -66,6 +66,9 @@
             <trans-unit id="setup.php" resname="setup.php">
                 <source>PHP version</source>
             </trans-unit>
+            <trans-unit id="setup.shell-exec" resname="setup.shell-exec">
+                <source>PHP function "shell_exec" enabled</source>
+            </trans-unit>
 
             <!-- TYPOSCRIPT -->
             <trans-unit id="typoscript.originUid" resname="typoscript.originUid">

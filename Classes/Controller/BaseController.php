@@ -136,7 +136,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
     {
         $this->assignDefaultValues();
 
-        if (Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
+        if ($this->rectorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
             $this->run();
         }
 

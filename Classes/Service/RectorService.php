@@ -189,8 +189,17 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
         return false;
     }
 
+    public function isShellExecEnabled(): bool
+    {
+        return is_callable('shell_exec') && false === stripos(ini_get('disable_functions'), 'shell_exec');
+    }
+
     private function run(string $statement): ?string
     {
-        return shell_exec($this->rectorPath . $statement);
+        if ($this->isShellExecEnabled()) {
+            return shell_exec($this->rectorPath . $statement);
+        }
+
+        return null;
     }
 }

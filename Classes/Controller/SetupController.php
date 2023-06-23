@@ -48,6 +48,7 @@ class SetupController extends BaseController
                 'composer' => Environment::isComposerMode(),
                 'rectorVersion' => $this->rectorService->getVersion(),
                 'phpVersion' => PHP_VERSION,
+                'shellExec' => $this->rectorService->isShellExecEnabled(),
             ],
         ]);
 

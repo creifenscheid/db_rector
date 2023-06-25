@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Utility\DiffUtility;
 
 /***************************************************************
  *
@@ -71,7 +72,10 @@ class TyposcriptController extends BaseController
     public function detailAction(Element $element): ResponseInterface
     {
         $this->assignDefaultValues();
-        $this->view->assign('element', $element);
+        $this->view->assignMultiple([
+            'element' => $element,
+            'diff' => DiffUtility::makeDiffDisplay($element->getOriginTyposcript(),$element->getProcessedTyposcript())	
+        ]);
 
         $this->moduleTemplate->setContent($this->view->render());
 

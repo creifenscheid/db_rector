@@ -10,7 +10,7 @@ This extension is an adapter to run typo3-rector in the TYPO3 backend to refacto
 - backend module to
   - view all typoscript stored in the db
   - run typo3-rector on single db entries
-  - Review the result of the typo3-rector process
+  - Review the result of the typo3-rector process (incl. diff view)
   - apply typo3-rector result to the corresponding sys_template record
   - roll back the original typoscript
 - security

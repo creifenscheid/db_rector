@@ -70,12 +70,14 @@ class TyposcriptController extends BaseController
     }
 
     public function detailAction(Element $element): ResponseInterface
-    {
+    { 
         $this->assignDefaultValues();
-        $this->view->assignMultiple([
-            'element' => $element,
-            'diff' => DiffUtility::makeDiffDisplay($element->getOriginTyposcript(),$element->getProcessedTyposcript())	
-        ]);
+        
+        $this->view->assign('element', $element);
+         
+        if($element->getProcessedTyposcript() !== '') {
+            $this->view->assign('diff', DiffUtility::makeDiffDisplay($element->getOriginTyposcript(),$element->getProcessedTyposcript()));
+        }
 
         $this->moduleTemplate->setContent($this->view->render());
 

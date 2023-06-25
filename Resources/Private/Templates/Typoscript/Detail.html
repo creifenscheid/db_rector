@@ -34,9 +34,19 @@
             <div class="row">
                 <div class="col border py-3">
                     <h3 class="mb-3"><f:translate key="{l10n}typoscript.originTyposcript"/></h3>
-                    <code>
-                        <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
+                    
+                    <f:if condition="{diff}">
+                        <f:then>
+                            <div>
+                                {diff}
+                            </div>
+                        </f:then>
+                        <f:else>
+                            <code>
+                                <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
                     </code>
+                        </f:else>
+                    </f:if>
                 </div>
                 <div class="col border border-start-0 py-3">
                     <div class="d-flex flex-column" style="height:100%;">

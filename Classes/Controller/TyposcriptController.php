@@ -76,7 +76,8 @@ class TyposcriptController extends BaseController
         $this->view->assign('element', $element);
          
         if($element->getProcessedTyposcript() !== '') {
-            $this->view->assign('diff', DiffUtility::makeDiffDisplay($element->getOriginTyposcript(),$element->getProcessedTyposcript()));
+            $diffUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DiffUtility::class);
+            $this->view->assign('diff', $diffUtility->makeDiffDisplay($element->getOriginTyposcript(),$element->getProcessedTyposcript()));
         }
 
         $this->moduleTemplate->setContent($this->view->render());

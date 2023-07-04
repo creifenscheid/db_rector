@@ -35,7 +35,13 @@
                 <div class="col border py-3">
                     <h3 class="mb-3"><f:translate key="{l10n}typoscript.originTyposcript"/></h3>
 
-                    <code>
+                    <style>
+                        .code-diff {
+                            color: black;
+                        }
+                    </style>
+
+                    <code class="code-diff">
                         <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
                     </code>
                 </div>
@@ -57,13 +63,8 @@
                                 text-decoration: none;
                                 color: red;
                             }
-
                             ins {
                                 color: green;
-                            }
-
-                            .code-diff {
-                                color: black;
                             }
                         </style>
                         <code class="code-diff">

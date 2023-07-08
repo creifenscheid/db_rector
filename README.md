@@ -3,6 +3,10 @@
 ## Disclaimer
 It is recommended to **NOT run this** extension **in productive environments**!
 
+## Installation
+
+This **extension must be installed via composer**, e.g. `composer req -dev creifenscheid/db-rector`, to install typo3-rector and get it running.  You can download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/), but it still has to be installed via composer.
+
 ## What does it do
 This extension is an adapter to run typo3-rector in the TYPO3 backend to refactor typoscript stored in sys_template.config.
 
@@ -10,7 +14,7 @@ This extension is an adapter to run typo3-rector in the TYPO3 backend to refacto
 - backend module to
   - view all typoscript stored in the db
   - run typo3-rector on single db entries
-  - Review the result of the typo3-rector process
+  - Review the result of the typo3-rector process (incl. diff view)
   - apply typo3-rector result to the corresponding sys_template record
   - roll back the original typoscript
 - security
@@ -19,10 +23,6 @@ This extension is an adapter to run typo3-rector in the TYPO3 backend to refacto
 ### Note
 If the sys_template record has been adjusted after the rector process or the applying of the rector result, the corresponding rector model is going to be reset.<br>
 So the updated sys_template typoscript can be processed again.
-
-## Installation
-
-Install this extension via `composer req --dev creifenscheid/db-rector` or download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/) and activate the extension in the Extension Manager of your TYPO3 installation.
 
 ### Known working setups
 
@@ -40,7 +40,7 @@ Install this extension via `composer req --dev creifenscheid/db-rector` or downl
 
 ### Rector configuration
 To configure typo3-rector a file named rector.php is required.<br>
-This file is generated more or less automatically.<br>
+This file is generated More or less automatically.<br>
 There is some sort of „template“, which is copied into the working folder.<br>
 <br>
 Hence we just want to refactor typoscript, the rector config file is kept small and simple.<br>

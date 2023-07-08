@@ -86,6 +86,9 @@
             <trans-unit id="typoscript.processedTyposcript" resname="typoscript.processedTyposcript">
                 <source>Processed typoscript</source>
             </trans-unit>
+            <trans-unit id="typoscript.diff" resname="typoscript.diff">
+                <source>Difference</source>
+            </trans-unit>
             <trans-unit id="typoscript.applied" resname="typoscript.applied">
                 <source>Applied</source>
             </trans-unit>

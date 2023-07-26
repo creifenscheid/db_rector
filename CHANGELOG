@@ -1,6 +1,7 @@
 v12.1.1 +
+  * [TASK] - Replace rector config "template" with non php file to prevent errors
   * [FIX] - Fix color allocation in legend
-  
+
 v12.1.0 +
   * [FEATURE] - View difference between original and processed TypoScript
   * [FIX] - Reviewed README installation instructions

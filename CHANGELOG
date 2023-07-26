@@ -1,6 +1,9 @@
+v12.1.1 +
+  * [FIX] - Fix color allocation in legend
+  
 v12.1.0 +
   * [FEATURE] - View difference between original and processed TypoScript
   * [FIX] - Reviewed README installation instructions
-  
+
 v12.0.0 +
   * initial release 

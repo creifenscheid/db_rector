@@ -1,4 +1,5 @@
-v12.1.1 +
+v12.2.0 +
+  * [FEATURE] - Implements multiselect of records
   * [TASK] - Replace rector config "template" with non php file to prevent errors
   * [FIX] - Fix color allocation in legend
 

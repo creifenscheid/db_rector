@@ -4,13 +4,29 @@
 <f:layout name="Default"/>
 
 <f:section name="Content">
-    <h2><f:translate key="{l10n}section.typoscript" /></h2>
+    <f:be.pageRenderer
+        includeJavaScriptModules="{
+            1: '@typo3/backend/multi-record-selection.js'
+        }"
+    />
+
+    <h2>
+        <f:translate key="{l10n}section.typoscript"/>
+    </h2>
     <br>
     <div aria-hidden="true">
-        <b><f:translate key="{l10n}typoscript.legend" /></b>
+        <b>
+            <f:translate key="{l10n}typoscript.legend"/>
+        </b>
         <ul class="mt-2" style="list-style-type: none; padding: 0; margin: 0;">
-            <li class="d-flex flex-row"><span class="info" style="display: inline-block; width:15px; height: 15px; background-color: #e3ecf4; margin-right:5px;"></span><f:translate key="{l10n}typoscript.legend.info" /></li>
-            <li class="d-flex flex-row"><span class="success" style="display: inline-block; width:15px; height: 15px; background-color: #d6e5d6; margin-right:5px;"></span><f:translate key="{l10n}typoscript.legend.success" /></li>
+            <li class="d-flex flex-row">
+                <span class="info" style="display: inline-block; width:15px; height: 15px; background-color: #e3ecf4; margin-right:5px;"></span>
+                <f:translate key="{l10n}typoscript.legend.info"/>
+            </li>
+            <li class="d-flex flex-row">
+                <span class="success" style="display: inline-block; width:15px; height: 15px; background-color: #d6e5d6; margin-right:5px;"></span>
+                <f:translate key="{l10n}typoscript.legend.success"/>
+            </li>
         </ul>
     </div>
     <br>
@@ -18,66 +34,83 @@
         <table data-table="sys_template" class="table table-striped table-hover">
             <thead>
             <tr data-uid="0" data-multi-record-selection-element="true">
-                <th><f:translate key="{l10n}typoscript.originUid" /></th>
-                <th><f:translate key="{l10n}typoscript.originPid" /></th>
-                <th><f:translate key="{l10n}typoscript.originTitle" /></th>
-                <th><f:translate key="{l10n}typoscript.originTyposcript" /></th>
-                <th><f:translate key="{l10n}typoscript.processedTyposcript" /></th>
-                <th><f:translate key="{l10n}typoscript.applied" /></th>
+                <th class="col-checkbox"><f:render section="multiRecordSelectionCheckboxActions" /></th>
+                <th><f:translate key="{l10n}typoscript.originUid"/></th>
+                <th><f:translate key="{l10n}typoscript.originPid"/></th>
+                <th><f:translate key="{l10n}typoscript.originTitle"/></th>
+                <th><f:translate key="{l10n}typoscript.originTyposcript"/></th>
+                <th><f:translate key="{l10n}typoscript.processedTyposcript"/></th>
+                <th><f:translate key="{l10n}typoscript.applied"/></th>
                 <th class="col-control"></th>
             </tr>
             </thead>
 
             <tbody data-multi-record-selection-row-selection="true">
             <f:for each="{elements}" as="element">
-                <tr title="id={element.originUid}" data-uid="{element.originUid}" data-multi-record-selection-element="true"{f:if(condition:element.applied, then:' class="success"')}{f:if(condition:element.processed, then:' class="info"')}>
+                <tr title="id={element.originUid}" data-uid="{element.originUid}" data-multi-record-selection-element="true" {f:if(condition:element.applied, then:
+                ' class="success"')}{f:if(condition:element.processed, then:' class="info"')}>
+                <td class="col-checkbox">
+                    <span class="form-check form-check-type-toggle">
+                        <input class="form-check-input t3js-multi-record-selection-check" type="checkbox"/>
+                    </span>
+                </td>
                 <td>{element.originUid}</td>
                 <td>{element.originPid}</td>
-                <td><f:format.crop maxCharacters="25">{element.originTitle}</f:format.crop></td>
-                <td><f:format.crop maxCharacters="50">{element.originTyposcript}</f:format.crop></td>
-                <td><f:format.crop maxCharacters="50">{element.processedTyposcript}</f:format.crop></td>
+                <td>
+                    <f:format.crop maxCharacters="25">{element.originTitle}</f:format.crop>
+                </td>
+                <td>
+                    <f:format.crop maxCharacters="50">{element.originTyposcript}</f:format.crop>
+                </td>
+                <td>
+                    <f:format.crop maxCharacters="50">{element.processedTyposcript}</f:format.crop>
+                </td>
                 <td>
                     <f:if condition="{element.applied}">
-                        <f:then><core:icon identifier="actions-check" size="small" /></f:then>
-                        <f:else><core:icon identifier="actions-close" size="small" /></f:else>
+                        <f:then>
+                            <core:icon identifier="actions-check" size="small"/>
+                        </f:then>
+                        <f:else>
+                            <core:icon identifier="actions-close" size="small"/>
+                        </f:else>
                     </f:if>
                 </td>
                 <td class="col-control nowrap">
                     <div class="btn-group">
 
-                        <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}" />
+                        <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}"/>
                         <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
-                            <core:icon identifier="actions-view" size="small" />
+                            <core:icon identifier="actions-view" size="small"/>
                         </f:link.action>
 
                         <f:if condition="{element.processed}">
                             <f:then>
                                 <f:if condition="{element.applied}">
                                     <f:then>
-                                        <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}" />
+                                        <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}"/>
                                         <f:link.action action="rollBack" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelRollBack}" arguments="{element:element}" title="{ariaLabelRollBack}">
-                                            <core:icon identifier="actions-undo" size="small" />
+                                            <core:icon identifier="actions-undo" size="small"/>
                                         </f:link.action>
                                     </f:then>
                                     <f:else>
-                                        <f:variable name="ariaLabelApply" value="{f:translate(key:'{l10n}typoscript.toolbar.apply')}" />
+                                        <f:variable name="ariaLabelApply" value="{f:translate(key:'{l10n}typoscript.toolbar.apply')}"/>
                                         <f:link.action action="apply" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelApply}" arguments="{element:element}" title="{ariaLabelApply}">
-                                            <core:icon identifier="actions-exchange" size="small" />
+                                            <core:icon identifier="actions-exchange" size="small"/>
                                         </f:link.action>
                                     </f:else>
                                 </f:if>
                             </f:then>
                             <f:else>
-                                <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}" />
+                                <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}"/>
                                 <f:link.action action="process" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelProcess}" arguments="{element:element}" title="{ariaLabelProcess}">
-                                    <core:icon identifier="actions-play" size="small" />
+                                    <core:icon identifier="actions-play" size="small"/>
                                 </f:link.action>
                             </f:else>
                         </f:if>
 
-                        <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}" />
+                        <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}"/>
                         <f:link.action action="reset" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelReset}" arguments="{element:element}" title="{ariaLabelReset}">
-                            <core:icon identifier="actions-database-reload" size="small" />
+                            <core:icon identifier="actions-database-reload" size="small"/>
                         </f:link.action>
                     </div>
                 </td>
@@ -90,6 +123,52 @@
     <f:link.action action="processAll" controller="Typoscript" extensionName="DbRector" class="btn btn-primary">
         <f:translate key="{l10n}typoscript.button.processAll"/>
     </f:link.action>
+</f:section>
+
+<f:section name="multiRecordSelectionCheckboxActions">
+    <div class="btn-group dropdown">
+        <button type="button" class="dropdown-toggle dropdown-toggle-link t3js-multi-record-selection-check-actions-toggle" data-bs-toggle="dropdown" data-bs-boundary="window" aria-expanded="false">
+            <core:icon identifier="actions-selection" size="small" />
+        </button>
+        <ul class="dropdown-menu t3js-multi-record-selection-check-actions">
+            <li>
+                <button type="button" class="dropdown-item disabled" data-multi-record-selection-check-action="check-all" title="{f:translate(key: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.checkAll')}">
+                    <span class="dropdown-item-columns">
+                        <span class="dropdown-item-column dropdown-item-column-icon" aria-hidden="true">
+                            <core:icon identifier="actions-selection-elements-all" size="small" />
+                        </span>
+                        <span class="dropdown-item-column dropdown-item-column-title">
+                            <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.checkAll" />
+                        </span>
+                    </span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item disabled" data-multi-record-selection-check-action="check-none" title="{f:translate(key: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.uncheckAll')}">
+                    <span class="dropdown-item-columns">
+                        <span class="dropdown-item-column dropdown-item-column-icon" aria-hidden="true">
+                            <core:icon identifier="actions-selection-elements-none" size="small" />
+                        </span>
+                        <span class="dropdown-item-column dropdown-item-column-title">
+                            <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.uncheckAll" />
+                        </span>
+                    </span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item" data-multi-record-selection-check-action="toggle" title="{f:translate(key: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.toggleSelection')}">
+                    <span class="dropdown-item-columns">
+                        <span class="dropdown-item-column dropdown-item-column-icon" aria-hidden="true">
+                            <core:icon identifier="actions-selection-elements-invert" size="small" />
+                        </span>
+                        <span class="dropdown-item-column dropdown-item-column-title">
+                            <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.toggleSelection" />
+                        </span>
+                    </span>
+                </button>
+            </li>
+        </ul>
+    </div>
 </f:section>
 
 </html>

@@ -135,6 +135,14 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
+    public function processSelectionAction(): ResponseInterface
+    {
+        // SeppToDo:: $this->request->getArguments() -> add magic
+
+        // redirect to index
+        return $this->redirect('index');
+    }
+
     public function processAction(Element $element): ResponseInterface
     {
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());

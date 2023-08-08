@@ -1,5 +1,6 @@
 v12.2.0 +
   * [FEATURE] - Implements multiselect of records
+  * [TASK] - Streamline record handling in TypoScriptController
   * [TASK] - Improve flash message handling in TypoScriptController
   * [TASK] - Replace rector config "template" with non php file to prevent errors
   * [FIX] - Fix color allocation in legend

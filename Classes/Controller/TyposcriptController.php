@@ -52,9 +52,19 @@ class TyposcriptController extends BaseController
 
     private ?DataHandler $dataHandler = null;
 
+    private bool $logErrorOccurred = false;
+
     public function injectElementRepository(ElementRepository $elementRepository): void
     {
         $this->elementRepository = $elementRepository;
+    }
+
+    // SeppToDo: TEST
+    public function __destruct()
+    {
+        if ($this->logErrorOccurred) {
+            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        }
     }
 
     public function run(): void
@@ -96,7 +106,9 @@ class TyposcriptController extends BaseController
 
     public function submitAction(Element $element): ResponseInterface
     {
-        $this->updateRectorElement($element, 'typoscript.messages.detail.success.bodytext');
+        if($this->updateRectorElement($element)) {
+            $this->setupFlashMessage('typoscript.messages.detail.success.bodytext');
+        }
 
         return $this->redirect('index');
     }
@@ -145,6 +157,7 @@ class TyposcriptController extends BaseController
 
     public function processAction(Element $element): ResponseInterface
     {
+        // SeppToDo: Stopped here -  call processElement(), remove obsolete code and clean up flash messages
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
         if ($rectorResult === false) {
@@ -156,7 +169,9 @@ class TyposcriptController extends BaseController
         $element->setProcessedTyposcript($rectorResult);
         $element->setProcessed(true);
 
-        $this->updateRectorElement($element, 'typoscript.messages.process.success.bodytext');
+        if($this->updateRectorElement($element)) {
+            $this->setupFlashMessage('typoscript.messages.process.success.bodytext');
+        }
 
         return $this->redirect('index');
     }
@@ -174,7 +189,10 @@ class TyposcriptController extends BaseController
     {
         $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
         $element->setApplied(false);
-        $this->updateRectorElement($element, 'typoscript.messages.rollBack.success.bodytext');
+
+        if($this->updateRectorElement($element)) {
+            $this->setupFlashMessage('typoscript.messages.rollBack.success.bodytext');
+        }
 
         return $this->redirect('index');
     }
@@ -210,6 +228,37 @@ class TyposcriptController extends BaseController
         return [];
     }
 
+    private function processElement(Element $element): bool
+    {
+        $elementResult = $this->rectorService->process($element->getOriginTyposcript());
+
+        if ($elementResult === false) {
+            return false;
+        }
+
+        $element->setProcessedTyposcript($elementResult);
+        $element->setProcessed(true);
+
+        return $this->updateRectorElement($element);
+    }
+
+    private function updateRectorElement(Element $element): bool
+    {
+        try {
+            $element->setTstamp(time());
+            $this->elementRepository->update($element);
+            $this->elementRepository->persistAll();
+
+            return true;
+
+        } catch (IllegalObjectTypeException|UnknownObjectException) {
+            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
+            $this->logErrorOccurred = true;
+
+            return false;
+        }
+    }
+
     private function updateSysTemplateRecord(int $uid, string $typoscript): void
     {
         if ($this->dataHandler === null) {
@@ -223,22 +272,6 @@ class TyposcriptController extends BaseController
 
         $this->dataHandler->start($dataHandlerData, []);
         $this->dataHandler->process_datamap();
-    }
-
-    private function updateRectorElement(Element $element, ?string $messageKey = null): void
-    {
-        try {
-            $element->setTstamp(time());
-            $this->elementRepository->update($element);
-            $this->elementRepository->persistAll();
-
-            if ($messageKey !== null) {
-                $this->setupFlashMessage($messageKey);
-            }
-        } catch (IllegalObjectTypeException|UnknownObjectException) {
-            $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        }
     }
 
     private function createModel(array $data): void

@@ -124,9 +124,9 @@ class TyposcriptController extends BaseController
         }
 
         if ($result === false) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR), \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.processAll.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.processAll.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::OK));
+            $this->setupFlashMessage('typoscript.messages.processAll.success.bodytext');
         }
 
         $this->elementRepository->persistAll();
@@ -148,7 +148,7 @@ class TyposcriptController extends BaseController
         $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
 
         if ($rectorResult === false) {
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.general.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR), \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.general.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
 
             return $this->redirect('index');
         }
@@ -184,10 +184,10 @@ class TyposcriptController extends BaseController
         try {
             $this->elementRepository->remove($element);
             $this->elementRepository->persistAll();
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.reset.success.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::OK));
+            $this->setupFlashMessage('typoscript.messages.reset.success.bodytext');
         } catch (IllegalObjectTypeException) {
             $this->logger->error('The element could not be removed from the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR), \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
 
         return $this->redirect('index');
@@ -233,11 +233,11 @@ class TyposcriptController extends BaseController
             $this->elementRepository->persistAll();
 
             if ($messageKey !== null) {
-                $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::OK));
+                $this->setupFlashMessage($messageKey);
             }
         } catch (IllegalObjectTypeException|UnknownObjectException) {
             $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-            $this->addFlashMessage(LocalizationUtility::translate(self::L10N . 'typoscript.messages.process.error.bodytext'), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR), \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
     }
 
@@ -294,5 +294,10 @@ class TyposcriptController extends BaseController
 
         // 0: strings identical | 1/-1:  strings differ
         return !(strcmp($originalTrimmed, $modelTrimmed) === 0);
+    }
+
+    private function setupFlashMessage(string $messageKey, int $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK): void
+    {
+        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . $severity), $severity);
     }
 }

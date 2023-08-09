@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\DiffUtility;
 
@@ -64,7 +65,6 @@ class TyposcriptController extends BaseController
         $this->elementRepository = $elementRepository;
     }
 
-    // SeppToDo: TEST
     public function __destruct()
     {
         if ($this->logErrorOccurred) {
@@ -136,9 +136,29 @@ class TyposcriptController extends BaseController
         return $this->redirect('index');
     }
 
+    /**
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
     public function processSelectionAction(): ResponseInterface
     {
-        // SeppToDo:: $this->request->getArguments() -> add magic
+        $selection = $this->request->getArgument('records');
+
+        if ($selection === '') {
+            $this->setupFlashMessage('typoscript.messages.no-selection.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::INFO);
+
+            // redirect to index
+            return $this->redirect('index');
+        }
+
+        $selection = array_map('intval', $selection);
+
+        $elements = $this->elementRepository->findByUids($selection);
+
+        $processSuccess = $this->processStack($elements);
+
+        if ($processSuccess) {
+            $this->setupFlashMessage('typoscript.messages.stack.success.bodytext');
+        }
 
         // redirect to index
         return $this->redirect('index');
@@ -159,7 +179,10 @@ class TyposcriptController extends BaseController
     {
         $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
         $element->setApplied(true);
-        $this->updateRectorElement($element, 'typoscript.messages.apply.success.bodytext');
+
+        if($this->updateRectorElement($element)) {
+            $this->setupFlashMessage('typoscript.messages.apply.success.bodytext');
+        }
 
         return $this->redirect('index');
     }

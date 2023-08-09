@@ -7,13 +7,12 @@ use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\DiffUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Utility\DiffUtility;
 
 /***************************************************************
  *
@@ -91,19 +90,19 @@ class TyposcriptController extends BaseController
     }
 
     public function detailAction(Element $element): ResponseInterface
-    { 
+    {
         $this->assignDefaultValues();
-        
+
         $this->view->assign('element', $element);
-         
-        if($element->getProcessedTyposcript() !== '') {
+
+        if ($element->getProcessedTyposcript() !== '') {
             $diffUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DiffUtility::class);
 
             $diff = [];
             $origin = GeneralUtility::trimExplode(PHP_EOL, $element->getOriginTyposcript());
             $processed = GeneralUtility::trimExplode(PHP_EOL, $element->getProcessedTyposcript());
 
-            for($i = 0, $imax = count($origin); $i < $imax; ++$i) {
+            for ($i = 0, $imax = count($origin); $i < $imax; ++$i) {
                 $diff[] = $diffUtility->makeDiffDisplay($origin[$i], $processed[$i]);
             }
 
@@ -117,7 +116,7 @@ class TyposcriptController extends BaseController
 
     public function submitAction(Element $element): ResponseInterface
     {
-        if($this->updateRectorElement($element)) {
+        if ($this->updateRectorElement($element)) {
             $this->setupFlashMessage('typoscript.messages.detail.success.bodytext');
         }
 
@@ -180,7 +179,7 @@ class TyposcriptController extends BaseController
         $this->updateSysTemplateRecord($element->getOriginUid(), $element->getProcessedTyposcript());
         $element->setApplied(true);
 
-        if($this->updateRectorElement($element)) {
+        if ($this->updateRectorElement($element)) {
             $this->setupFlashMessage('typoscript.messages.apply.success.bodytext');
         }
 
@@ -192,7 +191,7 @@ class TyposcriptController extends BaseController
         $this->updateSysTemplateRecord($element->getOriginUid(), $element->getOriginTyposcript());
         $element->setApplied(false);
 
-        if($this->updateRectorElement($element)) {
+        if ($this->updateRectorElement($element)) {
             $this->setupFlashMessage('typoscript.messages.rollBack.success.bodytext');
         }
 
@@ -274,7 +273,6 @@ class TyposcriptController extends BaseController
             $this->elementRepository->persistAll();
 
             return true;
-
         } catch (IllegalObjectTypeException|UnknownObjectException) {
             $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
             $this->logErrorOccurred = true;

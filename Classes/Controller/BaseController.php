@@ -158,6 +158,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
             'composerMode' => Environment::isComposerMode(),
             'restrictedRendering' => $this->restrictedRendering,
             'rector' => $this->rectorService->getGoodToGo(),
+            'typo3version' => $this->typo3Version->getMajorVersion()
         ]);
     }
 }

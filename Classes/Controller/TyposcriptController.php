@@ -79,7 +79,11 @@ class TyposcriptController extends BaseController
 
     public function run(): void
     {
-        $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
+        if ($this->typo3Version->getMajorVersion() < 12) {
+            $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/MultiRecordSelection');
+        } else {
+            $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
+        }
 
         $entries = $this->getDataEntries();
 

@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\DiffUtility;
 
@@ -54,6 +55,10 @@ class TyposcriptController extends BaseController
 
     private bool $logErrorOccurred = false;
 
+    private bool $processingError = false;
+
+    private bool $stackProcess = false;
+
     public function injectElementRepository(ElementRepository $elementRepository): void
     {
         $this->elementRepository = $elementRepository;
@@ -63,7 +68,13 @@ class TyposcriptController extends BaseController
     public function __destruct()
     {
         if ($this->logErrorOccurred) {
-            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $messageKey = $this->stackProcess ? 'typoscript.messages.stackLog.error.bodytext' : 'typoscript.messages.log.error.bodytext';
+            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        }
+
+        if ($this->processingError) {
+            $messageKey = $this->stackProcess ? 'typoscript.messages.stackProcess.error.bodytext' : 'typoscript.messages.process.error.bodytext';
+            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
     }
 
@@ -115,33 +126,11 @@ class TyposcriptController extends BaseController
 
     public function processAllAction(): ResponseInterface
     {
-        $elements = $this->elementRepository->findByProcessed(false);
+        $processSuccess = $this->processStack($this->elementRepository->findByProcessed(false));
 
-        $result = true;
-        foreach ($elements as $element) {
-            $elementResult = $this->rectorService->process($element->getOriginTyposcript());
-
-            if ($elementResult === false) {
-                $result = false;
-            } else {
-                $element->setProcessedTyposcript($elementResult);
-                $element->setProcessed(true);
-                try {
-                    $this->elementRepository->update($element);
-                } catch (IllegalObjectTypeException|UnknownObjectException) {
-                    $this->logger->error('The element could not be updated by the repository', ['element' => $element]);
-                    $result = false;
-                }
-            }
+        if ($processSuccess) {
+            $this->setupFlashMessage('typoscript.messages.stack.success.bodytext');
         }
-
-        if ($result === false) {
-            $this->setupFlashMessage('typoscript.messages.processAll.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        } else {
-            $this->setupFlashMessage('typoscript.messages.processAll.success.bodytext');
-        }
-
-        $this->elementRepository->persistAll();
 
         // redirect to index
         return $this->redirect('index');
@@ -157,19 +146,9 @@ class TyposcriptController extends BaseController
 
     public function processAction(Element $element): ResponseInterface
     {
-        // SeppToDo: Stopped here -  call processElement(), remove obsolete code and clean up flash messages
-        $rectorResult = $this->rectorService->process($element->getOriginTyposcript());
+        $processSuccess = $this->processElement($element);
 
-        if ($rectorResult === false) {
-            $this->setupFlashMessage('typoscript.messages.general.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-
-            return $this->redirect('index');
-        }
-
-        $element->setProcessedTyposcript($rectorResult);
-        $element->setProcessed(true);
-
-        if($this->updateRectorElement($element)) {
+        if ($processSuccess) {
             $this->setupFlashMessage('typoscript.messages.process.success.bodytext');
         }
 
@@ -228,11 +207,33 @@ class TyposcriptController extends BaseController
         return [];
     }
 
+    private function processStack(QueryResult $elements): bool
+    {
+        $this->stackProcess = true;
+
+        if ($elements->count() === 0) {
+            return true;
+        }
+
+        $stackResult = true;
+
+        foreach ($elements as $element) {
+            $processSuccess = $this->processElement($element);
+
+            if ($processSuccess === false) {
+                $stackResult = false;
+            }
+        }
+
+        return $stackResult;
+    }
+
     private function processElement(Element $element): bool
     {
         $elementResult = $this->rectorService->process($element->getOriginTyposcript());
 
         if ($elementResult === false) {
+            $this->processingError = true;
             return false;
         }
 

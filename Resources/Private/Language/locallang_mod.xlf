@@ -95,6 +95,9 @@
             <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
                 <source>Process all</source>
             </trans-unit>
+            <trans-unit id="typoscript.button.processSelection" resname="typoscript.button.processSelection">
+                <source>Process selection</source>
+            </trans-unit>
             <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view">
                 <source>View/edit rector result</source>
             </trans-unit>
@@ -110,17 +113,23 @@
             <trans-unit id="typoscript.toolbar.reset" resname="typoscript.toolbar.reset">
                 <source>Reset rector element</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.general.error.bodytext" resname="typoscript.message.general.error.bodytext">
-                <source>An error occurred. Check the TYPO3 log file for further information.</source>
+            <trans-unit id="typoscript.messages.log.error.bodytext" resname="typoscript.message.general.error.bodytext">
+                <source>Updating the element resulted in an error. Check the TYPO3 log file for further information.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.stackLog.error.bodytext" resname="typoscript.messages.processAll.error.bodytext">
+                <source>Updating at least one element resulted in an error. Check the TYPO3 log file for further information.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.process.error.bodytext" resname="typoscript.message.process.error.bodytext">
+                <source>Processing the element resulted in an error.</source>
+            </trans-unit>
+            <trans-unit id="typoscript.messages.stackProcess.error.bodytext" resname="typoscript.messages.processStack.error.bodytext">
+                <source>Processing at least one element resulted in an error.</source>
             </trans-unit>
             <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext">
                 <source>The element has been refactored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.processAll.success.bodytext" resname="typoscript.messages.processAll.success.bodytext">
+            <trans-unit id="typoscript.messages.stack.success.bodytext" resname="typoscript.messages.processAll.success.bodytext">
                 <source>All elements have been refactored successfully.</source>
-            </trans-unit>
-            <trans-unit id="typoscript.messages.processAll.error.bodytext" resname="typoscript.messages.processAll.error.bodytext">
-                <source>An error occurred for at least one element. Check the TYPO3 log file for further information.</source>
             </trans-unit>
             <trans-unit id="typoscript.messages.apply.success.bodytext" resname="typoscript.message.apply.success.bodytext">
                 <source>The refactored typoscript has been applied successfully.</source>

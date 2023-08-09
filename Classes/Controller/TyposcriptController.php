@@ -79,6 +79,8 @@ class TyposcriptController extends BaseController
 
     public function run(): void
     {
+        $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
+
         $entries = $this->getDataEntries();
 
         foreach ($entries as $entry) {

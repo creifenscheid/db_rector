@@ -68,6 +68,9 @@
             </trans-unit>
 
             <!-- TYPOSCRIPT -->
+            <trans-unit id="typoscript.bodytext" resname="typoscript.bodytext">
+                <source>Note that multi selection is only available for unprocessed typoscript.</source>
+            </trans-unit>
             <trans-unit id="typoscript.originUid" resname="typoscript.originUid">
                 <source>SysTemplate uid</source>
             </trans-unit>

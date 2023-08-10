@@ -83,6 +83,7 @@ class TyposcriptController extends BaseController
             $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/MultiRecordSelection');
         } else {
             $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
+            $this->pageRenderer->loadJavaScriptModule('@creifenscheid/db-rector/show-process-animation.js');
         }
 
         $entries = $this->getDataEntries();

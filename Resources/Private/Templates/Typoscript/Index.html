@@ -112,7 +112,7 @@
                                 </f:then>
                                 <f:else>
                                     <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}"/>
-                                    <f:link.action action="process" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelProcess}" arguments="{element:element}" title="{ariaLabelProcess}">
+                                    <f:link.action action="process" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelProcess,data-shows-process-animation-after-click:'true'}" arguments="{element:element}" title="{ariaLabelProcess}">
                                         <core:icon identifier="actions-play" size="small"/>
                                     </f:link.action>
                                 </f:else>
@@ -131,11 +131,11 @@
         </f:form>
     </div>
 
-    <button type="submit" form="dbrector-list-form" class="btn btn-primary">
+    <button type="submit" data-shows-process-animation-after-click="true" form="dbrector-list-form" class="btn btn-primary">
         <f:translate key="{l10n}typoscript.button.processSelection"/>
     </button>
 
-    <f:link.action action="processAll" controller="Typoscript" extensionName="DbRector" class="btn btn-primary">
+    <f:link.action action="processAll" controller="Typoscript" extensionName="DbRector" class="btn btn-primary" additionalAttributes="{data-shows-process-animation-after-click:'true'}">
         <f:translate key="{l10n}typoscript.button.processAll"/>
     </f:link.action>
 </f:section>

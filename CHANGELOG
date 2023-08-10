@@ -1,5 +1,7 @@
 v12.2.0 +
-  * [FEATURE] - Implements multiselect of records
+  * [FEATURE] - Processing animation
+  * [FEATURE] - Multiselect in list view
+  * [TASK] - Inline styles to css file conversion
   * [TASK] - Streamline record handling in TypoScriptController
   * [TASK] - Improve flash message handling in TypoScriptController
   * [TASK] - Replace rector config "template" with non php file to prevent errors

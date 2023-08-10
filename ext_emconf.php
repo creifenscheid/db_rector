@@ -4,7 +4,7 @@
  *
  *  Copyright notice
  *
- *  (c) 2023 C. Reifenscheid
+ *  (c) 2023 Christian Reifenscheid
  *
  *  All rights reserved
  *

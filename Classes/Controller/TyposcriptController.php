@@ -81,6 +81,7 @@ class TyposcriptController extends BaseController
     {
         if ($this->typo3Version->getMajorVersion() < 12) {
             $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/MultiRecordSelection');
+            $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/DbRector/ShowProcessAnimation');
         } else {
             $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
             $this->pageRenderer->loadJavaScriptModule('@creifenscheid/db-rector/show-process-animation.js');

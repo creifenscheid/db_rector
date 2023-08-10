@@ -4,7 +4,7 @@
  *
  *  Copyright notice
  *
- *  (c) 2023 C. Reifenscheid
+ *  (c) 2023 Christian Reifenscheid
  *
  *  All rights reserved
  *
@@ -29,8 +29,8 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'DB Rector',
     'description' => 'This TYPO3 extension is an typo3-rector adapter with backend module to refactor sys_template.config data.',
     'category' => 'be',
-    'author' => 'C. Reifenscheid',
-    'version' => '12.1.0',
+    'author' => 'Christian Reifenscheid',
+    'version' => '12.2.0',
     'state' => 'alpha',
     'constraints' => [
         'depends' => [

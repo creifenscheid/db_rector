@@ -89,15 +89,16 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
     {
         if ($this->createVarFolder()) {
             // CONFIGURATION SETUP
-            $configurationFilename = 'rector.php';
-            $configurationFile = $this->varFolder . '/' . $configurationFilename;
-            $configurationTemplate = GeneralUtility::getFileAbsFileName('EXT:' . self::EXT_KEY . '/Resources/Private/Php/' . $configurationFilename);
+            $configurationFilename = 'rector';
+            $configurationFile = $this->varFolder . '/' . $configurationFilename . '.php';
 
             if (file_exists($configurationFile)) {
                 $this->rectorConfiguration = $configurationFile;
 
                 return true;
             }
+
+            $configurationTemplate = GeneralUtility::getFileAbsFileName('EXT:' . self::EXT_KEY . '/Resources/Private/Php/' . $configurationFilename . '.tmpl');
 
             // PREPARE CONFIG FILE
             $configuration = file_get_contents($configurationTemplate);

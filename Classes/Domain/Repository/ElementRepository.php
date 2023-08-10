@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\DbRector\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /***************************************************************
@@ -37,5 +38,16 @@ class ElementRepository extends Repository
     public function persistAll(): void
     {
         $this->persistenceManager->persistAll();
+    }
+
+    /**
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function findByUids(array $uids): QueryResultInterface|array
+    {
+        $query = $this->createQuery();
+        $query->matching($query->in('uid', $uids));
+
+        return $query->execute();
     }
 }

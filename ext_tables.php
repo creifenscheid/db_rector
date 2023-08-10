@@ -8,6 +8,7 @@ defined('TYPO3') || die();
 
 (static function ($extKey) {
     $typo3Version = new Typo3Version();
+
     if ($typo3Version->getMajorVersion() < 12) {
         ExtensionUtility::registerModule(
             ucfirst(GeneralUtility::underscoredToLowerCamelCase($extKey)),
@@ -15,7 +16,7 @@ defined('TYPO3') || die();
             $extKey,
             'after:toolsupgrade',
             [
-                \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, process, apply, rollBack, submit, reset',
+                \CReifenscheid\DbRector\Controller\TyposcriptController::class => 'index, detail, processAll, processSelection, process, apply, rollBack, submit, reset',
                 \CReifenscheid\DbRector\Controller\SetupController::class => 'index',
             ],
             [
@@ -24,5 +25,13 @@ defined('TYPO3') || die();
                 'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_mod.xlf',
             ]
         );
+
+        // SKIN
+        $GLOBALS['TBE_STYLES']['skins'][$extKey] = [
+            'name' => 'DB Rector',
+            'stylesheetDirectories' => [
+                'css' => 'EXT:' . $extKey . '/Resources/Public/Css/',
+            ],
+        ];
     }
 })('db_rector');

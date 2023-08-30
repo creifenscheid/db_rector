@@ -11,7 +11,7 @@ defined('TYPO3') || die();
 
     if ($typo3Version->getMajorVersion() < 12) {
         ExtensionUtility::registerModule(
-            ucfirst(GeneralUtility::underscoredToLowerCamelCase($extKey)),
+            \ucfirst(GeneralUtility::underscoredToLowerCamelCase($extKey)),
             'tools',
             $extKey,
             'after:toolsupgrade',

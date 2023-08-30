@@ -352,11 +352,11 @@ class TyposcriptController extends BaseController
 
     private function hasFieldChanged(string $originalTs, string $modelTs): bool
     {
-        $originalTrimmed = preg_replace('/\s+/', '', $originalTs);
-        $modelTrimmed = preg_replace('/\s+/', '', $modelTs);
+        $originalTrimmed = \preg_replace('/\s+/', '', $originalTs);
+        $modelTrimmed = \preg_replace('/\s+/', '', $modelTs);
 
         // 0: strings identical | 1/-1:  strings differ
-        return !(strcmp($originalTrimmed, $modelTrimmed) === 0);
+        return !(\strcmp($originalTrimmed, $modelTrimmed) === 0);
     }
 
     private function setupFlashMessage(string $messageKey, int $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK): void

@@ -175,6 +175,15 @@
             <trans-unit id="typoscript.button.submit" resname="typoscript.button.submit">
                 <source>Save changes</source>
             </trans-unit>
+            <trans-unit id="typoscript.detail.diffView.header" resname="typoscript.detail.diffView.header">
+                <source>Difference view</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.origin.collapse" resname="typoscript.detail.origin.collapse">
+                <source>Collapse or expand original typoscript view</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.diffView.collapse" resname="typoscript.detail.diffView.collapse">
+                <source>Collapse or expand difference view</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

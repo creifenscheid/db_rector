@@ -1,0 +1,7 @@
+.db-rector__processing { position: absolute; top: 0; left: 0; display: none; justify-content: center; align-items: center; width: 100%; height: 100%; z-index: 1; background-color: rgba(255, 255, 255, 0.666); }
+.db-rector__legends { list-style-type: none; padding: 0; margin: 0; }
+.db-rector__legend { display: inline-block; width: 15px; height: 15px; margin-right: 5px; }
+.db-rector__legend--info { background-color: #e3ecf4; }
+.db-rector__legend--success { background-color: #d6e5d6; }
+.db-rector__accordion { box-shadow: var(--panel-box-shadow); border-radius: var(--panel-border-radius); border: var(--panel-border-width) solid var(--panel-default-border-color); }
+.db-rector__header { display: flex; justify-content: space-between; background-color: var(--panel-default-heading-bg); padding: var(--panel-header-padding-y) var(--panel-header-padding-x); }

@@ -3,3 +3,12 @@
 .db-rector__legend { display: inline-block; width: 15px; height: 15px; margin-right: 5px; }
 .db-rector__legend--info { background-color: #e3ecf4; }
 .db-rector__legend--success { background-color: #d6e5d6; }
+.db-rector__code { color: black; }
+.db-rector__code del { color: red; text-decoration: none; }
+.db-rector__code ins { color: green; }
+.db-rector__textarea { width: 100%; min-height: 250px; border: none; }
+.db-rector__accordion { box-shadow: var(--panel-box-shadow); border-radius: var(--panel-border-radius); border: var(--panel-border-width) solid var(--panel-default-border-color); margin-top: calc(var(--typo3-spacing) * 1.5); }
+.db-rector__accordion__header { display: flex; align-items: center; justify-content: space-between; background-color: var(--panel-default-heading-bg); padding: var(--panel-header-padding-y) var(--panel-header-padding-x); }
+.db-rector__accordion__collapse[aria-expanded="false"] .icon-markup { transform: rotate(180deg); }
+.db-rector__accordion__header-title { font-weight: 700; }
+.db-rector__accordion__body { padding: var(--panel-header-padding-y) var(--panel-header-padding-x); border-top: 1px solid #ccc; }

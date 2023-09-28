@@ -123,7 +123,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
 
             $menu->addMenuItem(
                 $menu->makeMenuItem()
-                    ->setTitle(LocalizationUtility::translate('LLL:EXT:' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName()) . '/Resources/Private/Language/locallang_mod.xlf:section.' . strtolower((string)$alias)))
+                    ->setTitle(LocalizationUtility::translate('LLL:EXT:' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName()) . '/Resources/Private/Language/locallang_mod.xlf:section.' . \strtolower((string)$alias)))
                     ->setHref($this->uriBuilder->uriFor('index', null, $alias))
                     ->setActive($currentController === $alias . 'Controller')
             );

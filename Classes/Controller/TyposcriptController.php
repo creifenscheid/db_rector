@@ -110,11 +110,11 @@ class TyposcriptController extends BaseController
             $origin = GeneralUtility::trimExplode(PHP_EOL, $element->getOriginTyposcript());
             $processed = GeneralUtility::trimExplode(PHP_EOL, $element->getProcessedTyposcript());
 
-            for ($i = 0, $imax = count($origin); $i < $imax; ++$i) {
+            for ($i = 0, $imax = \count($origin); $i < $imax; ++$i) {
                 $diff[] = $diffUtility->makeDiffDisplay($origin[$i], $processed[$i]);
             }
 
-            $this->view->assign('diff', implode('<br>', $diff));
+            $this->view->assign('diff', \implode('<br>', $diff));
         }
 
         $this->moduleTemplate->setContent($this->view->render());
@@ -157,7 +157,7 @@ class TyposcriptController extends BaseController
             return $this->redirect('index');
         }
 
-        $selection = array_map('intval', $selection);
+        $selection = \array_map('intval', $selection);
 
         $elements = $this->elementRepository->findByUids($selection);
 
@@ -276,7 +276,7 @@ class TyposcriptController extends BaseController
     private function updateRectorElement(Element $element): bool
     {
         try {
-            $element->setTstamp(time());
+            $element->setTstamp(\time());
             $this->elementRepository->update($element);
             $this->elementRepository->persistAll();
 
@@ -333,7 +333,7 @@ class TyposcriptController extends BaseController
             }
         }
 
-        if ($data['config'] !== null) {
+        if ($data['config'] !== null && $data['config'] !== '') {
             // SET UP MODEL
             $element = new Element();
             $element

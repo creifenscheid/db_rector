@@ -106,11 +106,11 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             // SETUP PHP VERSION FOR RECTOR
             $phpVersion = GeneralUtility::trimExplode('.', PHP_VERSION);
             \array_pop($phpVersion);
-            $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . implode('', $phpVersion), $configuration);
+            $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . \implode('', $phpVersion), $configuration);
 
             // SETUP TYPO3 VERSION
             $typo3version = new Typo3Version();
-            $configuration = str_replace(['%%TYPO3CUR%%', '%%TYPO3PREV%%'], ['UP_TO_TYPO3_' . $typo3version->getMajorVersion(), 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1)], $configuration);
+            $configuration = \str_replace(['%%TYPO3CUR%%', '%%TYPO3PREV%%'], ['UP_TO_TYPO3_' . $typo3version->getMajorVersion(), 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1)], $configuration);
 
             // WRITE CONFIG FILE
             $fileResult = \file_put_contents($configurationFile, $configuration);
@@ -131,7 +131,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
     {
         $varFolder = Environment::getVarPath() . '/' . self::EXT_KEY;
 
-        if (!\file_exists($varFolder) && !mkdir($varFolder) && !\is_dir($varFolder)) {
+        if (!\file_exists($varFolder) && !\mkdir($varFolder) && !\is_dir($varFolder)) {
             throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder));
         }
 

@@ -164,7 +164,7 @@
                 <source>If you do not agree with the changes, you can edit the result of the refactoring here. Note that these changes will be overwritten when you process the original typoscript again.</source>
             </trans-unit>
             <trans-unit id="typoscript.detail.info" resname="typoscript.detail.info">
-                <source>Information of the original sys_template record</source>
+                <source>The typoscript is taken from the sys_template record (UID: %s) with the title "%s" on page %s.</source>
             </trans-unit>
             <trans-unit id="typoscript.detail.states" resname="typoscript.detail.states">
                 <source>Refactoring states</source>

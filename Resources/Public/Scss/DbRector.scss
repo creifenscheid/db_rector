@@ -1,4 +1,9 @@
 .db-rector {
+    // helper
+    &__mt {
+        margin-top: calc(var(--typo3-spacing));
+    }
+
     // INDEX
     &__processing {
         position:absolute;
@@ -47,10 +52,19 @@
         }
     }
 
+    &__label {
+        font-weight: 700;
+    }
+
     &__textarea {
         width: 100%;
         min-height: 250px;
-        border: none;
+        padding: var(--panel-header-padding-y) var(--panel-header-padding-x);
+    }
+
+    &__cta {
+        margin-inline-start: 1rem;
+        writing-mode: horizontal-tb;
     }
 
     // Accordion

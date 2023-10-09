@@ -85,14 +85,13 @@
                     </td>
                     <td class="col-control nowrap">
                         <div class="btn-group">
-
-                            <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}"/>
-                            <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
-                                <core:icon identifier="actions-view" size="small"/>
-                            </f:link.action>
-
                             <f:if condition="{element.processed}">
                                 <f:then>
+                                    <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}"/>
+                                    <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
+                                        <core:icon identifier="actions-view" size="small"/>
+                                    </f:link.action>
+
                                     <f:if condition="{element.applied}">
                                         <f:then>
                                             <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}"/>
@@ -107,6 +106,11 @@
                                             </f:link.action>
                                         </f:else>
                                     </f:if>
+
+                                    <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}"/>
+                                    <f:link.action action="reset" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelReset}" arguments="{element:element}" title="{ariaLabelReset}">
+                                        <core:icon identifier="actions-database-reload" size="small"/>
+                                    </f:link.action>
                                 </f:then>
                                 <f:else>
                                     <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}"/>
@@ -115,11 +119,6 @@
                                     </f:link.action>
                                 </f:else>
                             </f:if>
-
-                            <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}"/>
-                            <f:link.action action="reset" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelReset}" arguments="{element:element}" title="{ariaLabelReset}">
-                                <core:icon identifier="actions-database-reload" size="small"/>
-                            </f:link.action>
                         </div>
                     </td>
                     </tr>

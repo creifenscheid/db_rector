@@ -62,8 +62,8 @@
         padding: var(--panel-header-padding-y, 0.75rem) var(--panel-header-padding-x, 1rem);
     }
 
-    &__cta {
-        margin-inline-start: 1rem;
+    .btn + &__cta {
+        margin-left: var(--panel-header-padding-x, 1rem);
         writing-mode: horizontal-tb;
     }
 

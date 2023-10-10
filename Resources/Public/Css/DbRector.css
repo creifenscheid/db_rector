@@ -9,7 +9,7 @@
 .db-rector__code ins { color: green; }
 .db-rector__label { font-weight: 700; }
 .db-rector__textarea { width: 100%; min-height: 250px; padding: var(--panel-header-padding-y, 0.75rem) var(--panel-header-padding-x, 1rem); }
-.db-rector__cta { margin-inline-start: 1rem; writing-mode: horizontal-tb; }
+.btn + .db-rector__cta { margin-left: var(--panel-header-padding-x, 1rem); writing-mode: horizontal-tb; }
 .db-rector__accordion { box-shadow: var(--panel-box-shadow, 0 1px 2px rgba(0, 0, 0, 0.25)); border-radius: var(--panel-border-radius, 4px); border: var(--panel-border-width, 1px) solid var(--panel-default-border-color, #c4c4c4); margin-top: calc(var(--typo3-spacing, 1rem) * 1.5); }
 .db-rector__accordion__header { display: flex; align-items: center; justify-content: space-between; background-color: var(--panel-default-heading-bg, whitesmoke); padding: var(--panel-header-padding-y, 0.75rem) var(--panel-header-padding-x, 1rem); }
 .db-rector__accordion__collapse[aria-expanded="false"] .icon-markup { transform: rotate(180deg); }

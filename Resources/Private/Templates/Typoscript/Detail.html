@@ -5,27 +5,30 @@
 
 <f:section name="Content">
 
-    <f:form class="db-rector__mt" id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
-        <label for="processed-typosscript" class="db-rector__label"><h2><f:translate key="{l10n}typoscript.processedTyposcript"/></h2></label>
+    <f:if condition="{element.processed}">
+        <f:form class="db-rector__mt" id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
+            <label for="processed-typosscript" class="db-rector__label"><h2><f:translate key="{l10n}typoscript.processedTyposcript"/></h2></label>
 
-        <div id="processed-typosscript_description" class="db-rector__mt">
-            <f:translate key="{l10n}typoscript.detail.info" arguments="{0:element.originUid,1:element.originTitle,2:element.originPid}"/><br>
-            <f:translate key="{l10n}typoscript.detail.description"/>
-        </div>
+            <div id="processed-typosscript_description" class="db-rector__mt">
+                <f:translate key="{l10n}typoscript.detail.info" arguments="{0:element.originUid,1:element.originTitle,2:element.originPid}"/><br>
+                <f:translate key="{l10n}typoscript.detail.description"/>
+            </div>
 
-        <f:form.textarea property="processedTyposcript" value="{element.processedTyposcript}" class="db-rector__textarea db-rector__mt" id="processed-typosscript" aria="{describedby:'processed-typosscript_description'}"/>
+            <f:form.textarea property="processedTyposcript" value="{element.processedTyposcript}" class="db-rector__textarea db-rector__mt" id="processed-typosscript" aria="{describedby:'processed-typosscript_description'}"/>
+        </f:form>
+    </f:if>
 
-        <div class="d-flex flex-row db-rector__mt">
-            <f:form.button class="btn btn-primary">
+    <div class="d-flex flex-row db-rector__mt">
+        <f:if condition="{element.processed}">
+            <f:form.button class="btn btn-primary" form="detail-element-{element.uid}-form">
                 <f:translate key="{l10n}typoscript.button.submit"/>
             </f:form.button>
+        </f:if>
 
-            <f:link.action action="index" controller="Typoscript" extensionName="DbRector" class="btn btn-default db-rector__cta">
-                <f:translate key="{l10n}typoscript.detail.back"/>
-            </f:link.action>
-        </div>
-
-    </f:form>
+        <f:link.action action="index" controller="Typoscript" extensionName="DbRector" class="btn btn-default db-rector__cta">
+            <f:translate key="{l10n}typoscript.detail.back"/>
+        </f:link.action>
+    </div>
 
     <div class="db-rector__accordion">
         <div class="db-rector__accordion__header">

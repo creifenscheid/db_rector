@@ -36,7 +36,7 @@
                     <th><f:translate key="{l10n}typoscript.originPid"/></th>
                     <th><f:translate key="{l10n}typoscript.originTitle"/></th>
                     <th><f:translate key="{l10n}typoscript.originTyposcript"/></th>
-                    <th><f:translate key="{l10n}typoscript.processedTyposcript"/></th>
+                    <th><f:translate key="{l10n}typoscript.processed"/></th>
                     <th><f:translate key="{l10n}typoscript.applied"/></th>
                     <th class="col-control"></th>
                 </tr>
@@ -65,33 +65,53 @@
                     <td>{element.originUid}</td>
                     <td>{element.originPid}</td>
                     <td>
-                        <f:format.crop maxCharacters="25">{element.originTitle}</f:format.crop>
+                        <f:format.crop maxCharacters="42">{element.originTitle}</f:format.crop>
                     </td>
                     <td>
-                        <f:format.crop maxCharacters="50">{element.originTyposcript}</f:format.crop>
+                        <f:format.crop maxCharacters="66">{element.originTyposcript}</f:format.crop>
                     </td>
                     <td>
-                        <f:format.crop maxCharacters="50">{element.processedTyposcript}</f:format.crop>
+                        <f:if condition="{element.processed}">
+                            <f:then>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-check" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.yes" />
+                            </f:then>
+                            <f:else>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-close" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.no" />
+                            </f:else>
+                        </f:if>
                     </td>
                     <td>
                         <f:if condition="{element.applied}">
                             <f:then>
-                                <core:icon identifier="actions-check" size="small"/>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-check" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.yes" />
                             </f:then>
                             <f:else>
-                                <core:icon identifier="actions-close" size="small"/>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-close" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.no" />
                             </f:else>
                         </f:if>
                     </td>
                     <td class="col-control nowrap">
                         <div class="btn-group">
+
+                            <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}"/>
+                            <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
+                                <core:icon identifier="actions-view" size="small"/>
+                            </f:link.action>
+
                             <f:if condition="{element.processed}">
                                 <f:then>
-                                    <f:variable name="ariaLabelView" value="{f:translate(key:'{l10n}typoscript.toolbar.view')}"/>
-                                    <f:link.action action="detail" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelView}" arguments="{element:element}" title="{ariaLabelView}">
-                                        <core:icon identifier="actions-view" size="small"/>
-                                    </f:link.action>
-
                                     <f:if condition="{element.applied}">
                                         <f:then>
                                             <f:variable name="ariaLabelRollBack" value="{f:translate(key:'{l10n}typoscript.toolbar.rollBack')}"/>

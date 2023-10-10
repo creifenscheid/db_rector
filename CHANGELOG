@@ -1,5 +1,6 @@
 v12.2.1 +
   * [TASK] - Facelift detail view
+  * [TASK] - UI improvements
   * [FIX] - Supress import of records with empty typoscript setup
   * [TASK] - Code improvements
 

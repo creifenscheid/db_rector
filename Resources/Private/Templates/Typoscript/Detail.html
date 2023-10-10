@@ -4,10 +4,11 @@
 <f:layout name="Default"/>
 
 <f:section name="Content">
+    <h2><f:translate key="{l10n}typoscript.detail.header" arguments="{0:element.originTitle,1:element.originUid}"/></h2>
 
     <f:if condition="{element.processed}">
         <f:form class="db-rector__mt" id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
-            <label for="processed-typosscript" class="db-rector__label"><h2><f:translate key="{l10n}typoscript.processedTyposcript"/></h2></label>
+            <label for="processed-typosscript" class="db-rector__label db-rector__mt"><f:translate key="{l10n}typoscript.processedTyposcript"/></label>
 
             <div id="processed-typosscript_description" class="db-rector__mt">
                 <f:translate key="{l10n}typoscript.detail.info" arguments="{0:element.originUid,1:element.originTitle,2:element.originPid}"/><br>
@@ -38,7 +39,7 @@
             </button>
         </div>
 
-        <div class="db-rector__accordion__body collapse" id="db-rector_origin">
+        <div class="db-rector__accordion__body collapse{f:if(condition:'!{element.processed}', then:' show')}" id="db-rector_origin">
             <code class="db-rector__code">
                 <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
             </code>

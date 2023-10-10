@@ -5,31 +5,31 @@
           product-name="db-rector">
         <header/>
         <body>
-            <trans-unit id="tab.refactor" resname="tab.refactor">
+            <trans-unit id="tab.refactor" resname="tab.refactor" approved="true">
                 <source>Refactor information</source>
             </trans-unit>
-            <trans-unit id="label" resname="label">
+            <trans-unit id="label" resname="label" approved="true">
                 <source>DB Rector element</source>
             </trans-unit>
-            <trans-unit id="origin_uid" resname="origin_uid">
+            <trans-unit id="origin_uid" resname="origin_uid" approved="true">
                 <source>Uid of original element</source>
             </trans-unit>
-            <trans-unit id="origin_pid" resname="origin_pid">
+            <trans-unit id="origin_pid" resname="origin_pid" approved="true">
                 <source>Page uid of original element</source>
             </trans-unit>
-            <trans-unit id="origin_title" resname="origin_title">
+            <trans-unit id="origin_title" resname="origin_title" approved="true">
                 <source>Title of original element</source>
             </trans-unit>
-            <trans-unit id="origin_typoscript" resname="origin_typoscript">
+            <trans-unit id="origin_typoscript" resname="origin_typoscript" approved="true">
                 <source>Original typoscript</source>
             </trans-unit>
-            <trans-unit id="processed_typoscript" resname="processed_typoscript">
+            <trans-unit id="processed_typoscript" resname="processed_typoscript" approved="true">
                 <source>Processed typoscript</source>
             </trans-unit>
-            <trans-unit id="applied" resname="applied">
+            <trans-unit id="applied" resname="applied" approved="true">
                 <source>Applied</source>
             </trans-unit>
-            <trans-unit id="processed" resname="processed">
+            <trans-unit id="processed" resname="processed" approved="true">
                 <source>Processed</source>
             </trans-unit>
         </body>

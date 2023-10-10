@@ -5,7 +5,7 @@
           product-name="db-rector">
         <header/>
         <body>
-            <trans-unit id="backendmodule.ignoreTYPO3Context" resname="backendmodule.ignoreTYPO3Context">
+            <trans-unit id="backendmodule.ignoreTYPO3Context" resname="backendmodule.ignoreTYPO3Context" approved="true">
                 <source>Ignore TYPO3 context: By activating this checkbox, the context of the TYPO3 installation is ignored.</source>
             </trans-unit>
         </body>

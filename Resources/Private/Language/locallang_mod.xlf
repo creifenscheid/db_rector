@@ -6,64 +6,64 @@
         <header/>
         <body>
             <!-- GENERAL-->
-            <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
+            <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab" approved="true">
                 <source>Database Rector</source>
             </trans-unit>
-            <trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr">
+            <trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr" approved="true">
                 <source>Database Rector</source>
             </trans-unit>
 
             <!-- MODULE MENU -->
-            <trans-unit id="section.setup" resname="section.setup">
+            <trans-unit id="section.setup" resname="section.setup" approved="true">
                 <source>Setup check</source>
             </trans-unit>
-            <trans-unit id="section.typoscript" resname="section.typoscript">
+            <trans-unit id="section.typoscript" resname="section.typoscript" approved="true">
                 <source>TypoScript</source>
             </trans-unit>
 
             <!-- GENERAL -->
-            <trans-unit id="general.yes" resname="general.yes">
+            <trans-unit id="general.yes" resname="general.yes" approved="true">
                 <source>yes</source>
             </trans-unit>
-            <trans-unit id="general.no" resname="general.no">
+            <trans-unit id="general.no" resname="general.no" approved="true">
                 <source>no</source>
             </trans-unit>
-            <trans-unit id="no-composer" resname="no-composer">
+            <trans-unit id="no-composer" resname="no-composer" approved="true">
                 <source>Your TYPO3 installation is not running in composer mode, which is required to run rector.</source>
             </trans-unit>
-            <trans-unit id="no-development" resname="no-development">
+            <trans-unit id="no-development" resname="no-development" approved="true">
                 <source>Your TYPO3 installation is not running in context "Development". To prevent changes in a production environment, this module canonly be used in context "Development".</source>
             </trans-unit>
-            <trans-unit id="no-rector" resname="no-rector">
+            <trans-unit id="no-rector" resname="no-rector" approved="true">
                 <source>Rector is not running properly.</source>
             </trans-unit>
-            <trans-unit id="ignore-context" resname="ignore-context">
+            <trans-unit id="ignore-context" resname="ignore-context" approved="true">
                 <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!</source>
             </trans-unit>
-            <trans-unit id="general.messages.header.0" resname="general.messages.header.0">
+            <trans-unit id="general.messages.header.0" resname="general.messages.header.0" approved="true">
                 <source>Success</source>
             </trans-unit>
-            <trans-unit id="general.messages.header.2" resname="general.messages.header.2">
+            <trans-unit id="general.messages.header.2" resname="general.messages.header.2" approved="true">
                 <source>Error</source>
             </trans-unit>
 
             <!-- SETUP CHECK -->
-            <trans-unit id="setup.typo3" resname="setup.typo3">
+            <trans-unit id="setup.typo3" resname="setup.typo3" approved="true">
                 <source>TYPO3 version</source>
             </trans-unit>
-            <trans-unit id="setup.typo3context" resname="setup.typo3context">
+            <trans-unit id="setup.typo3context" resname="setup.typo3context" approved="true">
                 <source>TYPO3 context</source>
             </trans-unit>
-            <trans-unit id="setup.ignoreTypo3context" resname="setup.ignoreTypo3context">
+            <trans-unit id="setup.ignoreTypo3context" resname="setup.ignoreTypo3context" approved="true">
                 <source>Ignore TYPO3 context</source>
             </trans-unit>
-            <trans-unit id="setup.composer" resname="setup.composer">
+            <trans-unit id="setup.composer" resname="setup.composer" approved="true">
                 <source>Composer mode</source>
             </trans-unit>
-            <trans-unit id="setup.rector" resname="setup.rector">
+            <trans-unit id="setup.rector" resname="setup.rector" approved="true">
                 <source>Rector version</source>
             </trans-unit>
-            <trans-unit id="setup.php" resname="setup.php">
+            <trans-unit id="setup.php" resname="setup.php" approved="true">
                 <source>PHP version</source>
             </trans-unit>
             <trans-unit id="setup.shell-exec" resname="setup.shell-exec">
@@ -71,112 +71,124 @@
             </trans-unit>
 
             <!-- TYPOSCRIPT -->
-            <trans-unit id="typoscript.bodytext" resname="typoscript.bodytext">
+            <trans-unit id="typoscript.bodytext" resname="typoscript.bodytext" approved="true">
                 <source>Note that multi selection is only available for unprocessed typoscript.</source>
             </trans-unit>
-            <trans-unit id="typoscript.originUid" resname="typoscript.originUid">
+            <trans-unit id="typoscript.originUid" resname="typoscript.originUid" approved="true">
                 <source>SysTemplate uid</source>
             </trans-unit>
-            <trans-unit id="typoscript.originPid" resname="typoscript.originPid">
+            <trans-unit id="typoscript.originPid" resname="typoscript.originPid" approved="true">
                 <source>Page uid</source>
             </trans-unit>
-            <trans-unit id="typoscript.originTitle" resname="typoscript.originTitle">
+            <trans-unit id="typoscript.originTitle" resname="typoscript.originTitle" approved="true">
                 <source>Title</source>
             </trans-unit>
-            <trans-unit id="typoscript.originTyposcript" resname="typoscript.originTyposcript">
+            <trans-unit id="typoscript.originTyposcript" resname="typoscript.originTyposcript" approved="true">
                 <source>Original typoscript</source>
             </trans-unit>
-            <trans-unit id="typoscript.processedTyposcript" resname="typoscript.processedTyposcript">
+            <trans-unit id="typoscript.processedTyposcript" resname="typoscript.processedTyposcript" approved="true">
                 <source>Processed typoscript</source>
             </trans-unit>
-            <trans-unit id="typoscript.diff" resname="typoscript.diff">
+            <trans-unit id="typoscript.diff" resname="typoscript.diff" approved="true">
                 <source>Difference</source>
             </trans-unit>
-            <trans-unit id="typoscript.applied" resname="typoscript.applied">
+            <trans-unit id="typoscript.applied" resname="typoscript.applied" approved="true">
                 <source>Applied</source>
             </trans-unit>
-            <trans-unit id="typoscript.processed" resname="typoscript.processed">
+            <trans-unit id="typoscript.processed" resname="typoscript.processed" approved="true">
                 <source>Processed</source>
             </trans-unit>
-            <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll">
+            <trans-unit id="typoscript.button.processAll" resname="typoscript.button.processAll" approved="true">
                 <source>Process all</source>
             </trans-unit>
-            <trans-unit id="typoscript.button.processSelection" resname="typoscript.button.processSelection">
+            <trans-unit id="typoscript.button.processSelection" resname="typoscript.button.processSelection" approved="true">
                 <source>Process selection</source>
             </trans-unit>
-            <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view">
+            <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view" approved="true">
                 <source>View/edit rector result</source>
             </trans-unit>
-            <trans-unit id="typoscript.toolbar.process" resname="typoscript.toolbar.process">
+            <trans-unit id="typoscript.toolbar.process" resname="typoscript.toolbar.process" approved="true">
                 <source>Process record</source>
             </trans-unit>
-            <trans-unit id="typoscript.toolbar.apply" resname="typoscript.toolbar.apply">
+            <trans-unit id="typoscript.toolbar.apply" resname="typoscript.toolbar.apply" approved="true">
                 <source>Apply rector result</source>
             </trans-unit>
-            <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack">
+            <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack" approved="true">
                 <source>Roll back</source>
             </trans-unit>
-            <trans-unit id="typoscript.toolbar.reset" resname="typoscript.toolbar.reset">
+            <trans-unit id="typoscript.toolbar.reset" resname="typoscript.toolbar.reset" approved="true">
                 <source>Reset rector element</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.log.error.bodytext" resname="typoscript.message.general.error.bodytext">
+            <trans-unit id="typoscript.messages.log.error.bodytext" resname="typoscript.message.general.error.bodytext" approved="true">
                 <source>Updating the element resulted in an error. Check the TYPO3 log file for further information.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.stackLog.error.bodytext" resname="typoscript.messages.processAll.error.bodytext">
+            <trans-unit id="typoscript.messages.stackLog.error.bodytext" resname="typoscript.messages.processAll.error.bodytext" approved="true">
                 <source>Updating at least one element resulted in an error. Check the TYPO3 log file for further information.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.process.error.bodytext" resname="typoscript.message.process.error.bodytext">
+            <trans-unit id="typoscript.messages.process.error.bodytext" resname="typoscript.message.process.error.bodytext" approved="true">
                 <source>Processing the element resulted in an error.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.stackProcess.error.bodytext" resname="typoscript.messages.processStack.error.bodytext">
+            <trans-unit id="typoscript.messages.stackProcess.error.bodytext" resname="typoscript.messages.processStack.error.bodytext" approved="true">
                 <source>Processing at least one element resulted in an error.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext">
+            <trans-unit id="typoscript.messages.process.success.bodytext" resname="typoscript.message.process.success.bodytext" approved="true">
                 <source>The element has been refactored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.stack.success.bodytext" resname="typoscript.messages.processAll.success.bodytext">
+            <trans-unit id="typoscript.messages.stack.success.bodytext" resname="typoscript.messages.processAll.success.bodytext" approved="true">
                 <source>All elements have been refactored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.apply.success.bodytext" resname="typoscript.message.apply.success.bodytext">
+            <trans-unit id="typoscript.messages.apply.success.bodytext" resname="typoscript.message.apply.success.bodytext" approved="true">
                 <source>The refactored typoscript has been applied successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.rollBack.success.bodytext" resname="typoscript.message.rollBack.success.bodytext">
+            <trans-unit id="typoscript.messages.rollBack.success.bodytext" resname="typoscript.message.rollBack.success.bodytext" approved="true">
                 <source>The refactored typoscript has been rolled back successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.detail.success.bodytext" resname="typoscript.messages.detail.success.bodytext">
+            <trans-unit id="typoscript.messages.detail.success.bodytext" resname="typoscript.messages.detail.success.bodytext" approved="true">
                 <source>Your changes have been stored successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.reset.success.bodytext" resname="typoscript.messages.reset.success.bodytext">
+            <trans-unit id="typoscript.messages.reset.success.bodytext" resname="typoscript.messages.reset.success.bodytext" approved="true">
                 <source>The rector element has been reset successfully.</source>
             </trans-unit>
-            <trans-unit id="typoscript.messages.no-selection.bodytext" resname="typoscript.messages.no-selection.bodytext">
+            <trans-unit id="typoscript.messages.no-selection.bodytext" resname="typoscript.messages.no-selection.bodytext" approved="true">
                 <source>No element to be processed has been selected.</source>
             </trans-unit>
-            <trans-unit id="typoscript.legend" resname="typoscript.legend">
+            <trans-unit id="typoscript.legend" resname="typoscript.legend" approved="true">
                 <source>Colour legend</source>
             </trans-unit>
-            <trans-unit id="typoscript.legend.info" resname="typoscript.legend.info">
+            <trans-unit id="typoscript.legend.info" resname="typoscript.legend.info" approved="true">
                 <source>TypoScript has been processed.</source>
             </trans-unit>
-            <trans-unit id="typoscript.legend.success" resname="typoscript.legend.success">
+            <trans-unit id="typoscript.legend.success" resname="typoscript.legend.success" approved="true">
                 <source>Rector result has been applied.</source>
             </trans-unit>
 
             <!-- DETAIL -->
-            <trans-unit id="typoscript.detail.description" resname="typoscript.detail.description">
+            <trans-unit id="typoscript.detail.header" resname="typoscript.detail.header" approved="true">
+                <source>Detail view for refacturing of SysTemplate record "%s" (UID: %s)</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.description" resname="typoscript.detail.description" approved="true">
                 <source>If you do not agree with the changes, you can edit the result of the refactoring here. Note that these changes will be overwritten when you process the original typoscript again.</source>
             </trans-unit>
-            <trans-unit id="typoscript.detail.info" resname="typoscript.detail.info">
-                <source>Information of the original sys_template record</source>
+            <trans-unit id="typoscript.detail.info" resname="typoscript.detail.info" approved="true">
+                <source>The typoscript is taken from the sys_template record (UID: %s) with the title "%s" on page %s.</source>
             </trans-unit>
-            <trans-unit id="typoscript.detail.states" resname="typoscript.detail.states">
+            <trans-unit id="typoscript.detail.states" resname="typoscript.detail.states" approved="true">
                 <source>Refactoring states</source>
             </trans-unit>
-            <trans-unit id="typoscript.detail.back" resname="typoscript.detail.back">
+            <trans-unit id="typoscript.detail.back" resname="typoscript.detail.back" approved="true">
                 <source>Back to list view</source>
             </trans-unit>
-            <trans-unit id="typoscript.button.submit" resname="typoscript.button.submit">
+            <trans-unit id="typoscript.button.submit" resname="typoscript.button.submit" approved="true">
                 <source>Save changes</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.diffView.header" resname="typoscript.detail.diffView.header" approved="true">
+                <source>Difference view</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.origin.collapse" resname="typoscript.detail.origin.collapse" approved="true">
+                <source>Collapse or expand original typoscript view</source>
+            </trans-unit>
+            <trans-unit id="typoscript.detail.diffView.collapse" resname="typoscript.detail.diffView.collapse" approved="true">
+                <source>Collapse or expand difference view</source>
             </trans-unit>
         </body>
     </file>

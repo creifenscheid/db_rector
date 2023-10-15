@@ -48,10 +48,10 @@ class ExtensionConfiguration
         try {
             $extensionConfiguration = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get(self::EXTENSION_KEY);
 
-            if (is_array($extensionConfiguration)) {
+            if (\is_array($extensionConfiguration)) {
                 foreach ($extensionConfiguration as $key => $value) {
                     $methodName = 'set' . ucfirst($key);
-                    if (method_exists($this, $methodName)) {
+                    if (\method_exists($this, $methodName)) {
                         $this->$methodName($value);
                     }
                 }
@@ -67,6 +67,6 @@ class ExtensionConfiguration
 
     private function setIgnoreTYPO3Context(string $ignoreTYPO3Context): void
     {
-        $this->ignoreTYPO3Context = filter_var($ignoreTYPO3Context, FILTER_VALIDATE_BOOLEAN);
+        $this->ignoreTYPO3Context = \filter_var($ignoreTYPO3Context, FILTER_VALIDATE_BOOLEAN);
     }
 }

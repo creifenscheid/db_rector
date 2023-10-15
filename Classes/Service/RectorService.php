@@ -92,7 +92,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             $configurationFilename = 'rector';
             $configurationFile = $this->varFolder . '/' . $configurationFilename . '.php';
 
-            if (file_exists($configurationFile)) {
+            if (\file_exists($configurationFile)) {
                 $this->rectorConfiguration = $configurationFile;
 
                 return true;
@@ -101,19 +101,19 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             $configurationTemplate = GeneralUtility::getFileAbsFileName('EXT:' . self::EXT_KEY . '/Resources/Private/Php/' . $configurationFilename . '.tmpl');
 
             // PREPARE CONFIG FILE
-            $configuration = file_get_contents($configurationTemplate);
+            $configuration = \file_get_contents($configurationTemplate);
 
             // SETUP PHP VERSION FOR RECTOR
             $phpVersion = GeneralUtility::trimExplode('.', PHP_VERSION);
-            array_pop($phpVersion);
-            $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . implode('', $phpVersion), $configuration);
+            \array_pop($phpVersion);
+            $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . \implode('', $phpVersion), $configuration);
 
             // SETUP TYPO3 VERSION
             $typo3version = new Typo3Version();
-            $configuration = str_replace(['%%TYPO3CUR%%', '%%TYPO3PREV%%'], ['UP_TO_TYPO3_' . $typo3version->getMajorVersion(), 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1)], $configuration);
+            $configuration = \str_replace(['%%TYPO3CUR%%', '%%TYPO3PREV%%'], ['UP_TO_TYPO3_' . $typo3version->getMajorVersion(), 'UP_TO_TYPO3_' . ($typo3version->getMajorVersion() - 1)], $configuration);
 
             // WRITE CONFIG FILE
-            $fileResult = file_put_contents($configurationFile, $configuration);
+            $fileResult = \file_put_contents($configurationFile, $configuration);
 
             if ($fileResult !== false) {
                 $this->rectorConfiguration = $configurationFile;
@@ -131,12 +131,12 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
     {
         $varFolder = Environment::getVarPath() . '/' . self::EXT_KEY;
 
-        if (!file_exists($varFolder) && !mkdir($varFolder) && !is_dir($varFolder)) {
-            throw new RuntimeException(sprintf('Directory "%s" was not created', $varFolder));
+        if (!\file_exists($varFolder) && !\mkdir($varFolder) && !\is_dir($varFolder)) {
+            throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder));
         }
 
-        if (!is_writable($varFolder)) {
-            return chmod($varFolder, $GLOBALS['TYPO3_CONF_VARS']['SYS']['folderCreateMask']);
+        if (!\is_writable($varFolder)) {
+            return \chmod($varFolder, $GLOBALS['TYPO3_CONF_VARS']['SYS']['folderCreateMask']);
         }
 
         $this->varFolder = $varFolder;
@@ -157,9 +157,9 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
     public function process(string $contentToRefactor): string|bool
     {
         // CREATE TEMP FILE TO RUN RECTOR ON
-        $tmpFileName = uniqid() . '.typoscript';
+        $tmpFileName = \uniqid() . '.typoscript';
         $tmpFile = $this->varFolder . '/' . $tmpFileName;
-        $fileWritten = file_put_contents($tmpFile, $contentToRefactor);
+        $fileWritten = \file_put_contents($tmpFile, $contentToRefactor);
 
         if ($fileWritten === false) {
             $this->logger->error('The temporary typoscript file could not be written.');
@@ -177,9 +177,9 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
         }
 
         foreach ($this->rectorSuccessCriteria as $successCriterion) {
-            if (str_contains($rector, (string)$successCriterion)) {
-                $result = file_get_contents($tmpFile);
-                unlink($tmpFile);
+            if (\str_contains($rector, (string)$successCriterion)) {
+                $result = \file_get_contents($tmpFile);
+                \unlink($tmpFile);
 
                 return $result;
             }
@@ -197,10 +197,6 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
 
     private function run(string $statement): ?string
     {
-        if ($this->isShellExecEnabled()) {
-            return shell_exec($this->rectorPath . $statement);
-        }
-
-        return null;
+        return \shell_exec($this->rectorPath . $statement);
     }
 }

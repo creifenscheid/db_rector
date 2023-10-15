@@ -4,84 +4,65 @@
 <f:layout name="Default"/>
 
 <f:section name="Content">
-    <h2><f:translate key="{l10n}section.typoscript"/></h2>
-    <br>
-    <p><f:translate key="{l10n}typoscript.detail.description"/></p>
-    <br>
-    <f:form id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
-        <div class="container-fluid ">
-            <div class="row">
-                <div class="col border border-bottom-0 py-3">
-                    <h3 class="mb-3"><f:translate key="{l10n}typoscript.detail.info" /></h3>
-                    <ul>
-                        <li><f:translate key="{l10n}typoscript.originUid"/>: {element.originUid}</li>
-                        <li><f:translate key="{l10n}typoscript.originPid"/>: {element.originPid}</li>
-                        <li><f:translate key="{l10n}typoscript.originTitle"/>: {element.originTitle}</li>
-                    </ul>
-                </div>
-                <div class="col border border-bottom-0 border-start-0 py-3">
-                    <h3 class="mb-3"><f:translate key="{l10n}typoscript.detail.states" /></h3>
-                    <div class="form-check">
-                        <f:form.checkbox property="processed" class="form-check-input" id="processed" value="{element.processed}" checked="{f:if(condition:element.processed, then:'checked')}"/>
-                        <label class="form-check-label" for="processed"><f:translate key="{l10n}typoscript.processed" /></label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" for="applied"><f:translate key="{l10n}typoscript.applied" /></label>
-                        <f:form.checkbox property="applied" class="form-check-input" id="applied" value="{element.applied}" checked="{f:if(condition:element.applied, then:'checked')}"/>
-                    </div>
-                </div>
+    <h2><f:translate key="{l10n}typoscript.detail.header" arguments="{0:element.originTitle,1:element.originUid}"/></h2>
+
+    <f:if condition="{element.processed}">
+        <f:form class="db-rector__mt" id="detail-element-{element.uid}-form" action="submit" controller="Typoscript" method="post" enctype="multipart/form-data" name="element" object="{element}">
+            <label for="processed-typosscript" class="db-rector__label db-rector__mt"><f:translate key="{l10n}typoscript.processedTyposcript"/></label>
+
+            <div id="processed-typosscript_description" class="db-rector__mt">
+                <f:translate key="{l10n}typoscript.detail.info" arguments="{0:element.originUid,1:element.originTitle,2:element.originPid}"/><br>
+                <f:translate key="{l10n}typoscript.detail.description"/>
             </div>
-            <div class="row">
-                <div class="col border py-3">
-                    <h3 class="mb-3"><f:translate key="{l10n}typoscript.originTyposcript"/></h3>
 
-                    <style>
-                        .code-diff {
-                            color: black;
-                        }
-                    </style>
+            <f:form.textarea property="processedTyposcript" value="{element.processedTyposcript}" class="db-rector__textarea db-rector__mt" id="processed-typosscript" aria="{describedby:'processed-typosscript_description'}"/>
+        </f:form>
+    </f:if>
 
-                    <code class="code-diff">
-                        <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
-                    </code>
-                </div>
-                <div class="col border border-start-0 py-3">
-                    <div class="d-flex flex-column" style="height:100%;">
-                        <h3 id="processed-typoscript-label" class="mb-3"><f:translate key="{l10n}typoscript.processedTyposcript"/></h3>
+    <div class="d-flex flex-row db-rector__mt">
+        <f:if condition="{element.processed}">
+            <f:form.button class="btn btn-primary" form="detail-element-{element.uid}-form">
+                <f:translate key="{l10n}typoscript.button.submit"/>
+            </f:form.button>
+        </f:if>
 
-                        <f:form.textarea property="processedTyposcript" value="{element.processedTyposcript}" class="form-control flex-grow-1" id="processed-typosscript" aria="{labelledby:'processed-typoscript-label'}"/>
-                    </div>
-                </div>
+        <f:link.action action="index" controller="Typoscript" extensionName="DbRector" class="btn btn-default db-rector__cta">
+            <f:translate key="{l10n}typoscript.detail.back"/>
+        </f:link.action>
+    </div>
+
+    <div class="db-rector__accordion">
+        <div class="db-rector__accordion__header">
+            <div class="db-rector__accordion__header-title"><f:translate key="{l10n}typoscript.originTyposcript"/></div>
+            <button type="button" class="btn btn-sm btn-default db-rector__accordion__collapse" title="{f:translate(key:'{l10n}typoscript.detail.origin.collapse')}" aria-label="{f:translate(key:'{l10n}typoscript.detail.origin.collapse')}" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#db-rector_origin">
+                <core:icon identifier="actions-view-list-collapse" size="small" />
+            </button>
+        </div>
+
+        <div class="db-rector__accordion__body collapse{f:if(condition:'!{element.processed}', then:' show')}" id="db-rector_origin">
+            <code class="db-rector__code">
+                <f:format.nl2br>{element.originTyposcript}</f:format.nl2br>
+            </code>
+        </div>
+    </div>
+
+    <f:if condition="{diff}">
+        <div class="db-rector__accordion">
+            <div class="db-rector__accordion__header diff-view">
+                <div class="db-rector__accordion__header-title"><f:translate key="{l10n}typoscript.detail.diffView.header"/></div>
+                <button type="button" class="btn btn-sm btn-default db-rector__accordion__collapse" title="{f:translate(key:'{l10n}typoscript.detail.diffView.collapse')}" aria-label="{f:translate(key:'{l10n}typoscript.detail.diffView.collapse')}" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#db-rector_diff-view">
+                    <core:icon identifier="actions-view-list-collapse" size="small" />
+                </button>
             </div>
-            <f:if condition="{diff}">
-                <div class="row">
-                    <div class="col border border-top-0 py-3">
-                        <h3 class="mb-3"><f:translate key="{l10n}typoscript.diff"/></h3>
 
-                        <style>
-                            del {
-                                text-decoration: none;
-                                color: red;
-                            }
-                            ins {
-                                color: green;
-                            }
-                        </style>
-                        <code class="code-diff">
-                            <f:format.raw>{diff}</f:format.raw>
-                        </code>
-                    </div>
-                </div>
-            </f:if>
+            <div class="db-rector__accordion__body collapse" id="db-rector_diff-view">
+                <code class="db-rector__code">
+                    <f:format.raw>{diff}</f:format.raw>
+                </code>
+            </div>
         </div>
-        <div class="d-flex flex-row mt-4">
-            <f:link.action action="index" controller="Typoscript" extensionName="DbRector" class="btn btn-default" style="margin-right: 1rem;">
-                <f:translate key="{l10n}typoscript.detail.back"/>
-            </f:link.action>
+    </f:if>
 
-            <f:form.button class="btn btn-primary"><f:translate key="{l10n}typoscript.button.submit"/></f:form.button>
-        </div>
-    </f:form>
 </f:section>
 
 </html>

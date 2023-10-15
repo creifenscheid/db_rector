@@ -36,7 +36,7 @@
                     <th><f:translate key="{l10n}typoscript.originPid"/></th>
                     <th><f:translate key="{l10n}typoscript.originTitle"/></th>
                     <th><f:translate key="{l10n}typoscript.originTyposcript"/></th>
-                    <th><f:translate key="{l10n}typoscript.processedTyposcript"/></th>
+                    <th><f:translate key="{l10n}typoscript.processed"/></th>
                     <th><f:translate key="{l10n}typoscript.applied"/></th>
                     <th class="col-control"></th>
                 </tr>
@@ -65,21 +65,40 @@
                     <td>{element.originUid}</td>
                     <td>{element.originPid}</td>
                     <td>
-                        <f:format.crop maxCharacters="25">{element.originTitle}</f:format.crop>
+                        <f:format.crop maxCharacters="42">{element.originTitle}</f:format.crop>
                     </td>
                     <td>
-                        <f:format.crop maxCharacters="50">{element.originTyposcript}</f:format.crop>
+                        <f:format.crop maxCharacters="66">{element.originTyposcript}</f:format.crop>
                     </td>
                     <td>
-                        <f:format.crop maxCharacters="50">{element.processedTyposcript}</f:format.crop>
+                        <f:if condition="{element.processed}">
+                            <f:then>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-check" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.yes" />
+                            </f:then>
+                            <f:else>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-close" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.no" />
+                            </f:else>
+                        </f:if>
                     </td>
                     <td>
                         <f:if condition="{element.applied}">
                             <f:then>
-                                <core:icon identifier="actions-check" size="small"/>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-check" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.yes" />
                             </f:then>
                             <f:else>
-                                <core:icon identifier="actions-close" size="small"/>
+                                <span aria-hidden="true">
+                                    <core:icon identifier="actions-close" size="small"/>
+                                </span>
+                                <f:translate key="{l10n}general.no" />
                             </f:else>
                         </f:if>
                     </td>
@@ -107,6 +126,11 @@
                                             </f:link.action>
                                         </f:else>
                                     </f:if>
+
+                                    <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}"/>
+                                    <f:link.action action="reset" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelReset}" arguments="{element:element}" title="{ariaLabelReset}">
+                                        <core:icon identifier="actions-database-reload" size="small"/>
+                                    </f:link.action>
                                 </f:then>
                                 <f:else>
                                     <f:variable name="ariaLabelProcess" value="{f:translate(key:'{l10n}typoscript.toolbar.process')}"/>
@@ -115,11 +139,6 @@
                                     </f:link.action>
                                 </f:else>
                             </f:if>
-
-                            <f:variable name="ariaLabelReset" value="{f:translate(key:'{l10n}typoscript.toolbar.reset')}"/>
-                            <f:link.action action="reset" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{aria-label:ariaLabelReset}" arguments="{element:element}" title="{ariaLabelReset}">
-                                <core:icon identifier="actions-database-reload" size="small"/>
-                            </f:link.action>
                         </div>
                     </td>
                     </tr>

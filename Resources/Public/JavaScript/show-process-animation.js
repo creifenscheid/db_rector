@@ -9,5 +9,3 @@ class ShowProcessAnimation {
 }
 
 export default new ShowProcessAnimation();
-
-

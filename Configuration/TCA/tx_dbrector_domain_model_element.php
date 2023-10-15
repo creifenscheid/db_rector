@@ -2,7 +2,7 @@
 
 $extensionKey = 'db_rector';
 
-$table = basename(__FILE__, '.php');
+$table = \basename(__FILE__, '.php');
 $l10n = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/TCA/locallang_' . $table . '.xlf:';
 
 return [

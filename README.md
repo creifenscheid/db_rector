@@ -40,10 +40,10 @@ So the updated sys_template typoscript can be processed again.
 
 ### Rector configuration
 To configure typo3-rector a file named rector.php is required.<br>
-This file is generated More or less automatically.<br>
+This file is generated more or less automatically.<br>
 There is some sort of „template“, which is copied into the working folder.<br>
 <br>
-Hence we just want to refactor typoscript, the rector config file is kept small and simple.<br>
+Since just typoscript refactoring is needed, the rector config file is kept small and simple.<br>
 <br>
 The following configuration parameter are defined dynamically:
 

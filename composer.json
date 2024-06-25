@@ -16,7 +16,6 @@
 			"CReifenscheid\\DbRector\\" : "Classes/"
 		}
 	},
-	"minimum-stability" : "alpha",
 	"authors" : [{
 			"name" : "Christian Reifenscheid",
 			"email" : "dev@christian-reifenscheid.de"

@@ -7,12 +7,21 @@ use CReifenscheid\DbRector\Domain\Repository\ElementRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\DiffUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
+use function array_key_exists;
+use function array_map;
+use function count;
+use function implode;
+use function preg_replace;
+use function strcmp;
+use function time;
 
 /***************************************************************
  *
@@ -68,12 +77,12 @@ class TyposcriptController extends BaseController
     {
         if ($this->logErrorOccurred) {
             $messageKey = $this->stackProcess ? 'typoscript.messages.stackLog.error.bodytext' : 'typoscript.messages.log.error.bodytext';
-            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage($messageKey, AbstractMessage::ERROR);
         }
 
         if ($this->processingError) {
             $messageKey = $this->stackProcess ? 'typoscript.messages.stackProcess.error.bodytext' : 'typoscript.messages.process.error.bodytext';
-            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage($messageKey, AbstractMessage::ERROR);
         }
     }
 
@@ -104,17 +113,19 @@ class TyposcriptController extends BaseController
         $this->view->assign('element', $element);
 
         if ($element->getProcessedTyposcript() !== '') {
-            $diffUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DiffUtility::class);
+            $diffUtility = GeneralUtility::makeInstance(DiffUtility::class);
 
             $diff = [];
             $origin = GeneralUtility::trimExplode(PHP_EOL, $element->getOriginTyposcript());
             $processed = GeneralUtility::trimExplode(PHP_EOL, $element->getProcessedTyposcript());
 
-            for ($i = 0, $imax = \count($origin); $i < $imax; ++$i) {
-                $diff[] = $diffUtility->makeDiffDisplay($origin[$i], $processed[$i]);
+            for ($i = 0, $imax = count($origin); $i < $imax; ++$i) {
+                if (array_key_exists($i, $processed) && is_string($processed[$i])) {
+                    $diff[] = $diffUtility->makeDiffDisplay($origin[$i], $processed[$i]);
+                }
             }
 
-            $this->view->assign('diff', \implode('<br>', $diff));
+            $this->view->assign('diff', implode('<br>', $diff));
         }
 
         $this->moduleTemplate->setContent($this->view->render());
@@ -151,13 +162,13 @@ class TyposcriptController extends BaseController
         $selection = $this->request->getArgument('records');
 
         if ($selection === '') {
-            $this->setupFlashMessage('typoscript.messages.no-selection.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::INFO);
+            $this->setupFlashMessage('typoscript.messages.no-selection.bodytext', AbstractMessage::INFO);
 
             // redirect to index
             return $this->redirect('index');
         }
 
-        $selection = \array_map('intval', $selection);
+        $selection = array_map('intval', $selection);
 
         $elements = $this->elementRepository->findByUids($selection);
 
@@ -214,7 +225,7 @@ class TyposcriptController extends BaseController
             $this->setupFlashMessage('typoscript.messages.reset.success.bodytext');
         } catch (IllegalObjectTypeException) {
             $this->logger->error('The element could not be removed from the repository', ['element' => $element]);
-            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', AbstractMessage::ERROR);
         }
 
         return $this->redirect('index');
@@ -264,6 +275,7 @@ class TyposcriptController extends BaseController
 
         if ($elementResult === false) {
             $this->processingError = true;
+
             return false;
         }
 
@@ -276,7 +288,7 @@ class TyposcriptController extends BaseController
     private function updateRectorElement(Element $element): bool
     {
         try {
-            $element->setTstamp(\time());
+            $element->setTstamp(time());
             $this->elementRepository->update($element);
             $this->elementRepository->persistAll();
 
@@ -352,14 +364,14 @@ class TyposcriptController extends BaseController
 
     private function hasFieldChanged(string $originalTs, string $modelTs): bool
     {
-        $originalTrimmed = \preg_replace('/\s+/', '', $originalTs);
-        $modelTrimmed = \preg_replace('/\s+/', '', $modelTs);
+        $originalTrimmed = preg_replace('/\s+/', '', $originalTs);
+        $modelTrimmed = preg_replace('/\s+/', '', $modelTs);
 
         // 0: strings identical | 1/-1:  strings differ
-        return !(\strcmp($originalTrimmed, $modelTrimmed) === 0);
+        return !(strcmp($originalTrimmed, $modelTrimmed) === 0);
     }
 
-    private function setupFlashMessage(string $messageKey, int $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK): void
+    private function setupFlashMessage(string $messageKey, int $severity = AbstractMessage::OK): void
     {
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . $severity), $severity);
     }

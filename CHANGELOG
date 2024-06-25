@@ -1,7 +1,11 @@
+v12.3.0 +
+  * [TASK] - Adds support for php 8.2
+  * [TASK] - Drops support for php 8.0
+
 v12.2.1 +
   * [TASK] - Facelift detail view
   * [TASK] - UI improvements
-  * [FIX] - Supress import of records with empty typoscript setup
+  * [FIX] - Surpress import of records with empty typoscript setup
   * [TASK] - Code improvements
 
 v12.2.0 +
@@ -18,4 +22,4 @@ v12.1.0 +
   * [FIX] - Reviewed README installation instructions
 
 v12.0.0 +
-  * initial release 
+  * initial release

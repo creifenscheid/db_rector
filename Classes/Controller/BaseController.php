@@ -145,9 +145,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
-    public function run(): void
-    {
-    }
+    public function run(): void {}
 
     protected function assignDefaultValues(): void
     {
@@ -158,7 +156,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
             'composerMode' => Environment::isComposerMode(),
             'restrictedRendering' => $this->restrictedRendering,
             'rector' => $this->rectorService->getGoodToGo(),
-            'typo3version' => $this->typo3Version->getMajorVersion()
+            'typo3version' => $this->typo3Version->getMajorVersion(),
         ]);
     }
 }

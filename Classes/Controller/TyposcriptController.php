@@ -303,7 +303,7 @@ class TyposcriptController extends BaseController
 
     private function updateSysTemplateRecord(int $uid, string $typoscript): void
     {
-        if ($this->dataHandler === null) {
+        if (!$this->dataHandler instanceof \TYPO3\CMS\Core\DataHandling\DataHandler) {
             $this->dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         }
 
@@ -336,13 +336,11 @@ class TyposcriptController extends BaseController
             return;
         }
 
-        if ($existingModel instanceof Element) {
-            try {
-                $this->elementRepository->remove($existingModel);
-                $this->elementRepository->persistAll();
-            } catch (IllegalObjectTypeException) {
-                $this->logger->error('The element could not be removed from the repository', ['element' => $existingModel]);
-            }
+        try {
+            $this->elementRepository->remove($existingModel);
+            $this->elementRepository->persistAll();
+        } catch (IllegalObjectTypeException) {
+            $this->logger->error('The element could not be removed from the repository', ['element' => $existingModel]);
         }
 
         if ($data['config'] !== null && $data['config'] !== '') {
@@ -368,7 +366,7 @@ class TyposcriptController extends BaseController
         $modelTrimmed = preg_replace('/\s+/', '', $modelTs);
 
         // 0: strings identical | 1/-1:  strings differ
-        return !(strcmp($originalTrimmed, $modelTrimmed) === 0);
+        return strcmp($originalTrimmed, $modelTrimmed) !== 0;
     }
 
     private function setupFlashMessage(string $messageKey, int $severity = AbstractMessage::OK): void

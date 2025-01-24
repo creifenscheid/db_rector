@@ -90,30 +90,24 @@ class TyposcriptController extends BaseController
     public function indexAction(): ResponseInterface
     {
         $view = $this->initializeModuleTemplate();
-        $this->assignDefaultValues();
+        $view = $this->assignDefaultValues($view);
 
         if ($this->rectorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
-            $this->run();
+
+            $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
+            $this->pageRenderer->loadJavaScriptModule('@creifenscheid/db-rector/show-process-animation.js');
+
+            $entries = $this->getDataEntries();
+
+            foreach ($entries as $entry) {
+                $this->createModel($entry);
+            }
+
+            $elements = $this->elementRepository->findAll();
+            $view->assign('elements', $elements);
         }
 
-        $view->setContent($this->view->render());
-
-        return $view->renderResponse('Dashboard/Main');
-    }
-
-    public function run(): void
-    {
-        $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
-        $this->pageRenderer->loadJavaScriptModule('@creifenscheid/db-rector/show-process-animation.js');
-
-        $entries = $this->getDataEntries();
-
-        foreach ($entries as $entry) {
-            $this->createModel($entry);
-        }
-
-        $elements = $this->elementRepository->findAll();
-        $this->view->assign('elements', $elements);
+        return $view->renderResponse('Typoscript/Index');
     }
 
     public function detailAction(Element $element): ResponseInterface

@@ -7,6 +7,7 @@ use CReifenscheid\DbRector\Service\RectorService;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use ReflectionClass;
+use TYPO3\CMS\Backend\Module\ModuleData;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
@@ -48,7 +49,7 @@ use function strtolower;
 /**
  * Class BaseController
  */
-class BaseController extends ActionController implements RectorControllerInterface, LoggerAwareInterface
+class BaseController extends ActionController implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -95,11 +96,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
         $menu = $view->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier($this->request->getControllerExtensionName() . 'ModuleMenu');
 
-        if ($this->typo3Version->getMajorVersion() < 12) {
-            $moduleControllerActions = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$this->request->getControllerExtensionName()]['modules'][$this->request->getPluginName()]['controllers'];
-        } else {
-            $moduleControllerActions = $this->request->getAttribute('module')->getControllerActions();
-        }
+        $moduleControllerActions = $this->request->getAttribute('module')->getControllerActions();
 
         foreach ($moduleControllerActions as $configuredController) {
             $alias = $configuredController['alias'];
@@ -115,15 +112,26 @@ class BaseController extends ActionController implements RectorControllerInterfa
         $view->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
 
         return $view;
+
+
+        $languageService = $this->getLanguageService();
+        $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
+        $shortcutTitle = sprintf(
+            '%s: %s [%d]',
+            $languageService->sL('LLL:EXT:backend/Resources/Private/Language/locallang_pagetsconfig.xlf:module.pagetsconfig_active'),
+            BackendUtility::getRecordTitle('pages', $pageInfo),
+            $pageUid
+        );
+        $shortcutButton = $buttonBar->makeShortcutButton()
+            ->setRouteIdentifier($moduleIdentifier)
+            ->setDisplayName($shortcutTitle)
+            ->setArguments(['id' => $pageUid]);
+        $buttonBar->addButton($shortcutButton);
     }
 
-    public function run(): void
+    protected function assignDefaultValues(ModuleTemplate $view): ModuleTemplate
     {
-    }
-
-    protected function assignDefaultValues(): void
-    {
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'l10n' => self::L10N,
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
@@ -132,5 +140,7 @@ class BaseController extends ActionController implements RectorControllerInterfa
             'rector' => $this->rectorService->getGoodToGo(),
             'typo3version' => $this->typo3Version->getMajorVersion(),
         ]);
+
+        return $view;
     }
 }

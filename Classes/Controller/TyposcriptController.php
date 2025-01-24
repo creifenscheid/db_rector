@@ -68,7 +68,7 @@ class TyposcriptController extends BaseController
 
     private bool $stackProcess = false;
 
-    public function injectElementRepository(ElementRepository $elementRepository): void
+    public function __construct(\CReifenscheid\DbRector\Domain\Repository\ElementRepository $elementRepository)
     {
         $this->elementRepository = $elementRepository;
     }
@@ -77,12 +77,12 @@ class TyposcriptController extends BaseController
     {
         if ($this->logErrorOccurred) {
             $messageKey = $this->stackProcess ? 'typoscript.messages.stackLog.error.bodytext' : 'typoscript.messages.log.error.bodytext';
-            $this->setupFlashMessage($messageKey, AbstractMessage::ERROR);
+            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
 
         if ($this->processingError) {
             $messageKey = $this->stackProcess ? 'typoscript.messages.stackProcess.error.bodytext' : 'typoscript.messages.process.error.bodytext';
-            $this->setupFlashMessage($messageKey, AbstractMessage::ERROR);
+            $this->setupFlashMessage($messageKey, \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
     }
 
@@ -144,7 +144,7 @@ class TyposcriptController extends BaseController
 
     public function processAllAction(): ResponseInterface
     {
-        $processSuccess = $this->processStack($this->elementRepository->findByProcessed(false));
+        $processSuccess = $this->processStack($this->elementRepository->findBy(['processed' => false]));
 
         if ($processSuccess) {
             $this->setupFlashMessage('typoscript.messages.stack.success.bodytext');
@@ -162,7 +162,7 @@ class TyposcriptController extends BaseController
         $selection = $this->request->getArgument('records');
 
         if ($selection === '') {
-            $this->setupFlashMessage('typoscript.messages.no-selection.bodytext', AbstractMessage::INFO);
+            $this->setupFlashMessage('typoscript.messages.no-selection.bodytext', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::INFO);
 
             // redirect to index
             return $this->redirect('index');
@@ -225,7 +225,7 @@ class TyposcriptController extends BaseController
             $this->setupFlashMessage('typoscript.messages.reset.success.bodytext');
         } catch (IllegalObjectTypeException) {
             $this->logger->error('The element could not be removed from the repository', ['element' => $element]);
-            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', AbstractMessage::ERROR);
+            $this->setupFlashMessage('typoscript.messages.process.error.bodytext', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
 
         return $this->redirect('index');
@@ -320,7 +320,7 @@ class TyposcriptController extends BaseController
     {
         // CHECK IF MODEL ALREADY EXISTS
         /** @var \CReifenscheid\DbRector\Domain\Model\Element $existingModel */
-        $existingModel = $this->elementRepository->findByOriginUid($data['uid'])->getFirst();
+        $existingModel = $this->elementRepository->findBy(['originUid' => $data['uid']])->getFirst();
 
         if (
             $existingModel instanceof Element && (
@@ -369,7 +369,7 @@ class TyposcriptController extends BaseController
         return strcmp($originalTrimmed, $modelTrimmed) !== 0;
     }
 
-    private function setupFlashMessage(string $messageKey, int $severity = AbstractMessage::OK): void
+    private function setupFlashMessage(string $messageKey, int $severity = \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK): void
     {
         $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . $severity), $severity);
     }

@@ -132,7 +132,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
         $varFolder = Environment::getVarPath() . '/' . self::EXT_KEY;
 
         if (!\file_exists($varFolder) && !\mkdir($varFolder) && !\is_dir($varFolder)) {
-            throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder));
+            throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder), 9547825830);
         }
 
         if (!\is_writable($varFolder)) {

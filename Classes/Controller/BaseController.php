@@ -4,7 +4,6 @@ namespace CReifenscheid\DbRector\Controller;
 
 use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
 use CReifenscheid\DbRector\Service\RectorService;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use ReflectionClass;
@@ -16,8 +15,10 @@ use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
+use function method_exists;
+use function strtolower;
 
 /***************************************************************
  *
@@ -54,62 +55,44 @@ class BaseController extends ActionController implements RectorControllerInterfa
     /**
      * @var string
      */
-    protected const L10N = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:';
+    protected const string L10N = 'LLL:EXT:db_rector/Resources/Private/Language/locallang_mod.xlf:';
 
     protected string $shortName = '';
-
-    protected ?ExtensionConfiguration $extensionConfiguration = null;
-
-    protected ?RectorService $rectorService = null;
-
-    protected ModuleTemplateFactory $moduleTemplateFactory;
-
-    protected ModuleTemplate $moduleTemplate;
-
-    protected PageRenderer $pageRenderer;
-
-    protected ?ConnectionPool $connectionPool = null;
 
     protected ?Typo3Version $typo3Version = null;
 
     protected bool $restrictedRendering = true;
 
     public function __construct(
-        ModuleTemplateFactory $moduleTemplateFactory,
-        PageRenderer $pageRenderer,
-        ConnectionPool $connectionPool,
-        ExtensionConfiguration $extensionConfiguration,
-        RectorService $rectorService
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+        protected readonly PageRenderer $pageRenderer,
+        protected readonly ConnectionPool $connectionPool,
+        protected readonly ExtensionConfiguration $extensionConfiguration,
+        protected readonly RectorService $rectorService
     ) {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-        $this->pageRenderer = $pageRenderer;
-        $this->connectionPool = $connectionPool;
-        $this->extensionConfiguration = $extensionConfiguration;
-        $this->rectorService = $rectorService;
-
         $reflect = new ReflectionClass($this);
         $this->shortName = $reflect->getShortName();
 
         $this->typo3Version = new Typo3Version();
+
+        if (method_exists($this, 'initialize')) {
+            $this->initialize();
+        }
     }
 
-    /**
-     * @throws NoSuchArgumentException
-     */
-    protected function initializeAction(): void
+    protected function initializeModuleTemplate(): ModuleTemplate
     {
-        parent::initializeAction();
-        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $view = $this->moduleTemplateFactory->create($this->request);
 
         // generate the dropdown menu
-        $this->buildMenu($this->shortName);
+        return $this->buildMenu($view, $this->shortName);
     }
 
-    protected function buildMenu(string $currentController): void
+    protected function buildMenu(ModuleTemplate $view, string $currentController): ModuleTemplate
     {
         $this->uriBuilder->setRequest($this->request);
 
-        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
+        $menu = $view->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier($this->request->getControllerExtensionName() . 'ModuleMenu');
 
         if ($this->typo3Version->getMajorVersion() < 12) {
@@ -123,29 +106,20 @@ class BaseController extends ActionController implements RectorControllerInterfa
 
             $menu->addMenuItem(
                 $menu->makeMenuItem()
-                    ->setTitle(LocalizationUtility::translate('LLL:EXT:' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName()) . '/Resources/Private/Language/locallang_mod.xlf:section.' . \strtolower((string)$alias)))
+                    ->setTitle(LocalizationUtility::translate('LLL:EXT:' . GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName()) . '/Resources/Private/Language/locallang_mod.xlf:section.' . strtolower((string)$alias)))
                     ->setHref($this->uriBuilder->uriFor('index', null, $alias))
                     ->setActive($currentController === $alias . 'Controller')
             );
         }
 
-        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+        $view->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+
+        return $view;
     }
 
-    public function indexAction(): ResponseInterface
+    public function run(): void
     {
-        $this->assignDefaultValues();
-
-        if ($this->rectorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
-            $this->run();
-        }
-
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
-
-    public function run(): void {}
 
     protected function assignDefaultValues(): void
     {

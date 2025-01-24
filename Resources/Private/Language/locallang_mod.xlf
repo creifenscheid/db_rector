@@ -40,10 +40,10 @@
             <trans-unit id="ignore-context" resname="ignore-context" approved="true">
                 <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!</source>
             </trans-unit>
-            <trans-unit id="general.messages.header.0" resname="general.messages.header.0" approved="true">
+            <trans-unit id="general.messages.header.success" resname="general.messages.header.success" approved="true">
                 <source>Success</source>
             </trans-unit>
-            <trans-unit id="general.messages.header.2" resname="general.messages.header.2" approved="true">
+            <trans-unit id="general.messages.header.danger" resname="general.messages.header.danger" approved="true">
                 <source>Error</source>
             </trans-unit>
 

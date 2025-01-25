@@ -4,7 +4,7 @@
 	"description" : "This TYPO3 extension is an typo3-rector adapter with backend module to refactor sys_template.config data.",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
-		"typo3/cms-core" : "^12.4||^13.3"
+		"typo3/cms-core" : "^13.4"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest"

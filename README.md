@@ -5,7 +5,7 @@ It is recommended to **NOT run this** extension **in productive environments**!
 
 ## Installation
 
-This **extension must be installed via composer**, e.g. `composer req -dev creifenscheid/db-rector`, to install typo3-rector and get it running.  You can download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/), but it still has to be installed via composer.
+This **extension must be installed via composer**, e.g. `composer req —dev creifenscheid/db-rector`, to install typo3-rector and get it running.  You can download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/), but it still has to be installed via composer.
 
 ## What does it do
 This extension is an adapter to run typo3-rector in the TYPO3 backend to refactor typoscript stored in sys_template.config.
@@ -26,7 +26,7 @@ So the updated sys_template typoscript can be processed again.
 
 ### Known working setups
 
-* DDEV (TYPO3 11, TYPO3 12)
+* DDEV based environments
 
 ### Known not working setups
 

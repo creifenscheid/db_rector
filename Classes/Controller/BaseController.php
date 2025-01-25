@@ -112,21 +112,6 @@ class BaseController extends ActionController implements LoggerAwareInterface
         $view->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
 
         return $view;
-
-
-        $languageService = $this->getLanguageService();
-        $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
-        $shortcutTitle = sprintf(
-            '%s: %s [%d]',
-            $languageService->sL('LLL:EXT:backend/Resources/Private/Language/locallang_pagetsconfig.xlf:module.pagetsconfig_active'),
-            BackendUtility::getRecordTitle('pages', $pageInfo),
-            $pageUid
-        );
-        $shortcutButton = $buttonBar->makeShortcutButton()
-            ->setRouteIdentifier($moduleIdentifier)
-            ->setDisplayName($shortcutTitle)
-            ->setArguments(['id' => $pageUid]);
-        $buttonBar->addButton($shortcutButton);
     }
 
     protected function assignDefaultValues(ModuleTemplate $view): ModuleTemplate

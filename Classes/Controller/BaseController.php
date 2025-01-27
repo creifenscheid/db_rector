@@ -63,6 +63,8 @@ class BaseController extends ActionController implements LoggerAwareInterface
 
     protected bool $restrictedRendering = true;
 
+    protected ?ModuleTemplate $moduleTemplate = null;
+
     public function __construct(
         private readonly ModuleTemplateFactory $moduleTemplateFactory,
         protected readonly PageRenderer $pageRenderer,
@@ -80,20 +82,20 @@ class BaseController extends ActionController implements LoggerAwareInterface
         }
     }
 
-    protected function initializeModuleTemplate(): ModuleTemplate
+    protected function initializeModuleTemplate(): void
     {
-        $view = $this->moduleTemplateFactory->create($this->request);
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
 
         // generate the dropdown menu
-        return $this->buildMenu($view, $this->shortName);
+        $this->buildMenu($this->shortName);
     }
 
-    protected function buildMenu(ModuleTemplate $view, string $currentController): ModuleTemplate
+    protected function buildMenu(string $currentController): void
     {
         $this->uriBuilder->setRequest($this->request);
 
 
-        $menu = $view->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
+        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier($this->request->getControllerExtensionName() . 'ModuleMenu');
 
         $moduleControllerActions = $this->request->getAttribute('module')->getControllerActions();
@@ -109,14 +111,12 @@ class BaseController extends ActionController implements LoggerAwareInterface
             );
         }
 
-        $view->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
-
-        return $view;
+        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
-    protected function assignDefaultValues(ModuleTemplate $view): ModuleTemplate
+    protected function assignDefaultValues(): void
     {
-        $view->assignMultiple([
+        $this->moduleTemplate->assignMultiple([
             'l10n' => self::L10N,
             'contextIsDevelopment' => Environment::getContext()->isDevelopment(),
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
@@ -125,7 +125,5 @@ class BaseController extends ActionController implements LoggerAwareInterface
             'rector' => $this->rectorService->getGoodToGo(),
             'typo3version' => $this->typo3Version->getMajorVersion(),
         ]);
-
-        return $view;
     }
 }

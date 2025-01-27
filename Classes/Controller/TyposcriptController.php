@@ -49,9 +49,6 @@ use function time;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class TyposcriptController
- */
 class TyposcriptController extends BaseController
 {
     /**
@@ -89,8 +86,8 @@ class TyposcriptController extends BaseController
 
     public function indexAction(): ResponseInterface
     {
-        $view = $this->initializeModuleTemplate();
-        $view = $this->assignDefaultValues($view);
+        $this->initializeModuleTemplate();
+        $this->assignDefaultValues();
 
         if ($this->rectorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
 
@@ -104,10 +101,10 @@ class TyposcriptController extends BaseController
             }
 
             $elements = $this->elementRepository->findAll();
-            $view->assign('elements', $elements);
+            $this->moduleTemplate->assign('elements', $elements);
         }
 
-        return $view->renderResponse('Typoscript/Index');
+        return $this->moduleTemplate->renderResponse('Typoscript/Index');
     }
 
     public function detailAction(Element $element): ResponseInterface

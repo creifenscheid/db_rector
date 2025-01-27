@@ -1,8 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:flashMessages />
-
 <div class="module {moduleClass}" data-module-id="{moduleId}" data-module-name="{moduleName}">
     <f:if condition="{docHeader.enabled}">
         <f:render partial="DocHeader" arguments="{docHeader:docHeader}" />
@@ -10,6 +8,9 @@
 
     <div class="module-body t3js-module-body">
         <div class="db-rector-be-module db-rector">
+
+            <f:flashMessages />
+
             <h1><f:translate key="{l10n}mlang_tabs_tab"/></h1>
 
             <f:if condition="{restrictedRendering}">

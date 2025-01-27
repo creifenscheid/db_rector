@@ -152,15 +152,6 @@
             <trans-unit id="typoscript.messages.no-selection.bodytext" resname="typoscript.messages.no-selection.bodytext" approved="true">
                 <source>No element to be processed has been selected.</source>
             </trans-unit>
-            <trans-unit id="typoscript.legend" resname="typoscript.legend" approved="true">
-                <source>Colour legend</source>
-            </trans-unit>
-            <trans-unit id="typoscript.legend.info" resname="typoscript.legend.info" approved="true">
-                <source>TypoScript has been processed.</source>
-            </trans-unit>
-            <trans-unit id="typoscript.legend.success" resname="typoscript.legend.success" approved="true">
-                <source>Rector result has been applied.</source>
-            </trans-unit>
 
             <!-- DETAIL -->
             <trans-unit id="typoscript.detail.header" resname="typoscript.detail.header" approved="true">

@@ -7,7 +7,6 @@ use CReifenscheid\DbRector\Service\RectorService;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use ReflectionClass;
-use TYPO3\CMS\Backend\Module\ModuleData;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
@@ -92,6 +91,7 @@ class BaseController extends ActionController implements LoggerAwareInterface
     protected function buildMenu(ModuleTemplate $view, string $currentController): ModuleTemplate
     {
         $this->uriBuilder->setRequest($this->request);
+
 
         $menu = $view->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier($this->request->getControllerExtensionName() . 'ModuleMenu');

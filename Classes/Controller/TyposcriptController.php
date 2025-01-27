@@ -109,9 +109,10 @@ class TyposcriptController extends BaseController
 
     public function detailAction(Element $element): ResponseInterface
     {
+        $this->initializeModuleTemplate();
         $this->assignDefaultValues();
 
-        $this->view->assign('element', $element);
+        $this->moduleTemplate->assign('element', $element);
 
         if ($element->getProcessedTyposcript() !== '') {
             $diffUtility = GeneralUtility::makeInstance(DiffUtility::class);
@@ -126,12 +127,10 @@ class TyposcriptController extends BaseController
                 }
             }
 
-            $this->view->assign('diff', implode('<br>', $diff));
+            $this->moduleTemplate->assign('diff', implode('<br>', $diff));
         }
 
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse('Typoscript/Detail');
     }
 
     public function submitAction(Element $element): ResponseInterface

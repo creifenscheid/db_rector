@@ -24,21 +24,6 @@
         margin: 0;
     }
 
-    &__legend {
-        display: inline-block;
-        width:15px;
-        height: 15px;
-        margin-right:5px;
-
-        &--info {
-            background-color: #e3ecf4;
-        }
-
-        &--success {
-            background-color: #d6e5d6;
-        }
-    }
-
     &__code {
         color: black;
 
@@ -78,7 +63,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: var(--panel-default-heading-bg, whitesmoke);
             padding: var(--panel-header-padding-y, 0.75rem) var(--panel-header-padding-x, 1rem);
         }
 

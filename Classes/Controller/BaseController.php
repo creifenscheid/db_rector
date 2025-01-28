@@ -3,7 +3,7 @@
 namespace CReifenscheid\DbRector\Controller;
 
 use CReifenscheid\DbRector\Configuration\ExtensionConfiguration;
-use CReifenscheid\DbRector\Service\RectorService;
+use CReifenscheid\DbRector\Service\FractorService;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use ReflectionClass;
@@ -70,7 +70,7 @@ class BaseController extends ActionController implements LoggerAwareInterface
         protected readonly PageRenderer $pageRenderer,
         protected readonly ConnectionPool $connectionPool,
         protected readonly ExtensionConfiguration $extensionConfiguration,
-        protected readonly RectorService $rectorService
+        protected readonly FractorService $fractorService
     ) {
         $reflect = new ReflectionClass($this);
         $this->shortName = $reflect->getShortName();
@@ -122,7 +122,7 @@ class BaseController extends ActionController implements LoggerAwareInterface
             'ignoreTYPO3Context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
             'composerMode' => Environment::isComposerMode(),
             'restrictedRendering' => $this->restrictedRendering,
-            'rector' => $this->rectorService->getGoodToGo(),
+            'fractor' => $this->fractorService->getGoodToGo(),
             'typo3version' => $this->typo3Version->getMajorVersion(),
         ]);
     }

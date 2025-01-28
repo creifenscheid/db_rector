@@ -44,9 +44,9 @@ class SetupController extends BaseController
                 'typo3context' => Environment::getContext(),
                 'ignoreTypo3context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
                 'composer' => Environment::isComposerMode(),
-                'rectorVersion' => $this->rectorService->getVersion(),
+                'fractorVersion' => $this->fractorService->getVersion(),
                 'phpVersion' => PHP_VERSION,
-                'shellExec' => $this->rectorService->isShellExecEnabled(),
+                'shellExec' => $this->fractorService->isShellExecEnabled(),
             ],
         ]);
 

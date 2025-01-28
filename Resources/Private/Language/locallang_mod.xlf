@@ -29,13 +29,13 @@
                 <source>no</source>
             </trans-unit>
             <trans-unit id="no-composer" resname="no-composer" approved="true">
-                <source>Your TYPO3 installation is not running in composer mode, which is required to run rector.</source>
+                <source>Your TYPO3 installation is not running in composer mode, which is required to run fractor.</source>
             </trans-unit>
             <trans-unit id="no-development" resname="no-development" approved="true">
                 <source>Your TYPO3 installation is not running in context "Development". To prevent changes in a production environment, this module canonly be used in context "Development".</source>
             </trans-unit>
-            <trans-unit id="no-rector" resname="no-rector" approved="true">
-                <source>Rector is not running properly.</source>
+            <trans-unit id="no-fractor" resname="no-fractor" approved="true">
+                <source>Fractor is not running properly.</source>
             </trans-unit>
             <trans-unit id="ignore-context" resname="ignore-context" approved="true">
                 <source>Database Rector is configured to ignore the TYPO3 context! Note that it's not recommended to run this extension in production environments!</source>
@@ -60,8 +60,8 @@
             <trans-unit id="setup.composer" resname="setup.composer" approved="true">
                 <source>Composer mode</source>
             </trans-unit>
-            <trans-unit id="setup.rector" resname="setup.rector" approved="true">
-                <source>Rector version</source>
+            <trans-unit id="setup.fractor" resname="setup.fractor" approved="true">
+                <source>Fractor version</source>
             </trans-unit>
             <trans-unit id="setup.php" resname="setup.php" approved="true">
                 <source>PHP version</source>
@@ -105,19 +105,19 @@
                 <source>Process selection</source>
             </trans-unit>
             <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view" approved="true">
-                <source>View/edit rector result</source>
+                <source>View/edit fractor result</source>
             </trans-unit>
             <trans-unit id="typoscript.toolbar.process" resname="typoscript.toolbar.process" approved="true">
                 <source>Process record</source>
             </trans-unit>
             <trans-unit id="typoscript.toolbar.apply" resname="typoscript.toolbar.apply" approved="true">
-                <source>Apply rector result</source>
+                <source>Apply fractor result</source>
             </trans-unit>
             <trans-unit id="typoscript.toolbar.rollBack" resname="typoscript.toolbar.rollBack" approved="true">
                 <source>Roll back</source>
             </trans-unit>
             <trans-unit id="typoscript.toolbar.reset" resname="typoscript.toolbar.reset" approved="true">
-                <source>Reset rector element</source>
+                <source>Reset fractor element</source>
             </trans-unit>
             <trans-unit id="typoscript.messages.log.error.bodytext" resname="typoscript.message.general.error.bodytext" approved="true">
                 <source>Updating the element resulted in an error. Check the TYPO3 log file for further information.</source>
@@ -147,7 +147,7 @@
                 <source>Your changes have been stored successfully.</source>
             </trans-unit>
             <trans-unit id="typoscript.messages.reset.success.bodytext" resname="typoscript.messages.reset.success.bodytext" approved="true">
-                <source>The rector element has been reset successfully.</source>
+                <source>The fractor element has been reset successfully.</source>
             </trans-unit>
             <trans-unit id="typoscript.messages.no-selection.bodytext" resname="typoscript.messages.no-selection.bodytext" approved="true">
                 <source>No element to be processed has been selected.</source>

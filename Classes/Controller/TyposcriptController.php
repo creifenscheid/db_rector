@@ -89,7 +89,7 @@ class TyposcriptController extends BaseController
         $this->initializeModuleTemplate();
         $this->assignDefaultValues();
 
-        if ($this->rectorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
+        if ($this->fractorService->isShellExecEnabled() && Environment::isComposerMode() && ($this->extensionConfiguration->getIgnoreTYPO3Context() || Environment::getContext()->isDevelopment())) {
 
             $this->pageRenderer->loadJavaScriptModule('@typo3/backend/multi-record-selection.js');
             $this->pageRenderer->loadJavaScriptModule('@creifenscheid/db-rector/show-process-animation.js');
@@ -271,7 +271,7 @@ class TyposcriptController extends BaseController
 
     private function processElement(Element $element): bool
     {
-        $elementResult = $this->rectorService->process($element->getOriginTyposcript());
+        $elementResult = $this->fractorService->process($element->getOriginTyposcript());
 
         if ($elementResult === false) {
             $this->processingError = true;

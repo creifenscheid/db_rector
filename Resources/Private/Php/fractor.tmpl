@@ -4,6 +4,7 @@ use a9f\Fractor\Configuration\FractorConfiguration;
 use a9f\Typo3Fractor\Set\Typo3LevelSetList;
 
 return FractorConfiguration::configure()
+    ->withPaths([__DIR__ . '/var/db_rector/'])
     ->withSets([
         Typo3LevelSetList::%%TYPO3PREV%%,
         Typo3LevelSetList::%%TYPO3CUR%%

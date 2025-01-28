@@ -24,15 +24,15 @@
                 <th scope="row"><f:translate key="{l10n}setup.composer" /></th>
                 <td><f:translate key="{l10n}general.{f:if(condition:setup.composer, then:'yes', else:'no')}" /></td>
             </tr>
-            <tr role="row"{f:if(condition:'!{setup.rectorVersion}', then:' class="danger"')}>
-                <th scope="row"><f:translate key="{l10n}setup.rector" /></th>
+            <tr role="row"{f:if(condition:'!{setup.fractorVersion}', then:' class="danger"')}>
+                <th scope="row"><f:translate key="{l10n}setup.fractor" /></th>
                 <td>
-                    <f:if condition="{setup.rectorVersion}">
+                    <f:if condition="{setup.fractorVersion}">
                         <f:then>
-                            {setup.rectorVersion}
+                            {setup.fractorVersion}
                         </f:then>
                         <f:else>
-                            <f:translate key="{l10n}no-rector" />
+                            <f:translate key="{l10n}no-fractor" />
                         </f:else>
                     </f:if>
                 </td>

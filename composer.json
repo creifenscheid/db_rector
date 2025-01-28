@@ -1,7 +1,7 @@
 {
 	"name" : "creifenscheid/db-rector",
 	"type" : "typo3-cms-extension",
-	"description" : "This TYPO3 extension is an typo3-rector adapter with backend module to refactor sys_template.config data.",
+	"description" : "This TYPO3 extension is an typo3-fractor adapter with backend module to refactor sys_template.config data.",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
 		"typo3/cms-core" : "^13.4",

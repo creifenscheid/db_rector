@@ -67,16 +67,13 @@ class FractorService implements SingletonInterface, LoggerAwareInterface
 
     private function init(): void
     {
+        // fractor always needs a valid configuration file, even for a '--version' call
+        $configurationInitialized = $this->initFractorConfiguration();
+
         $this->version = $this->run('--version');
 
-        /*
-         * the shell returns either a string containing the version number or null
-         * null as return means, that an error occurred
-         * and an error means, fractor does not run properly or there is a problem with running fractor
-         * so, we are not good to go.
-         */
-        // assign state
-        $this->goodToGo = $this->version !== null && $this->initFractorConfiguration();
+        $versionPattern = '/^Fractor \d+\.\d+\.\d+$/';
+        $this->goodToGo = preg_match($versionPattern, $this->version) && $configurationInitialized;
     }
 
     /**
@@ -165,7 +162,7 @@ class FractorService implements SingletonInterface, LoggerAwareInterface
             return false;
         }
 
-        $fractor = $this->run('process ' . $tmpFile . ' --config ' . $this->fractorConfiguration);
+        $fractor = $this->run('process ');
 
         if ($fractor === null) {
             $this->logger->error('An error occurred, so that fractor returned "null".');
@@ -194,6 +191,6 @@ class FractorService implements SingletonInterface, LoggerAwareInterface
 
     private function run(string $statement): ?string
     {
-        return \shell_exec($this->fractorPath . $statement);
+        return \shell_exec($this->fractorPath . $statement . ' --config ' . $this->fractorConfiguration);
     }
 }

@@ -46,6 +46,9 @@
             <trans-unit id="general.messages.header.danger" resname="general.messages.header.danger" approved="true">
                 <source>Error</source>
             </trans-unit>
+            <trans-unit id="general.messages.header.info" resname="general.messages.header.info" approved="true">
+                <source>Info</source>
+            </trans-unit>
 
             <!-- SETUP CHECK -->
             <trans-unit id="setup.typo3" resname="setup.typo3" approved="true">

@@ -371,6 +371,9 @@ class TyposcriptController extends BaseController
 
     private function setupFlashMessage(string $messageKey, ContextualFeedbackSeverity $severity = ContextualFeedbackSeverity::OK): void
     {
-        $this->addFlashMessage(LocalizationUtility::translate(self::L10N . $messageKey), LocalizationUtility::translate(self::L10N . 'general.messages.header.' . $severity->getCssClass()), $severity);
+        $header = LocalizationUtility::translate(self::L10N . 'general.messages.header.' . $severity->getCssClass());
+        $bodytext = LocalizationUtility::translate(self::L10N . $messageKey);
+
+        $this->addFlashMessage($bodytext, $header, $severity);
     }
 }

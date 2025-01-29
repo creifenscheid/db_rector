@@ -1,28 +1,30 @@
 # TYPO3 Extension "DB Rector"
 
+> **Note: As of version 13.0.0, this extension uses [typo3-fractor](https://github.com/andreaswolf/fractor-typo3-fractor).**
+
 ## Disclaimer
-It is recommended to **NOT run this** extension **in productive environments**!
+It is strongly recommended **NOT** to run this extension **in production environments**!
 
 ## Installation
 
-This **extension must be installed via composer**, e.g. `composer req —dev creifenscheid/db-rector`, to install typo3-fractor and get it running.  You can download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/), but it still has to be installed via composer.
+This **extension must be installed via Composer**, e.g., `composer req --dev creifenscheid/db-rector`, to install typo3-fractor and get it running. While you can download it from the [TYPO3 Extension Repository](https://extensions.typo3.org/extension/db_rector/), **it still needs to be installed via Composer**.
 
 ## What does it do
-This extension is an adapter to run typo3-fractor in the TYPO3 backend to refactor typoscript stored in sys_template.config.
+This extension acts as an adapter to run typo3-fractor in the TYPO3 backend, enabling the refactoring of TypoScript stored in `sys_template.config`.
 
 ## Features
-- backend module to
-  - view all typoscript stored in the db
-  - run typo3-fractor on single db entries
-  - Review the result of the typo3-fractor process (incl. diff view)
-  - apply typo3-fractor result to the corresponding sys_template record
-  - roll back the original typoscript
-- security
-  - backend module is only active in TYPO3 context „development“ by default
+- Backend module to:
+  - View all TypoScript stored in the database
+  - Run typo3-fractor on individual or all database entries
+  - Review the results of the typo3-fractor process (including a diff view)
+  - Apply typo3-fractor results to the corresponding sys_template record
+  - Roll back to the original TypoScript
+- Security
+  - The backend module is only active in the TYPO3 development context by default
 
 ### Note
-If the sys_template record has been adjusted after the fractor process or the applying of the fractor result, the corresponding fractor model is going to be reset.<br>
-So the updated sys_template typoscript can be processed again.
+If the `sys_template` record is modified after the fractor process or after applying the fractor result, the corresponding fractor model will be reset.<br>
+This allows the updated sys_template TypoScript to be processed again.
 
 ### Known working setups
 
@@ -36,25 +38,24 @@ So the updated sys_template typoscript can be processed again.
 ### Extension configuration
 | Parameter | Default | Optional | Description                                                                  |
 |:----------|:--------|:---------|:-----------------------------------------------------------------------------|
-|ignoreTYPO3Context|false|yes| If set to true, the context of the TYPO3 installation is going to be ignored - this is not recommended |
+|ignoreTYPO3Context|false|yes| If set to `true`, the TYPO3 installation context will be ignored—this is not recommended. |
 
 ### Rector configuration
-To configure typo3-fractor a file named fractor.php is required.<br>
-This file is generated more or less automatically.<br>
-There is some sort of „template“, which is copied into the working folder.<br>
-<br>
-Since just typoscript refactoring is needed, the fractor config file is kept small and simple.<br>
-<br>
-The following configuration parameter are defined dynamically:
+To configure typo3-fractor, a file named `fractor.php` is required.
+This file is generated semi-automatically by copying a predefined template into the working folder.
+
+Since only TypoScript refactoring is needed, the fractor configuration file remains small and simple.
+
+The following configuration parameters are defined dynamically:
 
 | Parameter  | Value(s)                                                                                                   | Description                           |
 |------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| phpVersion | The php version of the TYPO3 installation                                                                  | target version to support             |
-| sets       | 2 defined "UP_TO_TYPO3" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to run on the target code |
+| phpVersion | The PHP version of the TYPO3 installation.                                                                  | Target version to support.             |
+| sets       | 2 defined "UP_TO_TYPO3" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to apply to the target code. |
 
 ## Support
-I don't want your money or anything else.
-I am doing this for fun, with heart and to improve my coding skills.
-Constructive critisism is very welcome.
-If you want to contribute, feel free to do so.
-Thank you!
+I don’t want your money or anything else.
+I’m doing this for fun, with passion, and to improve my coding skills.
+I always welcome feedback and constructive criticism.
+If you’d like to contribute, feel free to do so.<br><br>
+**Thank you!**

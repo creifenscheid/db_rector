@@ -23,7 +23,7 @@
                     <th><f:translate key="{l10n}typoscript.originTyposcript"/></th>
                     <th><f:translate key="{l10n}typoscript.processed"/></th>
                     <th><f:translate key="{l10n}typoscript.applied"/></th>
-                    <th class="col-control"></th>
+                    <th class="col-control"><span class="sr-only"><f:translate key="{l10n}typoscript.toolbar"/></span></th>
                 </tr>
                 </thead>
 
@@ -123,11 +123,11 @@
         </f:form>
     </div>
 
-    <button type="submit" data-shows-process-animation-after-click="true" form="dbrector-list-form" class="btn btn-default">
+    <button type="submit" data-shows-process-animation-after-click="true" form="dbrector-list-form" class="btn btn-primary">
         <f:translate key="{l10n}typoscript.button.processSelection"/>
     </button>
 
-    <f:link.action action="processAll" controller="Typoscript" extensionName="DbRector" class="btn btn-default" additionalAttributes="{data-shows-process-animation-after-click:'true'}">
+    <f:link.action action="processAll" controller="Typoscript" extensionName="DbRector" class="btn btn-primary" additionalAttributes="{data-shows-process-animation-after-click:'true'}">
         <f:translate key="{l10n}typoscript.button.processAll"/>
     </f:link.action>
 </f:section>

@@ -107,6 +107,9 @@
             <trans-unit id="typoscript.button.processSelection" resname="typoscript.button.processSelection" approved="true">
                 <source>Process selection</source>
             </trans-unit>
+            <trans-unit id="typoscript.toolbar" resname="typoscript.toolbar" approved="true">
+                <source>Toolbar</source>
+            </trans-unit>
             <trans-unit id="typoscript.toolbar.view" resname="typoscript.toolbar.view" approved="true">
                 <source>View/edit fractor result</source>
             </trans-unit>

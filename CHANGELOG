@@ -1,3 +1,9 @@
+v13.0.0 +
+  * [TASK] - TYPO3 13 compatibility
+  * [TASK] - Drop TYPO3 12 compatibility
+  * [TASK] - Replace typo3-rector with typo3-fractor
+  * [TASK] - Make backend module context aware
+
 v12.3.0 +
   * [TASK] - Adds support for php 8.2
   * [TASK] - Drops support for php 8.0

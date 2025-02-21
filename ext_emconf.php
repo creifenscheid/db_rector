@@ -27,15 +27,14 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'DB Rector',
-    'description' => 'This TYPO3 extension is an typo3-rector adapter with backend module to refactor sys_template.config data.',
+    'description' => 'This TYPO3 extension is an typo3-fractor adapter with backend module to refactor sys_template.config data.',
     'category' => 'be',
     'author' => 'Christian Reifenscheid',
-    'version' => '12.3.0',
+    'version' => '13.0.0',
     'state' => 'stable',
     'constraints' => [
         'depends' => [
-            'php' => '8.1-8.2.99',
-            'typo3' => '11.5.0-12.4.99',
+            'typo3' => '13.4.0-13.4.99',
         ],
     ],
     'autoload' => [

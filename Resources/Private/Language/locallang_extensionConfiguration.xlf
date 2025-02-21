@@ -6,7 +6,7 @@
         <header/>
         <body>
             <trans-unit id="backendmodule.ignoreTYPO3Context" resname="backendmodule.ignoreTYPO3Context" approved="true">
-                <source>Ignore TYPO3 context: By activating this checkbox, the context of the TYPO3 installation is ignored.</source>
+                <source>Ignore TYPO3 context: Enabling this checkbox will ignore the context of the TYPO3 installation.</source>
             </trans-unit>
         </body>
     </file>

@@ -35,10 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class RectorService
- */
-class RectorService implements SingletonInterface, LoggerAwareInterface
+class FractorService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -51,49 +48,46 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
 
     protected ?string $version = null;
 
-    protected ?string $rectorPath = null;
+    protected ?string $fractorPath = null;
 
-    protected ?string $rectorConfiguration = null;
+    protected ?string $fractorConfiguration = null;
 
     protected ?string $varFolder = null;
 
-    protected array $rectorSuccessCriteria = [
-        '[OK] Rector is done',
-        '[OK] 1 file has been changed by Rector',
+    protected array $fractorSuccessCriteria = [
+        '[OK] Fractor is done',
+        '[OK] 1 file has been changed by Fractor',
     ];
 
     public function __construct()
     {
-        $this->rectorPath = Environment::getProjectPath() . '/vendor/bin/rector ';
+        $this->fractorPath = Environment::getProjectPath() . '/vendor/bin/fractor ';
         $this->init();
     }
 
     private function init(): void
     {
+        // fractor always needs a valid configuration file, even for a '--version' call
+        $configurationInitialized = $this->initFractorConfiguration();
+
         $this->version = $this->run('--version');
 
-        /*
-         * the shell returns either a string containing the version number or null
-         * null as return means, that an error occurred
-         * and an error means, rector does not run properly or there is a problem with running rector
-         * so, we are not good to go.
-         */
-        // assign state
-        $this->goodToGo = $this->version !== null && $this->initRectorConfiguration();
+        $versionPattern = '/^Fractor \d+\.\d+\.\d+$/';
+        $this->goodToGo = preg_match($versionPattern, $this->version) && $configurationInitialized;
     }
 
     /**
      * @SeppToDo: The following code feels a bit dirty. Perhaps there is a nicer way to implement it.
      */
-    private function initRectorConfiguration(): bool
+    private function initFractorConfiguration(): bool
     {
         if ($this->createVarFolder()) {
             // CONFIGURATION SETUP
-            $configurationFilename = 'rector';
+            $configurationFilename = 'fractor';
             $configurationFile = $this->varFolder . '/' . $configurationFilename . '.php';
 
             if (\file_exists($configurationFile)) {
-                $this->rectorConfiguration = $configurationFile;
+                $this->fractorConfiguration = $configurationFile;
 
                 return true;
             }
@@ -103,7 +97,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             // PREPARE CONFIG FILE
             $configuration = \file_get_contents($configurationTemplate);
 
-            // SETUP PHP VERSION FOR RECTOR
+            // SETUP PHP VERSION FOR FRACTOR
             $phpVersion = GeneralUtility::trimExplode('.', PHP_VERSION);
             \array_pop($phpVersion);
             $configuration = str_replace('%%PHPVERSION%%', 'PHP_' . \implode('', $phpVersion), $configuration);
@@ -116,7 +110,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             $fileResult = \file_put_contents($configurationFile, $configuration);
 
             if ($fileResult !== false) {
-                $this->rectorConfiguration = $configurationFile;
+                $this->fractorConfiguration = $configurationFile;
 
                 return true;
             }
@@ -132,7 +126,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
         $varFolder = Environment::getVarPath() . '/' . self::EXT_KEY;
 
         if (!\file_exists($varFolder) && !\mkdir($varFolder) && !\is_dir($varFolder)) {
-            throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder));
+            throw new RuntimeException(\sprintf('Directory "%s" was not created', $varFolder), 9547825830);
         }
 
         if (!\is_writable($varFolder)) {
@@ -156,7 +150,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
 
     public function process(string $contentToRefactor): string|bool
     {
-        // CREATE TEMP FILE TO RUN RECTOR ON
+        // CREATE TEMP FILE TO RUN FRACTOR ON
         $tmpFileName = \uniqid() . '.typoscript';
         $tmpFile = $this->varFolder . '/' . $tmpFileName;
         $fileWritten = \file_put_contents($tmpFile, $contentToRefactor);
@@ -168,16 +162,16 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             return false;
         }
 
-        $rector = $this->run('process ' . $tmpFile . ' --config ' . $this->rectorConfiguration);
+        $fractor = $this->run('process ');
 
-        if ($rector === null) {
-            $this->logger->error('An error occurred, so that rector returned "null".');
+        if ($fractor === null) {
+            $this->logger->error('An error occurred, so that fractor returned "null".');
 
             return false;
         }
 
-        foreach ($this->rectorSuccessCriteria as $successCriterion) {
-            if (\str_contains($rector, (string)$successCriterion)) {
+        foreach ($this->fractorSuccessCriteria as $successCriterion) {
+            if (\str_contains($fractor, (string)$successCriterion)) {
                 $result = \file_get_contents($tmpFile);
                 \unlink($tmpFile);
 
@@ -185,7 +179,7 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
             }
         }
 
-        $this->logger->error('Rector could not process the file.', ['return' => $rector]);
+        $this->logger->error('Fractor could not process the file.', ['return' => $fractor]);
 
         return false;
     }
@@ -197,6 +191,6 @@ class RectorService implements SingletonInterface, LoggerAwareInterface
 
     private function run(string $statement): ?string
     {
-        return \shell_exec($this->rectorPath . $statement);
+        return \shell_exec($this->fractorPath . $statement . ' --config ' . $this->fractorConfiguration);
     }
 }

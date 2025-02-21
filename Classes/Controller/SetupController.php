@@ -29,31 +29,27 @@ use TYPO3\CMS\Core\Core\Environment;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class SetupController
- */
 class SetupController extends BaseController
 {
     protected bool $restrictedRendering = false;
 
     public function indexAction(): \Psr\Http\Message\ResponseInterface
     {
+        $this->initializeModuleTemplate();
         $this->assignDefaultValues();
 
-        $this->view->assignMultiple([
+        $this->moduleTemplate->assignMultiple([
             'setup' => [
-                'typo3version' => $this->typo3Version,
+                'typo3version' => $this->typo3Version->getVersion(),
                 'typo3context' => Environment::getContext(),
                 'ignoreTypo3context' => $this->extensionConfiguration->getIgnoreTYPO3Context(),
                 'composer' => Environment::isComposerMode(),
-                'rectorVersion' => $this->rectorService->getVersion(),
+                'fractorVersion' => $this->fractorService->getVersion(),
                 'phpVersion' => PHP_VERSION,
-                'shellExec' => $this->rectorService->isShellExecEnabled(),
+                'shellExec' => $this->fractorService->isShellExecEnabled(),
             ],
         ]);
 
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse('Setup/Index');
     }
 }

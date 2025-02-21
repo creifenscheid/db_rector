@@ -1,52 +1,75 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:flashMessages />
+<div class="module {moduleClass}" data-module-id="{moduleId}" data-module-name="{moduleName}">
+    <f:if condition="{docHeader.enabled}">
+        <f:render partial="DocHeader" arguments="{docHeader:docHeader}" />
+    </f:if>
 
-<div class="db-rector-be-module db-rector">
-    <h1><f:translate key="{l10n}mlang_tabs_tab"/></h1>
+    <div class="module-body t3js-module-body">
+        <div class="db-rector-be-module db-rector">
 
-    <f:if condition="{restrictedRendering}">
-        <f:then>
-            <f:if condition="{rector}">
+            <f:flashMessages />
+
+            <h1><f:translate key="{l10n}mlang_tabs_tab"/></h1>
+
+            <f:if condition="{restrictedRendering}">
                 <f:then>
-                    <f:if condition="{composerMode}">
+                    <f:if condition="{fractor}">
                         <f:then>
-                            <f:if condition="!{contextIsDevelopment} && !{ignoreTYPO3Context}">
-                            <br>    
-                            <div class="callout callout-danger">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                            <f:if condition="{composerMode}">
+                                <f:then>
+                                    <f:if condition="!{contextIsDevelopment} && !{ignoreTYPO3Context}">
+                                        <br>
+                                        <div class="callout callout-danger">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="callout-body">
+                                                        <p><f:translate key="{l10n}no-development"/></p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <div class="callout-body">
-                                                <p><f:translate key="{l10n}no-development"/></p>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </f:if>
+                                    </f:if>
 
-                            <f:if condition="!{contextIsDevelopment} && {ignoreTYPO3Context}">
-                                <br>
-                                <div class="callout callout-warning">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                                    <f:if condition="!{contextIsDevelopment} && {ignoreTYPO3Context}">
+                                        <br>
+                                        <div class="callout callout-warning">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="callout-body">
+                                                        <p><f:translate key="{l10n}ignore-context"/></p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <div class="callout-body">
-                                                <p><f:translate key="{l10n}ignore-context"/></p>
+                                    </f:if>
+
+                                    <f:if condition="{contextIsDevelopment} || {ignoreTYPO3Context}">
+                                        <f:render section="Content"/>
+                                    </f:if>
+                                </f:then>
+                                <f:else>
+                                    <br>
+                                    <div class="callout callout-danger">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="callout-body">
+                                                    <p><f:translate key="{l10n}no-composer"/></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </f:if>
-
-                            <f:if condition="{contextIsDevelopment} || {ignoreTYPO3Context}">
-                                <f:render section="Content"/>
+                                </f:else>
                             </f:if>
                         </f:then>
                         <f:else>
@@ -58,7 +81,7 @@
                                     </div>
                                     <div class="media-body">
                                         <div class="callout-body">
-                                            <p><f:translate key="{l10n}no-composer"/></p>
+                                            <p><f:translate key="{l10n}no-fractor"/></p>
                                         </div>
                                     </div>
                                 </div>
@@ -67,26 +90,11 @@
                     </f:if>
                 </f:then>
                 <f:else>
-                    <br>
-                    <div class="callout callout-danger">
-                        <div class="media">
-                            <div class="media-left">
-                                <span class="icon-emphasized"><core:icon identifier="actions-exclamation" size="small" /></span>
-                            </div>
-                            <div class="media-body">
-                                <div class="callout-body">
-                                    <p><f:translate key="{l10n}no-rector"/></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <f:render section="Content"/>
                 </f:else>
             </f:if>
-        </f:then>
-        <f:else>
-            <f:render section="Content"/>
-        </f:else> 
-    </f:if>
+        </div>
+    </div>
 </div>
 
 </html>

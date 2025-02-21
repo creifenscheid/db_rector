@@ -50,4 +50,18 @@ class ElementRepository extends Repository
 
         return $query->execute();
     }
+
+    public function findAll()
+    {
+        $query = $this->createQuery();
+        $query->setOrderings(
+            [
+                'origin_uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+            ]
+        );
+
+        $this->addTableToCacheTags($query);
+        return $query->execute();
+    }
+
 }

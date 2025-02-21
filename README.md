@@ -50,8 +50,7 @@ The following configuration parameters are defined dynamically:
 
 | Parameter  | Value(s)                                                                                                   | Description                           |
 |------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| phpVersion | The PHP version of the TYPO3 installation.                                                                  | Target version to support.             |
-| sets       | 2 defined "UP_TO_TYPO3" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to apply to the target code. |
+| sets       | 2 defined "Typo3LevelSetList" sets<ul><li>the previous TYPO3 version</li><li>the current TYPO3 version</li></ul> | Rule sets to apply to the target code. |
 
 ## Support
 I don’t want your money or anything else.
